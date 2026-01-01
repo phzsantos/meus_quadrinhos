@@ -46,3 +46,15 @@ paper_types = [
 paper_types.each do |name|
   PaperType.find_or_create_by!(name: name)
 end
+
+authors = [
+  "Alan Moore",
+  "Frank Miller",
+  "Garth Ennis",
+  "Mark Millar",
+  "Jason Aaron",
+]
+
+authors.each do |name|
+  Author.find_or_create_by!(name: name)
+end
