@@ -25,3 +25,13 @@ publishers = [
 publishers.each do |name|
   Publisher.find_or_create_by!(name: name)
 end
+
+book_bindings = [
+  "Capa dura",
+  "Capa cartão",
+  "Canoa",
+]
+
+book_bindings.each do |name|
+  BookBinding.find_or_create_by!(name: name)
+end

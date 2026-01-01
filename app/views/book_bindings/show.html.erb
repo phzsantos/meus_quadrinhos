@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @book_binding %>
+
+<div>
+  <%= link_to "Edit this book binding", edit_book_binding_path(@book_binding) %> |
+  <%= link_to "Back to book bindings", book_bindings_path %>
+
+  <%= button_to "Destroy this book binding", @book_binding, method: :delete %>
+</div>

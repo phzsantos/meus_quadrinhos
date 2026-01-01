@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Publisher < ApplicationRecord
+class BookBinding < ApplicationRecord
   extend FriendlyId
 
   friendly_id :name, use: :slugged
