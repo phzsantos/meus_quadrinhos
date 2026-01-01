@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Paper types</h1>
+
+<div id="paper_types">
+  <% @paper_types.each do |paper_type| %>
+    <%= render paper_type %>
+    <p>
+      <%= link_to "Show this paper type", paper_type %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New paper type", new_paper_type_path %>

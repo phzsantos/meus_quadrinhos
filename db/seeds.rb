@@ -35,3 +35,14 @@ book_bindings = [
 book_bindings.each do |name|
   BookBinding.find_or_create_by!(name: name)
 end
+
+paper_types = [
+  "Couché",
+  "Offset",
+  "LWC",
+  "Jornal",
+]
+
+paper_types.each do |name|
+  PaperType.find_or_create_by!(name: name)
+end

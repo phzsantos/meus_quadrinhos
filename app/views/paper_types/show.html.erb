@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @paper_type %>
+
+<div>
+  <%= link_to "Edit this paper type", edit_paper_type_path(@paper_type) %> |
+  <%= link_to "Back to paper types", paper_types_path %>
+
+  <%= button_to "Destroy this paper type", @paper_type, method: :delete %>
+</div>
