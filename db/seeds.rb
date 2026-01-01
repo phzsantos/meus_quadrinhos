@@ -9,3 +9,19 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+publishers = [
+  "Abril",
+  "Mythos",
+  "Devir",
+  "Panini",
+  "JBC",
+  "Comix Zone",
+  "Globo",
+  "Record",
+  "Pipoca & Nanquim",
+]
+
+publishers.each do |name|
+  Publisher.find_or_create_by!(name: name)
+end
