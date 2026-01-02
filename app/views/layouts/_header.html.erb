@@ -1,7 +1,7 @@
 <header class="bg-black h-32 w-full flex items-center justify-center">
   <div class="text-center">
-    <h1 class="text-bada text-7xl bangers-regular text-shadow-md">
-      Meus Quadrinhos
+    <h1>
+      <%= link_to 'Meus Quadrinhos', root_path, class: "text-bada text-7xl bangers-regular text-shadow-md" %>
     </h1>
   </div>
 </header>
@@ -10,25 +10,25 @@
   <div class="container mx-auto px-4">
     <ul class="flex justify-center space-x-4 text-2xl bangers-regular">
       <li>
-        <%= link_to 'Dashboard', root_path, class: "flex justify-center items-center px-6 py-3 text-black hover:bg-black/20" %>
+        <%= link_to 'Dashboard', root_path, class: "flex justify-center items-center px-6 py-3 rounded hover:bg-black/20" %>
       </li>
       <li>
-        <%= link_to 'Quadrinhos', comics_path, class: "flex justify-center items-center px-6 py-3 text-black hover:bg-black/20" %>
+        <%= link_to 'Quadrinhos', comics_path, class: "flex justify-center items-center px-6 py-3 rounded hover:bg-black/20" %>
       </li>
       <li>
-        <%= link_to 'Autores', authors_path, class: "flex justify-center items-center px-6 py-3 text-black hover:bg-black/20" %>
+        <%= link_to 'Autores', authors_path, class: "flex justify-center items-center px-6 py-3 rounded hover:bg-black/20" %>
       </li>
       <li>
-        <%= link_to 'Editoras', publishers_path, class: "flex justify-center items-center px-6 py-3 text-black hover:bg-black/20" %>
+        <%= link_to 'Editoras', publishers_path, class: "flex justify-center items-center px-6 py-3 rounded hover:bg-black/20" %>
       </li>
       <li>
-        <%= link_to 'Encadernações', book_bindings_path, class: "flex justify-center items-center px-6 py-3 text-black hover:bg-black/20" %>
+        <%= link_to 'Encadernações', book_bindings_path, class: "flex justify-center items-center px-6 py-3 rounded hover:bg-black/20" %>
       </li>
       <li>
-        <%= link_to 'Tipo de papel', paper_types_path, class: "flex justify-center items-center px-6 py-3 text-black hover:bg-black/20" %>
+        <%= link_to 'Tipo de papel', paper_types_path, class: "flex justify-center items-center px-6 py-3 rounded hover:bg-black/20" %>
       </li>
       <li>
-        <%= link_to 'Tipo de quadrinho', publication_types_path, class: "flex justify-center items-center px-6 py-3 text-black hover:bg-black/20" %>
+        <%= link_to 'Tipo de quadrinho', publication_types_path, class: "flex justify-center items-center px-6 py-3 rounded hover:bg-black/20" %>
       </li>
     </ul>
   </div>
