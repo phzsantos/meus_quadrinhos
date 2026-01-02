@@ -63,7 +63,7 @@ class PublicationTypesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_publication_type
-    @publication_type = PublicationType.find(params[:id])
+    @publication_type = PublicationType.friendly.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

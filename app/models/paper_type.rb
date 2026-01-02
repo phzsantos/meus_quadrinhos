@@ -5,5 +5,7 @@ class PaperType < ApplicationRecord
 
   friendly_id :name, use: :slugged
 
+  has_many :comics, dependent: :restrict_with_error
+
   validates :name, presence: true
 end
