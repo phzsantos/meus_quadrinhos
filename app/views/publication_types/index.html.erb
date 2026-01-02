@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Publication types</h1>
+
+<div id="publication_types">
+  <% @publication_types.each do |publication_type| %>
+    <%= render publication_type %>
+    <p>
+      <%= link_to "Show this publication type", publication_type %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New publication type", new_publication_type_path %>

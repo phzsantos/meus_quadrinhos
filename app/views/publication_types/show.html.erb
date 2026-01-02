@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @publication_type %>
+
+<div>
+  <%= link_to "Edit this publication type", edit_publication_type_path(@publication_type) %> |
+  <%= link_to "Back to publication types", publication_types_path %>
+
+  <%= button_to "Destroy this publication type", @publication_type, method: :delete %>
+</div>

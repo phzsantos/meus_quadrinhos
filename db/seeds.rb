@@ -30,6 +30,7 @@ book_bindings = [
   "Capa dura",
   "Capa cartão",
   "Canoa",
+  "Omnibus",
 ]
 
 book_bindings.each do |name|
@@ -57,4 +58,15 @@ authors = [
 
 authors.each do |name|
   Author.find_or_create_by!(name: name)
+end
+
+publication_types = [
+  "HQ",
+  "Mangá",
+  "Manhwa",
+  "Manhua",
+]
+
+publication_types.each do |name|
+  PublicationType.find_or_create_by!(name: name)
 end
