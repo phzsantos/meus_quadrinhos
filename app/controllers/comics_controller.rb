@@ -24,6 +24,7 @@ class ComicsController < ApplicationController
   # POST /comics or /comics.json
   def create
     @comic = Comic.new(comic_params)
+    @comic.cover_image.attach(comic_params[:cover_image]) if comic_params[:cover_image].present?
 
     respond_to do |format|
       if @comic.save
@@ -68,6 +69,16 @@ class ComicsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def comic_params
-    params.require(:comic).permit(:title, :page_count, :published_year, :author_id, :publisher_id, :publication_type_id, :book_binding_id, :paper_type_id)
+    params.require(:comic).permit(
+      :title,
+      :page_count,
+      :published_year,
+      :author_id,
+      :publisher_id,
+      :publication_type_id,
+      :book_binding_id,
+      :paper_type_id,
+      :cover_image,
+    )
   end
 end

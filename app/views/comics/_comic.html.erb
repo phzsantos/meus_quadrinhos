@@ -16,27 +16,32 @@
 
   <p>
     <strong>Author:</strong>
-    <%= comic.author_id %>
+    <%= comic.author.name %>
   </p>
 
   <p>
     <strong>Publisher:</strong>
-    <%= comic.publisher_id %>
+    <%= comic.publisher.name %>
   </p>
 
   <p>
     <strong>Publication type:</strong>
-    <%= comic.publication_type_id %>
+    <%= comic.publication_type.name %>
   </p>
 
   <p>
     <strong>Book binding:</strong>
-    <%= comic.book_binding_id %>
+    <%= comic.book_binding.name %>
   </p>
 
   <p>
     <strong>Paper type:</strong>
-    <%= comic.paper_type_id %>
+    <%= comic.paper_type.name %>
   </p>
 
+  <% if comic.cover_image.attached? %>
+    <%= image_tag comic.cover_image.variant(resize_to_limit: [102, 155]) %>
+  <% else %>
+    <p>No cover uploaded</p>
+  <% end %>
 </div>

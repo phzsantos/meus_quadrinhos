@@ -40,5 +40,8 @@ module MeusQuadrinhos
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Configure Active Storage to use MiniMagick for variants
+    config.active_storage.variant_processor = :mini_magick
   end
 end
