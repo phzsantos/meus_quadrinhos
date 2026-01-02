@@ -78,6 +78,7 @@ class ComicsController < ApplicationController
       :publication_type_id,
       :book_binding_id,
       :paper_type_id,
+      :read_date,
       :cover_image,
     )
   end

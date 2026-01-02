@@ -56,6 +56,11 @@
   </div>
 
   <div>
+    <%= form.label :read_date, "Read Date" %>
+    <%= form.date_field :read_date %>
+  </div>
+
+  <div>
     <%= form.label :cover_image, "Cover Image" %>
     <%= form.file_field :cover_image %>
     <% if comic.cover_image.attached? %>

@@ -39,6 +39,11 @@
     <%= comic.paper_type.name %>
   </p>
 
+  <p>
+    <strong>Read Date:</strong>
+    <%= comic.read_date.strftime("%d/%m/%Y") if comic.read_date %>
+  </p>
+
   <% if comic.cover_image.attached? %>
     <%= image_tag comic.cover_image.variant(resize_to_limit: [102, 155]) %>
   <% else %>

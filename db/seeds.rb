@@ -54,6 +54,8 @@ authors = [
   "Garth Ennis",
   "Mark Millar",
   "Jason Aaron",
+  "Matthew Rosenberg",
+  "Gerry Duggan",
 ]
 
 authors.each do |name|
