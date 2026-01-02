@@ -1,1 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Patrick+Hand&display=swap');
 @import "tailwindcss";
+
+
+.bangers-regular {
+  font-family: "Bangers", system-ui;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.patrick-hand-regular {
+  font-family: "Patrick Hand", system-ui;
+  font-weight: normal;
+  font-style: cursive;
+}
+
+.bg-bada {
+  background-color: #bada55;
+}
+
+.text-bada {
+  color: #bada55;
+}
