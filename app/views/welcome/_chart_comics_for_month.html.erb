@@ -1,0 +1,24 @@
+<canvas id="comicsByMonthChart"></canvas>
+
+<script>
+  new Chart(document.getElementById('comicsByMonthChart'), {
+    type: 'bar',
+    data: {
+      labels: <%= raw @read_comics_months.map { |m| m.strftime("%m/%Y") }.to_json %>,
+      datasets: [{
+        data: <%= raw @read_comics_count_by_month.to_json %>
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1,
+            precision: 0 
+          }
+        }
+      }
+    }
+  });
+</script>

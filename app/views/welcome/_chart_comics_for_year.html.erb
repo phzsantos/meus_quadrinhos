@@ -1,0 +1,39 @@
+<canvas id="comicsByYearChart"></canvas>
+
+<script>
+  new Chart(document.getElementById('comicsByYearChart'), {
+    type: 'bar',
+    data: {
+      labels: <%= raw @read_comics_years.to_json %>,
+      datasets: [{
+        data: <%= raw @read_comics_count_by_year.to_json %>
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Ano'
+          }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1,
+            precision: 0
+          },
+          title: {
+            display: true,
+            text: 'Quantidade de quadrinhos'
+          }
+        }
+      }
+    }
+  });
+</script>

@@ -1,0 +1,25 @@
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="w-full bg-slate-900 rounded-xl p-4 shadow-lg flex flex-col">
+
+    <h2 class="text-2xl font-bold patrick-hand-regular mb-4 text-center shrink-0">
+      Lidos por ano
+    </h2>
+
+    <div class="flex-1 relative">
+      <%= render "chart_comics_for_year" %>
+    </div>
+
+  </div>
+
+  <div class="w-full bg-slate-900 rounded-xl p-4 shadow-lg flex flex-col">
+
+    <h2 class="text-2xl font-bold patrick-hand-regular mb-4 text-center shrink-0">
+      Lidos por mês
+    </h2>
+
+    <div class="flex-1 relative">
+      <%= render "chart_comics_for_month" %>
+    </div>
+
+  </div>
+</div>
