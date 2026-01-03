@@ -1,4 +1,4 @@
-<canvas id="comicsByMonthChart"></canvas>
+<canvas id="comicsByMonthChart" class="w-full h-full"></canvas>
 
 <script>
   new Chart(document.getElementById('comicsByMonthChart'), {
@@ -10,12 +10,29 @@
       }]
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
       scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Mês / Ano'
+          }
+        },
         y: {
           beginAtZero: true,
           ticks: {
             stepSize: 1,
-            precision: 0 
+            precision: 0
+          },
+          title: {
+            display: true,
+            text: 'Quantidade de quadrinhos'
           }
         }
       }
