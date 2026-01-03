@@ -5,7 +5,7 @@ class ComicsController < ApplicationController
 
   # GET /comics or /comics.json
   def index
-    @comics = Comic.all
+    @comics = Comic.all.order(:read_date, :created_at)
   end
 
   # GET /comics/1 or /comics/1.json

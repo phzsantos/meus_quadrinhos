@@ -1,13 +1,21 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Comics</h1>
-
-<div id="comics">
+<div
+  id="comics"
+  class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4"
+>
   <% @comics.each do |comic| %>
-    <%= render comic %>
-    <p>
-      <%= link_to "Show this comic", comic %>
-    </p>
+    <%= link_to comic, class: "group" do %>
+      <div class="aspect-[2/3] overflow-hidden rounded shadow-lg bg-slate-900">
+        <%= image_tag comic.cover_image,
+          class: "w-full h-full object-cover
+                  group-hover:scale-105 transition-transform duration-200" %>
+      </div>
+
+      <p class="mt-1 text-center text-sm truncate">
+        <%= comic.title %>
+      </p>
+    <% end %>
   <% end %>
 </div>
 
