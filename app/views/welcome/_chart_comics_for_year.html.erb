@@ -6,10 +6,15 @@
     data: {
       labels: <%= raw @read_comics_years.to_json %>,
       datasets: [{
-        data: <%= raw @read_comics_count_by_year.to_json %>
+        data: <%= raw @read_comics_count_by_year.to_json %>,
+        backgroundColor: '#000000',
+        borderColor: '#000000',
+        borderWidth: 1
       }]
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           display: false
@@ -17,20 +22,34 @@
       },
       scales: {
         x: {
+          ticks: {
+            color: '#000000'
+          },
           title: {
             display: true,
-            text: 'Ano'
+            text: 'Ano',
+            color: '#000000'
+          },
+          grid: {
+            color: '#000000',
+            drawBorder: true
           }
         },
         y: {
           beginAtZero: true,
           ticks: {
             stepSize: 1,
-            precision: 0
+            precision: 0,
+            color: '#000000'
           },
           title: {
             display: true,
-            text: 'Quantidade de quadrinhos'
+            text: 'Quantidade de quadrinhos',
+            color: '#000000'
+          },
+          grid: {
+            color: '#000000',
+            drawBorder: true
           }
         }
       }

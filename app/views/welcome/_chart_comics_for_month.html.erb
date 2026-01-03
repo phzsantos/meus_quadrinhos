@@ -6,7 +6,10 @@
     data: {
       labels: <%= raw @read_comics_months.map { |m| m.strftime("%m/%Y") }.to_json %>,
       datasets: [{
-        data: <%= raw @read_comics_count_by_month.to_json %>
+        data: <%= raw @read_comics_count_by_month.to_json %>,
+        backgroundColor: '#000000',
+        borderColor: '#000000',
+        borderWidth: 1
       }]
     },
     options: {
@@ -19,20 +22,34 @@
       },
       scales: {
         x: {
+          ticks: {
+            color: '#000000'
+          },
           title: {
             display: true,
-            text: 'Mês / Ano'
+            text: 'Mês / Ano',
+            color: '#000000'
+          },
+          grid: {
+            color: '#000000',
+            drawBorder: true
           }
         },
         y: {
           beginAtZero: true,
           ticks: {
             stepSize: 1,
-            precision: 0
+            precision: 0,
+            color: '#000000'
           },
           title: {
             display: true,
-            text: 'Quantidade de quadrinhos'
+            text: 'Quantidade de quadrinhos',
+            color: '#000000'
+          },
+          grid: {
+            color: '#000000',
+            drawBorder: true
           }
         }
       }
