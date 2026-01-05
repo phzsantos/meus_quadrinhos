@@ -7,9 +7,10 @@
   <% @comics.each do |comic| %>
     <%= link_to comic, class: "group" do %>
       <div class="aspect-[2/3] overflow-hidden rounded shadow-lg bg-slate-900">
-        <%= image_tag comic.cover_image,
-          class: "w-full h-full object-cover
-                  group-hover:scale-105 transition-transform duration-200" %>
+        <%= image_tag(
+              comic.cover_image.attached? ? comic.cover_image : "covers/no-cover.jpg",
+              class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+            ) %>
       </div>
 
       <p class="mt-1 text-center text-sm truncate">

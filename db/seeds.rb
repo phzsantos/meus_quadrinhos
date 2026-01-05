@@ -65,6 +65,7 @@ authors = [
   "Chuck Dixon",
   "Howard Mackie",
   "Nathan Edmondson",
+  "Dan D. G. Chichester",
 ]
 
 authors.each do |name|
@@ -117,6 +118,11 @@ comics = [
   { title: "Procurado n° 3", page_count: 50, published_year: 2005, author_name: "Mark Millar", publisher_name: "Mythos", publication_type_name: "HQ", book_binding_name: "Canoa", paper_type_name: "LWC", read_date: "2025-12-17" },
   { title: "Justiceiro - Preto e branco", page_count: 132, published_year: 2015, author_name: "Nathan Edmondson", publisher_name: "Panini", publication_type_name: "HQ", book_binding_name: "Capa cartão", paper_type_name: "LWC", read_date: "2025-12-25" },
   { title: "Justiceiro - Atravessando a fronteira", page_count: 148, published_year: 2016, author_name: "Nathan Edmondson", publisher_name: "Panini", publication_type_name: "HQ", book_binding_name: "Capa cartão", paper_type_name: "LWC", read_date: "2025-12-25" },
+  { title: "Justiceiro - Ultimos dias", page_count: 172, published_year: 2016, author_name: "Nathan Edmondson", publisher_name: "Panini", publication_type_name: "HQ", book_binding_name: "Capa cartão", paper_type_name: "LWC", read_date: "2026-01-03" },
+  { title: "Justiceiro & Capitão América - Sangue e Glória n° 1", page_count: 52, published_year: 1993, author_name: "Dan D. G. Chichester", publisher_name: "Abril", publication_type_name: "HQ", book_binding_name: "Canoa", paper_type_name: "LWC", read_date: "2026-01-03" },
+  { title: "Justiceiro & Capitão América - Sangue e Glória n° 2", page_count: 52, published_year: 1994, author_name: "Dan D. G. Chichester", publisher_name: "Abril", publication_type_name: "HQ", book_binding_name: "Canoa", paper_type_name: "LWC", read_date: "2026-01-03" },
+  { title: "Justiceiro & Capitão América - Sangue e Glória n° 3", page_count: 52, published_year: 1994, author_name: "Dan D. G. Chichester", publisher_name: "Abril", publication_type_name: "HQ", book_binding_name: "Canoa", paper_type_name: "LWC", read_date: "2026-01-03" },
+  { title: "Paladinos Marvel n° 1", page_count: 100, published_year: 2002, author_name: "Garth Ennis", publisher_name: "Panini", publication_type_name: "HQ", book_binding_name: "Canoa", paper_type_name: "LWC", read_date: "2026-01-04" },
 ]
 
 comics.each do |comic_attrs|
