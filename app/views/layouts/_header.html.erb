@@ -9,28 +9,15 @@
 <nav class="bg-bada shadow-md">
   <div class="container mx-auto px-4">
     <ul class="flex justify-center space-x-4 text-2xl bangers-regular">
-      <li>
-        <%= link_to 'Dashboard', root_path, class: "flex justify-center items-center px-6 py-3 rounded hover:bg-black/20" %>
-      </li>
-      <li>
-        <%= link_to 'Quadrinhos', comics_path, class: "flex justify-center items-center px-6 py-3 rounded hover:bg-black/20" %>
-      </li>
-      <li>
-        <%= link_to 'Autores', authors_path, class: "flex justify-center items-center px-6 py-3 rounded hover:bg-black/20" %>
-      </li>
-      <li>
-        <%= link_to 'Editoras', publishers_path, class: "flex justify-center items-center px-6 py-3 rounded hover:bg-black/20" %>
-      </li>
-      <li>
-        <%= link_to 'Encadernações', book_bindings_path, class: "flex justify-center items-center px-6 py-3 rounded hover:bg-black/20" %>
-      </li>
-      <li>
-        <%= link_to 'Tipo de papel', paper_types_path, class: "flex justify-center items-center px-6 py-3 rounded hover:bg-black/20" %>
-      </li>
-      <li>
-        <%= link_to 'Tipo de quadrinho', publication_types_path, class: "flex justify-center items-center px-6 py-3 rounded hover:bg-black/20" %>
-      </li>
+      <li><%= nav_link_to 'Dashboard', root_path %></li>
+      <li><%= nav_link_to 'Quadrinhos', comics_path %></li>
+      <li><%= nav_link_to 'Autores', authors_path %></li>
+      <li><%= nav_link_to 'Editoras', publishers_path %></li>
+      <li><%= nav_link_to 'Encadernações', book_bindings_path %></li>
+      <li><%= nav_link_to 'Tipo de papel', paper_types_path %></li>
+      <li><%= nav_link_to 'Tipo de quadrinho', publication_types_path %></li>
     </ul>
   </div>
 </nav>
+
 
