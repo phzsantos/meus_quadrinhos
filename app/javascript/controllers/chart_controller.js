@@ -28,7 +28,14 @@ export default class extends Controller {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { display: false }
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.parsed.y
+              }
+            }
+          }
         },
         scales: {
           x: {
@@ -44,6 +51,7 @@ export default class extends Controller {
             beginAtZero: true,
             ticks: {
               stepSize: 1,
+              callback: (value) => value,
               color: "#000000"
             },
             title: {
