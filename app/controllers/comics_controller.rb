@@ -79,6 +79,7 @@ class ComicsController < ApplicationController
       :paper_type_id,
       :read_date,
       :cover_image,
+      :link_guia_dos_quadrinhos,
       author_ids: [],
     )
   end
