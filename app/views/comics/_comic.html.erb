@@ -1,52 +1,34 @@
-<div id="<%= dom_id comic %>">
-  <p>
-    <strong>Title:</strong>
-    <%= comic.title %>
-  </p>
+<div class="bg-bada p-5 text-shadow-md rounded-md shadow-md grid grid-cols-1 md:grid-cols-3 gap-6">
+  <div class="md:col-span-2 space-y-3 text-black">
+    <h2 class="text-5xl font-bold bangers-regular mb-4">
+      <%= @comic.title %>
+    </h2>
 
-  <p>
-    <strong>Page count:</strong>
-    <%= comic.page_count %>
-  </p>
+    <div class="text-3xl patrick-hand-regular">
+      <p><strong>Páginas:</strong> <%= @comic.page_count %></p>
+      <p><strong>Ano:</strong> <%= @comic.published_year %></p>
+      <p><strong>Autor:</strong> <%= @comic.author.name %></p>
+      <p><strong>Editora:</strong> <%= @comic.publisher.name %></p>
+      <p><strong>Tipo:</strong> <%= @comic.publication_type.name %></p>
+      <p><strong>Encadernação:</strong> <%= @comic.book_binding.name %></p>
+      <p><strong>Papel:</strong> <%= @comic.paper_type.name %></p>
+      <% if @comic.read_date %>
+        <p>
+          <strong>Lido em:</strong>
+          <%= l(@comic.read_date, format: "%d/%m/%Y") %>
+        </p>
+      <% end %>
+    </div>
+  </div>
 
-  <p>
-    <strong>Published year:</strong>
-    <%= comic.published_year %>
-  </p>
-
-  <p>
-    <strong>Author:</strong>
-    <%= comic.author.name %>
-  </p>
-
-  <p>
-    <strong>Publisher:</strong>
-    <%= comic.publisher.name %>
-  </p>
-
-  <p>
-    <strong>Publication type:</strong>
-    <%= comic.publication_type.name %>
-  </p>
-
-  <p>
-    <strong>Book binding:</strong>
-    <%= comic.book_binding.name %>
-  </p>
-
-  <p>
-    <strong>Paper type:</strong>
-    <%= comic.paper_type.name %>
-  </p>
-
-  <p>
-    <strong>Read Date:</strong>
-    <%= comic.read_date.strftime("%d/%m/%Y") if comic.read_date %>
-  </p>
-
-  <% if comic.cover_image.attached? %>
-    <%= image_tag comic.cover_image.variant(resize_to_limit: [102, 155]) %>
-  <% else %>
-    <p>No cover uploaded</p>
-  <% end %>
+  <div class="flex justify-center md:justify-end">
+    <div class="bg-black/80 p-3 rounded-md shadow-md">
+      <%= image_tag(
+        @comic.cover_image.attached? ?
+          @comic.cover_image.variant(resize_to_fill: [402, 602]) :
+          "covers/no-cover.jpg",
+        class: "shadow-lg w-[402px] h-[602px] object-cover"
+      ) %>
+    </div>
+  </div>
 </div>
