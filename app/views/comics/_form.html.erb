@@ -25,6 +25,15 @@
     <%= form.number_field :published_year %>
   </div>
 
+  <div class="mb-4">
+    <%= form.label :story_count,
+          "Histórias neste encadernado" %>
+
+    <%= form.number_field :story_count,
+          min: 1,
+          step: 1 %>
+  </div>
+
   <div>
     <%= form.label :author_ids, "Autores", class: "block font-semibold mb-1" %>
 

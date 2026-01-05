@@ -80,6 +80,7 @@ class ComicsController < ApplicationController
       :read_date,
       :cover_image,
       :link_guia_dos_quadrinhos,
+      :story_count,
       author_ids: [],
     )
   end
