@@ -5,11 +5,13 @@ class Comic < ApplicationRecord
 
   friendly_id :title, use: :slugged
 
-  belongs_to :author
   belongs_to :publisher
   belongs_to :publication_type
   belongs_to :book_binding
   belongs_to :paper_type
+
+  has_many :comic_authors, dependent: :restrict_with_error
+  has_many :authors, through: :comic_authors
 
   has_one_attached :cover_image
 
@@ -19,5 +21,13 @@ class Comic < ApplicationRecord
 
   def should_generate_new_friendly_id?
     title_changed?
+  end
+
+  before_validation :remove_blank_author_ids
+
+  private
+
+  def remove_blank_author_ids
+    self.author_ids = author_ids.reject(&:blank?) if author_ids
   end
 end

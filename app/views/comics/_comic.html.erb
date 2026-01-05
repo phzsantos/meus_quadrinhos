@@ -7,7 +7,10 @@
     <div class="text-3xl patrick-hand-regular">
       <p><strong>Páginas:</strong> <%= @comic.page_count %></p>
       <p><strong>Ano:</strong> <%= @comic.published_year %></p>
-      <p><strong>Autor:</strong> <%= @comic.author.name %></p>
+      <p>
+        <strong>Autores:</strong>
+        <%= @comic.authors.map(&:name).join(", ") %>
+      </p>
       <p><strong>Editora:</strong> <%= @comic.publisher.name %></p>
       <p><strong>Tipo:</strong> <%= @comic.publication_type.name %></p>
       <p><strong>Encadernação:</strong> <%= @comic.book_binding.name %></p>

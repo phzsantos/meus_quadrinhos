@@ -5,7 +5,8 @@ class Author < ApplicationRecord
 
   friendly_id :name, use: :slugged
 
-  has_many :comics, dependent: :restrict_with_error
+  has_many :comic_authors, dependent: :restrict_with_error
+  has_many :comics, through: :comic_authors
 
   validates :name, presence: true
 

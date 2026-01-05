@@ -73,13 +73,13 @@ class ComicsController < ApplicationController
       :title,
       :page_count,
       :published_year,
-      :author_id,
       :publisher_id,
       :publication_type_id,
       :book_binding_id,
       :paper_type_id,
       :read_date,
       :cover_image,
+      author_ids: [],
     )
   end
 end

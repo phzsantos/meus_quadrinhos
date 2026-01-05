@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_01_02_043944) do
+ActiveRecord::Schema[7.1].define(version: 2026_01_05_120248) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -59,11 +59,19 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_02_043944) do
     t.index ["slug"], name: "index_book_bindings_on_slug", unique: true
   end
 
+  create_table "comic_authors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "comic_id", null: false
+    t.uuid "author_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_comic_authors_on_author_id"
+    t.index ["comic_id"], name: "index_comic_authors_on_comic_id"
+  end
+
   create_table "comics", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
     t.integer "page_count", null: false
     t.integer "published_year", null: false
-    t.uuid "author_id", null: false
     t.uuid "publisher_id", null: false
     t.uuid "publication_type_id", null: false
     t.uuid "book_binding_id", null: false
@@ -72,7 +80,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_02_043944) do
     t.datetime "updated_at", null: false
     t.string "slug"
     t.date "read_date"
-    t.index ["author_id"], name: "index_comics_on_author_id"
     t.index ["book_binding_id"], name: "index_comics_on_book_binding_id"
     t.index ["paper_type_id"], name: "index_comics_on_paper_type_id"
     t.index ["publication_type_id"], name: "index_comics_on_publication_type_id"
@@ -117,7 +124,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_02_043944) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "comics", "authors"
+  add_foreign_key "comic_authors", "authors"
+  add_foreign_key "comic_authors", "comics"
   add_foreign_key "comics", "book_bindings"
   add_foreign_key "comics", "paper_types"
   add_foreign_key "comics", "publication_types"

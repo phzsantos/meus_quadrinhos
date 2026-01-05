@@ -26,9 +26,14 @@
   </div>
 
   <div>
-    <%= form.label :author_id, "Author" %>
-    <%= form.collection_select :author_id, Author.order(:name), :id, :name,
-          { prompt: "Select an author" } %>
+    <%= form.label :author_ids, "Autores", class: "block font-semibold mb-1" %>
+
+    <%= form.collection_select :author_ids,
+      Author.order(:name),
+      :id,
+      :name,
+      {},
+      { multiple: true, class: "w-full rounded-lg" } %>
   </div>
 
   <div>
