@@ -1,58 +1,9 @@
-<canvas id="comicsByYearChart"></canvas>
-
-<script>
-  new Chart(document.getElementById('comicsByYearChart'), {
-    type: 'bar',
-    data: {
-      labels: <%= raw @read_comics_years.to_json %>,
-      datasets: [{
-        data: <%= raw @read_comics_count_by_year.to_json %>,
-        backgroundColor: '#000000',
-        borderColor: '#000000',
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: false
-        }
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: '#000000'
-          },
-          title: {
-            display: true,
-            text: 'Ano',
-            color: '#000000'
-          },
-          grid: {
-            color: '#000000',
-            drawBorder: true
-          }
-        },
-        y: {
-          beginAtZero: true,
-          ticks: {
-            stepSize: 1,
-            precision: 0,
-            color: '#000000'
-          },
-          title: {
-            display: true,
-            text: 'Quantidade de quadrinhos',
-            color: '#000000'
-          },
-          grid: {
-            color: '#000000',
-            drawBorder: true
-          }
-        }
-      }
-    }
-  });
-</script>
+<canvas
+  class="w-full h-full"
+  data-controller="chart"
+  data-chart-type-value="bar"
+  data-chart-labels-value="<%= @read_comics_years.to_json %>"
+  data-chart-data-value="<%= @read_comics_count_by_year.to_json %>"
+  data-chart-x-title-value="Ano"
+  data-chart-y-title-value="Quantidade de quadrinhos">
+</canvas>
