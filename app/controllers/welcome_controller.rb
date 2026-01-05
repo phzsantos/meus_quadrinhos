@@ -3,6 +3,7 @@
 class WelcomeController < ApplicationController
   def index
     load_comics_read_by_year
+    load_pages_read_by_year
     load_comics_read_by_month
     load_pages_read_by_month
   end
@@ -18,6 +19,19 @@ class WelcomeController < ApplicationController
     @read_comics_years = grouped_by_year.keys.sort
     @read_comics_count_by_year =
       @read_comics_years.map { |year| grouped_by_year[year].count }
+  end
+
+  def load_pages_read_by_year
+    grouped_by_year = Comic
+      .where.not(read_date: nil)
+      .select(:read_date, :page_count)
+      .group_by { |comic| comic.read_date.year }
+
+    @pages_read_years = grouped_by_year.keys.sort
+    @pages_read_count_by_year =
+      @pages_read_years.map do |year|
+        grouped_by_year[year].sum { |comic| comic.page_count || 0 }
+      end
   end
 
   def load_comics_read_by_month
