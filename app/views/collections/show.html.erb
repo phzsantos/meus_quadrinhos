@@ -5,23 +5,10 @@
 <% end %>
 
 <div class="rounded-xl shadow-lg">
-  <div class="bg-bada text-shadow-md p-3 rounded-md shadow-md flex flex-wrap gap-3 mb-6">
-    <%= link_to "Voltar",
-      collections_path,
-      class: "px-4 py-2 bg-black/20 rounded-lg hover:bg-black/30 transition" %>
-    
-    <%= link_to "Editar",
-      edit_collection_path(@collection),
-      class: "px-4 py-2 bg-black rounded-lg hover:bg-black/80 transition" %>
-
-    <div class="ml-auto">
-      <%= button_to "Excluir",
-        @collection,
-        method: :delete,
-        data: { confirm: "Tem certeza?" },
-        class: "px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition cursor-pointer" %>
-    </div>
-  </div>
+  <%= render "shared/show_actions",
+    resource: @collection,
+    index_path: collections_path,
+    edit_path: edit_collection_path(@collection) %>
 
   <%= render "collection", collection: @collection %>
 </div>
