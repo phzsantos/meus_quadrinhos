@@ -12,7 +12,12 @@
       <p><strong>Ano:</strong> <%= @comic.published_year %></p>
       <p>
         <strong>Autores:</strong>
-        <%= @comic.authors.map(&:name).join(", ") %>
+        <%= safe_join(
+          @comic.authors.map do |author|
+            link_to author.name, author, class: "text-blue-600 underline hover:text-blue-800"
+          end,
+          ", "
+        ) %>
       </p>
       <p><strong>Editora:</strong> <%= @comic.publisher.name %></p>
       <p><strong>Tipo:</strong> <%= @comic.publication_type.name %></p>
