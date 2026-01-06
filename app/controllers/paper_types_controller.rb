@@ -5,7 +5,7 @@ class PaperTypesController < ApplicationController
 
   # GET /paper_types or /paper_types.json
   def index
-    @paper_types = PaperType.all
+    @paper_types = PaperType.all.order(:name)
   end
 
   # GET /paper_types/1 or /paper_types/1.json
