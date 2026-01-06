@@ -5,7 +5,7 @@ class BookBindingsController < ApplicationController
 
   # GET /book_bindings or /book_bindings.json
   def index
-    @book_bindings = BookBinding.all
+    @book_bindings = BookBinding.all.order(:name)
   end
 
   # GET /book_bindings/1 or /book_bindings/1.json
