@@ -4,6 +4,8 @@
       <%= @comic.title %>
     </h2>
 
+    <hr>
+
     <div class="text-3xl patrick-hand-regular">
       <p><strong>Páginas:</strong> <%= @comic.page_count %></p>
       <p><strong>Histórias compiladas:</strong> <%= @comic.story_count %></p>
@@ -19,7 +21,9 @@
       <% if @comic.collection.present? %>
         <p>
           <strong>Coleção:</strong>
-          <%= @comic.collection.name %>
+          <%= link_to @comic.collection, class: "text-blue-600 underline hover:text-blue-800" do %>
+            <%= @comic.collection.name %>
+          <% end %>
         </p>
       <% end %>
       <% if @comic.readings.any? %>
