@@ -4,7 +4,7 @@
 
 <div id="collections">
   <% @collections.each do |collection| %>
-    <%= render collection %>
+    <h2><%= collection.name %></h2>
     <p>
       <%= link_to "Show this collection", collection %>
     </p>
