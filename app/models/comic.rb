@@ -13,6 +13,11 @@ class Comic < ApplicationRecord
   has_many :comic_authors, dependent: :restrict_with_error
   has_many :authors, through: :comic_authors
 
+  has_many :readings, dependent: :destroy
+  accepts_nested_attributes_for :readings,
+    allow_destroy: true,
+    reject_if: :reading_blank?
+
   has_one_attached :cover_image
 
   validates :title, presence: true
@@ -29,5 +34,9 @@ class Comic < ApplicationRecord
 
   def remove_blank_author_ids
     self.author_ids = author_ids.reject(&:blank?) if author_ids
+  end
+
+  def reading_blank?(attrs)
+    attrs["read_at"].blank? && attrs["_destroy"] != "1"
   end
 end

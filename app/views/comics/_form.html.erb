@@ -70,8 +70,34 @@
   </div>
 
   <div>
-    <%= form.label :read_date, "Read Date" %>
-    <%= form.date_field :read_date %>
+    <strong>Leituras:</strong>
+
+    <%= form.fields_for :readings do |reading_form| %>
+      <div
+        data-controller="nested-reading"
+        class="flex items-center gap-3 mb-2"
+      >
+        <%= reading_form.hidden_field :id %>
+        <%= reading_form.hidden_field :_destroy %>
+
+        <%= reading_form.date_field :read_at %>
+
+        <button
+          type="button"
+          data-action="nested-reading#remove"
+          class="text-red-600 font-semibold"
+        >
+          Remover
+        </button>
+      </div>
+    <% end %>
+
+    <!-- nova leitura -->
+    <%= form.fields_for :readings, @comic.readings.build do |new_form| %>
+      <div class="mt-2">
+        <%= new_form.date_field :read_at %>
+      </div>
+    <% end %>
   </div>
 
   <div class="mb-4">

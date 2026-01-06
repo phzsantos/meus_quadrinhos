@@ -16,10 +16,10 @@
       <p><strong>Tipo:</strong> <%= @comic.publication_type.name %></p>
       <p><strong>Encadernação:</strong> <%= @comic.book_binding.name %></p>
       <p><strong>Papel:</strong> <%= @comic.paper_type.name %></p>
-      <% if @comic.read_date %>
+      <% if @comic.readings.any? %>
         <p>
           <strong>Lido em:</strong>
-          <%= l(@comic.read_date, format: "%d/%m/%Y") %>
+          <%= @comic.readings.order(read_at: :asc).map { |r| l(r.read_at, format: "%d/%m/%Y") }.join(", ") %>
         </p>
       <% end %>
       <% if @comic.link_guia_dos_quadrinhos.present? %>
