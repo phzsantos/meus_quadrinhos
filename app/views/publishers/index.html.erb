@@ -1,14 +1,16 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Publishers</h1>
-
-<div id="publishers">
-  <% @publishers.each do |publisher| %>
-    <%= render publisher %>
-    <p>
-      <%= link_to "Show this publisher", publisher %>
-    </p>
-  <% end %>
+<div class="bg-bada p-5 text-shadow-md rounded-md shadow-md">
+  <div class="text-black">
+    <div class="text-3xl patrick-hand-regular">
+      <% @publishers.each do |publisher| %>
+        <p class="p-2" >
+          <%= link_to publisher.name, publisher %>
+        </p>
+        <hr>
+      <% end %>
+    </div>
+  </div>
 </div>
 
 <%= link_to "New publisher", new_publisher_path %>
