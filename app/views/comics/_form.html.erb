@@ -110,6 +110,15 @@
   </div>
 
   <div>
+    <%= form.label :collection_id, "Coleção" %>
+    <%= form.collection_select :collection_id,
+          Collection.order(:name),
+          :id,
+          :name,
+          include_blank: "Sem coleção" %>
+  </div>
+
+  <div>
     <%= form.label :cover_image, "Cover Image" %>
     <%= form.file_field :cover_image %>
     <% if comic.cover_image.attached? %>

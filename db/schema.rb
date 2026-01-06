@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_01_05_225700) do
+ActiveRecord::Schema[7.1].define(version: 2026_01_06_091618) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -59,6 +59,14 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_05_225700) do
     t.index ["slug"], name: "index_book_bindings_on_slug", unique: true
   end
 
+  create_table "collections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["slug"], name: "index_collections_on_slug", unique: true
+  end
+
   create_table "comic_authors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "comic_id", null: false
     t.uuid "author_id", null: false
@@ -81,7 +89,9 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_05_225700) do
     t.string "slug"
     t.string "link_guia_dos_quadrinhos"
     t.integer "story_count"
+    t.uuid "collection_id"
     t.index ["book_binding_id"], name: "index_comics_on_book_binding_id"
+    t.index ["collection_id"], name: "index_comics_on_collection_id"
     t.index ["paper_type_id"], name: "index_comics_on_paper_type_id"
     t.index ["publication_type_id"], name: "index_comics_on_publication_type_id"
     t.index ["publisher_id"], name: "index_comics_on_publisher_id"
@@ -136,6 +146,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_05_225700) do
   add_foreign_key "comic_authors", "authors"
   add_foreign_key "comic_authors", "comics"
   add_foreign_key "comics", "book_bindings"
+  add_foreign_key "comics", "collections"
   add_foreign_key "comics", "paper_types"
   add_foreign_key "comics", "publication_types"
   add_foreign_key "comics", "publishers"

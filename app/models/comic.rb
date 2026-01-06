@@ -9,6 +9,7 @@ class Comic < ApplicationRecord
   belongs_to :publication_type
   belongs_to :book_binding
   belongs_to :paper_type
+  belongs_to :collection, optional: true
 
   has_many :comic_authors, dependent: :restrict_with_error
   has_many :authors, through: :comic_authors
