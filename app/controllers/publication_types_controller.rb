@@ -5,7 +5,7 @@ class PublicationTypesController < ApplicationController
 
   # GET /publication_types or /publication_types.json
   def index
-    @publication_types = PublicationType.all
+    @publication_types = PublicationType.all.order(:name)
   end
 
   # GET /publication_types/1 or /publication_types/1.json
