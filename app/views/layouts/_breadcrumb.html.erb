@@ -1,0 +1,49 @@
+<nav class="flex items-center gap-2 w-full text-black patrick-hand-regular text-xl">
+  <%= link_to "Home", root_path, class: "underline hover:text-blue-700" %>
+
+  <span>/</span>
+
+  <% if action_name != "index" %>
+    <%= link_to controller_name.humanize,
+      url_for(controller: controller_name, action: :index),
+      class: "underline hover:text-blue-700" %>
+  <% else %>
+    <span class="font-bold"><%= controller_name.humanize %></span>
+  <% end %>
+
+  <% case action_name
+    when "show" %>
+      <% resource = instance_variable_get("@#{controller_name.singularize}") %>
+      <% if resource.present? %>
+        <span>/</span>
+        <span class="font-bold">
+          <%= resource.try(:name) || resource.try(:title) || resource.id %>
+        </span>
+      <% end %>
+
+    <% when "index" %>
+      <div class="ml-auto">
+        <%= link_to "Novo #{controller_name.singularize.humanize}",
+          url_for(controller: controller_name, action: :new),
+          class: "px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition" %>
+      </div>
+
+    <% when "edit" %>
+      <% resource = instance_variable_get("@#{controller_name.singularize}") %>
+
+      <% if resource.present? %>
+        <span>/</span>
+        <%= link_to resource.try(:name) || resource.try(:title) || resource.id,
+          url_for(controller: controller_name, action: :show, id: resource),
+          class: "underline hover:text-blue-700" %>
+      <% end %>
+
+      <span>/</span>
+      <span class="font-bold">Editar</span>
+
+
+    <% when "new" %>
+      <span>/</span>
+      <span class="font-bold">Novo</span>
+  <% end %>
+</nav>

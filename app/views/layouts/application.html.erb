@@ -18,6 +18,11 @@
   <body class="bg-gray-800">
     <%= render "layouts/header" %>
     <div class="container mx-auto bg-black/50 shadow-lg p-5 mt-3 mb-3 rounded-lg text-white">
+      <% if controller_name != "welcome" %>
+        <div class="bg-bada text-shadow-md p-3 rounded-md shadow-md flex flex-wrap gap-3 mb-6">
+          <%= render "layouts/breadcrumb" %>
+        </div>
+      <% end %>
       <%= yield %>
     </div>
   </body>
