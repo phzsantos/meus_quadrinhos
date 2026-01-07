@@ -78,6 +78,7 @@ class ComicsController < ApplicationController
       :publication_type_id,
       :book_binding_id,
       :paper_type_id,
+      :collection_id,
       :cover_image,
       :link_guia_dos_quadrinhos,
       :story_count,
