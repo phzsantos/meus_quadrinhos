@@ -1,10 +1,15 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %>
+  <div class="mb-4 rounded-lg bg-green-100 text-green-800 px-4 py-3">
+    <%= notice %>
+  </div>
+<% end %>
 
-<%= render @publisher %>
+<div class="rounded-xl shadow-lg">
+  <%= render "shared/show_actions",
+    resource: @publisher,
+    resource_name: "Editoras",
+    index_path: publishers_path,
+    edit_path: edit_publisher_path(@publisher) %>
 
-<div>
-  <%= link_to "Edit this publisher", edit_publisher_path(@publisher) %> |
-  <%= link_to "Back to publishers", publishers_path %>
-
-  <%= button_to "Destroy this publisher", @publisher, method: :delete %>
+  <%= render "publisher", publisher: @publisher %>
 </div>
