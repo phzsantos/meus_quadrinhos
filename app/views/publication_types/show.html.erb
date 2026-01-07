@@ -1,10 +1,15 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %>
+  <div class="mb-4 rounded-lg bg-green-100 text-green-800 px-4 py-3">
+    <%= notice %>
+  </div>
+<% end %>
 
-<%= render @publication_type %>
+<div class="rounded-xl shadow-lg">
+  <%= render "shared/show_actions",
+    resource: @publication_type,
+    resource_name: "Tipos de quadrinho",
+    index_path: publication_types_path,
+    edit_path: edit_publication_type_path(@publication_type) %>
 
-<div>
-  <%= link_to "Edit this publication type", edit_publication_type_path(@publication_type) %> |
-  <%= link_to "Back to publication types", publication_types_path %>
-
-  <%= button_to "Destroy this publication type", @publication_type, method: :delete %>
+  <%= render "publication_type", publication_type: @publication_type %>
 </div>
