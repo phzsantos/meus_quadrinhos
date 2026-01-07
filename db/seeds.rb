@@ -93,19 +93,19 @@ publication_types.each do |name|
 end
 
 collections = [
-  "Marvel Deluxe: Justiceiro",
-  "Justiceiro 2ª Série",
-  "Justiceiro 3ª Série",
-  "Justiceiro 4ª Série",
-  "Justiceiro Por Greg Rucka",
-  "Justiceiro & Capitão América - Sangue e Glória",
-  "Paladinos Marvel",
-  "Procurado",
-  "Um Passeio No Inferno",
+  { name: "Marvel Deluxe: Justiceiro", link_guia_dos_quadrinhos: "http://www.guiadosquadrinhos.com/capas/marvel-deluxe-justiceiro/ma011157" },
+  { name: "Justiceiro 2ª Série", link_guia_dos_quadrinhos: "http://www.guiadosquadrinhos.com/capas/justiceiro-2-serie/ju011200" },
+  { name: "Justiceiro 3ª Série", link_guia_dos_quadrinhos: "http://www.guiadosquadrinhos.com/capas/justiceiro-3-serie/ju011300" },
+  { name: "Justiceiro 4ª Série", link_guia_dos_quadrinhos: "http://www.guiadosquadrinhos.com/capas/justiceiro-4-serie/ju011400" },
+  { name: "Justiceiro Por Greg Rucka", link_guia_dos_quadrinhos: "http://www.guiadosquadrinhos.com/capas/justiceiro-por-greg-rucka/ju011128" },
+  { name: "Justiceiro & Capitão América - Sangue e Glória", link_guia_dos_quadrinhos: "http://www.guiadosquadrinhos.com/capas/justiceiro-e-capitao-america-sangue-e-gloria/jca0301" },
+  { name: "Paladinos Marvel", link_guia_dos_quadrinhos: "http://www.guiadosquadrinhos.com/capas/paladinos-marvel/pa011100" },
+  { name: "Procurado", link_guia_dos_quadrinhos: "http://www.guiadosquadrinhos.com/capas/procurado/wa062100" },
+  { name: "Um Passeio No Inferno", link_guia_dos_quadrinhos: "http://www.guiadosquadrinhos.com/capas/um-passeio-no-inferno/um237910" },
 ]
 
-collections.each do |name|
-  Collection.find_or_create_by!(name: name)
+collections.each do |collection|
+  Collection.find_or_create_by!(name: collection[:name], link_guia_dos_quadrinhos: collection[:link_guia_dos_quadrinhos])
 end
 
 comics = [
