@@ -1,10 +1,15 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %>
+  <div class="mb-4 rounded-lg bg-green-100 text-green-800 px-4 py-3">
+    <%= notice %>
+  </div>
+<% end %>
 
-<%= render @paper_type %>
+<div class="rounded-xl shadow-lg">
+  <%= render "shared/show_actions",
+    resource: @paper_type,
+    resource_name: "Tipos de Papel",
+    index_path: paper_types_path,
+    edit_path: edit_paper_type_path(@paper_type) %>
 
-<div>
-  <%= link_to "Edit this paper type", edit_paper_type_path(@paper_type) %> |
-  <%= link_to "Back to paper types", paper_types_path %>
-
-  <%= button_to "Destroy this paper type", @paper_type, method: :delete %>
+  <%= render "paper_type", paper_type: @paper_type %>
 </div>
