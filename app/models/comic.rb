@@ -11,7 +11,7 @@ class Comic < ApplicationRecord
   belongs_to :paper_type
   belongs_to :collection, optional: true
 
-  has_many :comic_authors, dependent: :restrict_with_error
+  has_many :comic_authors, dependent: :destroy
   has_many :authors, through: :comic_authors
 
   has_many :readings, dependent: :destroy
