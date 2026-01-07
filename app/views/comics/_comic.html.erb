@@ -19,10 +19,19 @@
           ", "
         ) %>
       </p>
-      <p><strong>Editora:</strong> <%= @comic.publisher.name %></p>
-      <p><strong>Tipo:</strong> <%= @comic.publication_type.name %></p>
-      <p><strong>Encadernação:</strong> <%= @comic.book_binding.name %></p>
-      <p><strong>Papel:</strong> <%= @comic.paper_type.name %></p>
+      <p>
+        <strong>Editora:</strong>
+        <%= link_to @comic.publisher.name, @comic.publisher, class: "text-blue-600 underline hover:text-blue-800" %></p>
+      <p>
+        <strong>Tipo:</strong>
+        <%= link_to @comic.publication_type.name, @comic.publication_type, class: "text-blue-600 underline hover:text-blue-800" %></p>
+      <p>
+        <strong>Encadernação:</strong>
+        <%= link_to @comic.book_binding.name, @comic.book_binding, class: "text-blue-600 underline hover:text-blue-800" %></p>
+      <p>
+        <strong>Papel:</strong>
+        <%= link_to @comic.paper_type.name, @comic.paper_type, class: "text-blue-600 underline hover:text-blue-800" %>
+      </p>
       <% if @comic.collection.present? %>
         <p>
           <strong>Coleção:</strong>
