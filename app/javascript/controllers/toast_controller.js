@@ -18,6 +18,8 @@ export default class extends Controller {
         background: this.backgroundColor()
       }
     }).showToast()
+    
+    this.element.remove()
   }
 
   backgroundColor() {
