@@ -8,6 +8,7 @@ module Welcome
       organize(
         ComicsReadByYear,
         PagesReadByYear,
+        ComicsReadByMonth,
       )
     end
   end
