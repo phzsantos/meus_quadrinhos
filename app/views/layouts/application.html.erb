@@ -29,27 +29,11 @@
     </div>
   </body>
 
-  <% if notice %>
-    <script>
-      Toastify({
-        text: "<%= notice %>",
-        duration: 4500,
-        style: {
-          background: "green",
-        }
-      }).showToast();
-    </script>
-  <% end %>
-
-  <% if alert %>
-    <script>
-      Toastify({
-        text: "<%= alert %>",
-        duration: 4500,
-        style: {
-          background: "#930f17",
-        }
-      }).showToast();
-    </script>
+  <% flash.each do |type, message| %>
+    <div
+      data-controller="toast"
+      data-toast-message-value="<%= message %>"
+      data-toast-type-value="<%= type %>">
+    </div>
   <% end %>
 </html>

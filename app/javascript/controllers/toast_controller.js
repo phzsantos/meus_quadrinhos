@@ -1,0 +1,32 @@
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static values = {
+    message: String,
+    type: String
+  }
+
+  connect() {
+    if (!this.messageValue) return
+
+    Toastify({
+      text: this.messageValue,
+      duration: 4500,
+      gravity: "top",
+      position: "right",
+      style: {
+        background: this.backgroundColor()
+      }
+    }).showToast()
+  }
+
+  backgroundColor() {
+    switch (this.typeValue) {
+      case "alert":
+        return "red"
+      case "notice":
+      default:
+        return "green"
+    }
+  }
+}
