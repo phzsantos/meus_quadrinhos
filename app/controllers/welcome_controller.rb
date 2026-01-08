@@ -6,6 +6,7 @@ class WelcomeController < ApplicationController
     load_pages_read_by_year
     load_comics_read_by_month
     load_pages_read_by_month
+    load_latest_readings
   end
 
   private
@@ -54,5 +55,13 @@ class WelcomeController < ApplicationController
       @pages_read_months.map do |month|
         grouped_by_month[month].sum { |r| r.comic.page_count.to_i }
       end
+  end
+
+  def load_latest_readings
+    @latest_readings = Reading
+      .includes(:comic)
+      .where.not(read_at: nil)
+      .order(read_at: :desc, created_at: :desc)
+      .limit(6)
   end
 end
