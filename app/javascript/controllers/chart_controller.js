@@ -24,7 +24,6 @@ export default class extends Controller {
         }]
       },
       options: {
-        animation: false,
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
