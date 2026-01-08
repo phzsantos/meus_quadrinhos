@@ -9,6 +9,7 @@ module Welcome
         ComicsReadByYear,
         PagesReadByYear,
         ComicsReadByMonth,
+        PagesReadByMonth,
       )
     end
   end

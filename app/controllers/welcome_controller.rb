@@ -13,25 +13,14 @@ class WelcomeController < ApplicationController
     @read_comics_months = context.read_comics_months
     @read_comics_count_by_month = context.read_comics_count_by_month
 
-    load_pages_read_by_month
+    @pages_read_months = context.pages_read_months
+    @pages_read_count_by_month = context.pages_read_count_by_month
+
     load_latest_readings
     load_general_satistics
   end
 
   private
-
-  def load_pages_read_by_month
-    grouped_by_month = Reading
-      .includes(:comic)
-      .where.not(read_at: nil)
-      .group_by { |r| r.read_at.beginning_of_month }
-
-    @pages_read_months = grouped_by_month.keys.sort
-    @pages_read_count_by_month =
-      @pages_read_months.map do |month|
-        grouped_by_month[month].sum { |r| r.comic.page_count.to_i }
-      end
-  end
 
   def load_latest_readings
     @latest_readings = Reading
