@@ -16,19 +16,12 @@ class WelcomeController < ApplicationController
     @pages_read_months = context.pages_read_months
     @pages_read_count_by_month = context.pages_read_count_by_month
 
-    load_latest_readings
+    @latest_readings = context.latest_readings
+
     load_general_satistics
   end
 
   private
-
-  def load_latest_readings
-    @latest_readings = Reading
-      .includes(:comic)
-      .where.not(read_at: nil)
-      .order(read_at: :desc, created_at: :desc)
-      .limit(6)
-  end
 
   def load_general_satistics
     @total_comics_read = Reading.where.not(read_at: nil).count
