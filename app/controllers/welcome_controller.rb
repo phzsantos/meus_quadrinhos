@@ -2,7 +2,11 @@
 
 class WelcomeController < ApplicationController
   def index
-    load_comics_read_by_year
+    context = Welcome::Dashboard::Organizer.call
+
+    @read_comics_years = context.read_comics_years
+    @read_comics_count_by_year = context.read_comics_count_by_year
+
     load_pages_read_by_year
     load_comics_read_by_month
     load_pages_read_by_month
@@ -11,16 +15,6 @@ class WelcomeController < ApplicationController
   end
 
   private
-
-  def load_comics_read_by_year
-    grouped_by_year = Reading
-      .where.not(read_at: nil)
-      .group_by { |r| r.read_at.year }
-
-    @read_comics_years = grouped_by_year.keys.sort
-    @read_comics_count_by_year =
-      @read_comics_years.map { |year| grouped_by_year[year].count }
-  end
 
   def load_pages_read_by_year
     grouped_by_year = Reading

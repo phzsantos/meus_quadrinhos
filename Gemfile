@@ -52,6 +52,9 @@ gem "friendly_id", "~> 5.4.0"
 # Image processing for Active Storage
 gem "image_processing", "~> 1.2"
 
+# Interactor for service objects
+gem "interactor", "~> 3.0"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: [:mri, :windows]
