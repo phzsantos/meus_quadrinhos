@@ -7,6 +7,7 @@ class WelcomeController < ApplicationController
     load_comics_read_by_month
     load_pages_read_by_month
     load_latest_readings
+    load_general_satistics
   end
 
   private
@@ -63,5 +64,24 @@ class WelcomeController < ApplicationController
       .where.not(read_at: nil)
       .order(read_at: :desc, created_at: :desc)
       .limit(6)
+  end
+
+  def load_general_satistics
+    @total_comics_read = Reading.where.not(read_at: nil).count
+
+    @total_pages_read = Reading
+      .includes(:comic)
+      .where.not(read_at: nil)
+      .sum { |r| r.comic.page_count.to_i }
+
+    @total_story_count = Reading
+      .includes(:comic)
+      .where.not(read_at: nil)
+      .sum { |r| r.comic.story_count.to_i }
+
+    @comics_read_this_month = Reading
+      .where.not(read_at: nil)
+      .where(read_at: Time.current.beginning_of_month..Time.current.end_of_month)
+      .count
   end
 end
