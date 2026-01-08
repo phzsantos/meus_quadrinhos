@@ -18,27 +18,9 @@ class WelcomeController < ApplicationController
 
     @latest_readings = context.latest_readings
 
-    load_general_satistics
-  end
-
-  private
-
-  def load_general_satistics
-    @total_comics_read = Reading.where.not(read_at: nil).count
-
-    @total_pages_read = Reading
-      .includes(:comic)
-      .where.not(read_at: nil)
-      .sum { |r| r.comic.page_count.to_i }
-
-    @total_story_count = Reading
-      .includes(:comic)
-      .where.not(read_at: nil)
-      .sum { |r| r.comic.story_count.to_i }
-
-    @comics_read_this_month = Reading
-      .where.not(read_at: nil)
-      .where(read_at: Time.current.beginning_of_month..Time.current.end_of_month)
-      .count
+    @total_comics_read = context.total_comics_read
+    @total_story_count = context.total_story_count
+    @total_pages_read = context.total_pages_read
+    @comics_read_this_month = context.comics_read_this_month
   end
 end

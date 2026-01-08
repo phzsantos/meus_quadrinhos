@@ -11,6 +11,7 @@ module Welcome
         ComicsReadByMonth,
         PagesReadByMonth,
         LatestReadings,
+        GeneralStatistics,
       )
     end
   end
