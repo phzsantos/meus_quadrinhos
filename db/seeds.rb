@@ -88,6 +88,34 @@ publication_types = [
   "Manhua",
 ]
 
+characters = [
+  "Justiceiro",
+  "Capitão América",
+  "Homem-Aranha",
+  "Thor",
+  "Motoqueiro Fantasma",
+  "Wolverine",
+  "Superman",
+  "Tex Willer",
+  "Hulk",
+  "Demolidor",
+  "Cavaleiro da Lua",
+  "Doutor Estranho",
+  "Homem de Ferro",
+  "Batman",
+  "Lex Luthor",
+  "Viuva Negra",
+  "Reed Richards",
+  "Sue Storm",
+  "Johnny Storm",
+  "Ben Grimm",
+  "V",
+]
+
+characters.each do |name|
+  Character.find_or_create_by!(name: name)
+end
+
 publication_types.each do |name|
   PublicationType.find_or_create_by!(name: name)
 end

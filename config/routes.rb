@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :characters
   resources :collections
   resources :comics
   resources :publication_types
