@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_01_09_231642) do
+ActiveRecord::Schema[7.1].define(version: 2026_01_10_000753) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -85,6 +85,15 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_09_231642) do
     t.index ["comic_id"], name: "index_comic_authors_on_comic_id"
   end
 
+  create_table "comic_characters", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "comic_id", null: false
+    t.uuid "character_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_comic_characters_on_character_id"
+    t.index ["comic_id"], name: "index_comic_characters_on_comic_id"
+  end
+
   create_table "comics", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
     t.integer "page_count", null: false
@@ -154,6 +163,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_09_231642) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comic_authors", "authors"
   add_foreign_key "comic_authors", "comics"
+  add_foreign_key "comic_characters", "characters"
+  add_foreign_key "comic_characters", "comics"
   add_foreign_key "comics", "book_bindings"
   add_foreign_key "comics", "collections"
   add_foreign_key "comics", "paper_types"

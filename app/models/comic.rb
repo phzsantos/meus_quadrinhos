@@ -14,6 +14,9 @@ class Comic < ApplicationRecord
   has_many :comic_authors, dependent: :destroy
   has_many :authors, through: :comic_authors
 
+  has_many :comic_characters, dependent: :destroy
+  has_many :characters, through: :comic_characters
+
   has_many :readings, dependent: :destroy
   accepts_nested_attributes_for :readings,
     allow_destroy: true,
