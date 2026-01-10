@@ -84,6 +84,7 @@ class ComicsController < ApplicationController
       :story_count,
       readings_attributes: [:id, :read_at, :_destroy],
       author_ids: [],
+      character_ids: [],
     )
   end
 end

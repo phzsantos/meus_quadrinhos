@@ -19,6 +19,17 @@
           ", "
         ) %>
       </p>
+      <% if @comic.characters.any? %>
+        <p>
+          <strong>Personagens:</strong>
+          <%= safe_join(
+            @comic.characters.order(:name).map do |character|
+              link_to character.name, character, class: "text-blue-600 underline hover:text-blue-800"
+            end,
+            ", "
+          ) %>
+        </p>
+      <% end %>
       <p>
         <strong>Editora:</strong>
         <%= link_to @comic.publisher.name, @comic.publisher, class: "text-blue-600 underline hover:text-blue-800" %></p>

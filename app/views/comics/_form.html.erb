@@ -57,6 +57,19 @@
         } %>
     </div>
 
+    <div class="text-2xl patrick-hand-regular">
+      <strong>Personagens</strong>
+      <%= form.collection_select :character_ids,
+        Character.order(:name),
+        :id,
+        :name,
+        {},
+        {
+          multiple: true,
+          class: "w-full mt-1 rounded-md border border-black/30 px-3 py-2 h-40"
+        } %>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-2xl patrick-hand-regular">
       <div>
         <strong>Editora</strong>
