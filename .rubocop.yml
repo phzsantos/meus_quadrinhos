@@ -1,6 +1,6 @@
 inherit_gem:
   rubocop-shopify: rubocop.yml
-require:
+plugins:
   - rubocop-rails
 AllCops:
   TargetRubyVersion: 3.3.0
