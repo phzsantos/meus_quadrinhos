@@ -1,12 +1,26 @@
 <div class="bg-bada p-5 text-shadow-md rounded-md shadow-md">
   <div class="text-black">
     <div class="text-3xl patrick-hand-regular">
-      <% @publication_types.each do |publication_type| %>
-        <p class="p-2" >
-          <%= link_to publication_type.name, publication_type %>
-        </p>
-        <hr>
-      <% end %>
+      <div class="flex flex-wrap bangers-regular text-4xl">
+        <span class="p-2 text-shadow-md">Tipos de HQ</span>
+        <span class="ml-auto">Volumes</span>
+      </div>
+
+      <hr>
+
+      <div class="text-3xl patrick-hand-regular">
+        <% @publication_types.each do |publication_type| %>
+          <div class="flex flex-wrap">
+            <span class="p-2" >
+              <%= link_to publication_type.name, publication_type %>
+            </span>
+            <span class="ml-auto p-2">
+              <%= publication_type.comics.count %> 
+            </span>
+          </div>
+          <hr>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
