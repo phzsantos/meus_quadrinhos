@@ -60,7 +60,6 @@ group :development, :test do
   gem "debug", platforms: [:mri, :windows]
   gem "railroady"
   gem "rspec-rails"
-  gem "simplecov", require: false
   gem "factory_bot_rails"
   gem "faker"
   gem "shoulda-matchers"
