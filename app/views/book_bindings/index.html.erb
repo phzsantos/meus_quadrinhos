@@ -1,12 +1,26 @@
 <div class="bg-bada p-5 text-shadow-md rounded-md shadow-md">
   <div class="text-black">
     <div class="text-3xl patrick-hand-regular">
-      <% @book_bindings.each do |book_binding| %>
-        <p class="p-2" >
-          <%= link_to book_binding.name, book_binding %>
-        </p>
-        <hr>
-      <% end %>
+      <div class="flex flex-wrap bangers-regular text-4xl">
+        <span class="p-2 text-shadow-md">Encadernações</span>
+        <span class="ml-auto">Volumes</span>
+      </div>
+
+      <hr>
+
+      <div class="text-3xl patrick-hand-regular">
+        <% @book_bindings.each do |book_binding| %>
+          <div class="flex flex-wrap">
+            <span class="p-2" >
+              <%= link_to book_binding.name, book_binding %>
+            </span>
+            <span class="ml-auto p-2">
+              <%= book_binding.comics.count %> 
+            </span>
+          </div>
+          <hr>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
