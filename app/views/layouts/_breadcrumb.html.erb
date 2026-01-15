@@ -4,11 +4,11 @@
   <span>/</span>
 
   <% if action_name != "index" %>
-    <%= link_to controller_name.humanize,
+    <%= link_to t("controllers.#{controller_name}"),
       url_for(controller: controller_name, action: :index),
       class: "underline hover:text-blue-700" %>
   <% else %>
-    <span class="font-bold"><%= controller_name.humanize %></span>
+    <span class="font-bold"><%= t("controllers.#{controller_name}") %></span>
   <% end %>
 
   <% case action_name
@@ -23,7 +23,7 @@
 
     <% when "index" %>
       <div class="ml-auto">
-        <%= link_to "Novo #{controller_name.singularize.humanize}",
+        <%= link_to "Adicionar #{controller_name.classify.constantize.model_name.human}",
           url_for(controller: controller_name, action: :new),
           class: "px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition" %>
       </div>

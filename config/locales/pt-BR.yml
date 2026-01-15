@@ -1,0 +1,10 @@
+pt-BR:
+  controllers:
+    comics: "Quadrinhos"
+    collections: "Coleções"
+    authors: "Autores"
+    characters: "Personagens"
+    publishers: "Editoras"
+    book_bindings: "Encadernações"
+    paper_types: "Papel"
+    publication_types: "Tipos de HQ"

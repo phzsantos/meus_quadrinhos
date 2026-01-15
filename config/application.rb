@@ -43,5 +43,7 @@ module MeusQuadrinhos
 
     # Configure Active Storage to use MiniMagick for variants
     config.active_storage.variant_processor = :mini_magick
+
+    config.i18n.default_locale = :"pt-BR"
   end
 end

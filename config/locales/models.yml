@@ -1,0 +1,11 @@
+pt-BR:
+  activerecord:
+    models:
+      comic: "Quadrinho"
+      collection: "Coleção"
+      author: "Autor"
+      character: "Personagem"
+      publisher: "Editora"
+      book_binding: "Encadernação"
+      paper_type: "Papel"
+      publication_type: "Tipo de HQ"
