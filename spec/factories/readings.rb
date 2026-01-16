@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :reading do
-    read_at { Date.today }
+    read_at { Time.zone.today }
     comic
   end
 end
