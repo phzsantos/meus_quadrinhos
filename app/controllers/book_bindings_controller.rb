@@ -30,8 +30,8 @@ class BookBindingsController < ApplicationController
         format.html { redirect_to(@book_binding, notice: "Book binding was successfully created.") }
         format.json { render(:show, status: :created, location: @book_binding) }
       else
-        format.html { render(:new, status: :unprocessable_entity) }
-        format.json { render(json: @book_binding.errors, status: :unprocessable_entity) }
+        format.html { render(:new, status: :unprocessable_content) }
+        format.json { render(json: @book_binding.errors, status: :unprocessable_content) }
       end
     end
   end
@@ -43,8 +43,8 @@ class BookBindingsController < ApplicationController
         format.html { redirect_to(@book_binding, notice: "Book binding was successfully updated.", status: :see_other) }
         format.json { render(:show, status: :ok, location: @book_binding) }
       else
-        format.html { render(:edit, status: :unprocessable_entity) }
-        format.json { render(json: @book_binding.errors, status: :unprocessable_entity) }
+        format.html { render(:edit, status: :unprocessable_content) }
+        format.json { render(json: @book_binding.errors, status: :unprocessable_content) }
       end
     end
   end

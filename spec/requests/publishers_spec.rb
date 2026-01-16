@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# spec/requests/publishers_spec.rb
 require "rails_helper"
 
 RSpec.describe("Publishers", type: :request) do

@@ -32,8 +32,8 @@ class ComicsController < ApplicationController
         format.html { redirect_to(@comic, notice: "Comic was successfully created.") }
         format.json { render(:show, status: :created, location: @comic) }
       else
-        format.html { render(:new, status: :unprocessable_entity) }
-        format.json { render(json: @comic.errors, status: :unprocessable_entity) }
+        format.html { render(:new, status: :unprocessable_content) }
+        format.json { render(json: @comic.errors, status: :unprocessable_content) }
       end
     end
   end
@@ -45,8 +45,8 @@ class ComicsController < ApplicationController
         format.html { redirect_to(@comic, notice: "Comic was successfully updated.", status: :see_other) }
         format.json { render(:show, status: :ok, location: @comic) }
       else
-        format.html { render(:edit, status: :unprocessable_entity) }
-        format.json { render(json: @comic.errors, status: :unprocessable_entity) }
+        format.html { render(:edit, status: :unprocessable_content) }
+        format.json { render(json: @comic.errors, status: :unprocessable_content) }
       end
     end
   end

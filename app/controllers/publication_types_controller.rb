@@ -30,8 +30,8 @@ class PublicationTypesController < ApplicationController
         format.html { redirect_to(@publication_type, notice: "Publication type was successfully created.") }
         format.json { render(:show, status: :created, location: @publication_type) }
       else
-        format.html { render(:new, status: :unprocessable_entity) }
-        format.json { render(json: @publication_type.errors, status: :unprocessable_entity) }
+        format.html { render(:new, status: :unprocessable_content) }
+        format.json { render(json: @publication_type.errors, status: :unprocessable_content) }
       end
     end
   end
@@ -43,8 +43,8 @@ class PublicationTypesController < ApplicationController
         format.html { redirect_to(@publication_type, notice: "Publication type was successfully updated.", status: :see_other) }
         format.json { render(:show, status: :ok, location: @publication_type) }
       else
-        format.html { render(:edit, status: :unprocessable_entity) }
-        format.json { render(json: @publication_type.errors, status: :unprocessable_entity) }
+        format.html { render(:edit, status: :unprocessable_content) }
+        format.json { render(json: @publication_type.errors, status: :unprocessable_content) }
       end
     end
   end

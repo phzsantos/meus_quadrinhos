@@ -30,8 +30,8 @@ class PaperTypesController < ApplicationController
         format.html { redirect_to(@paper_type, notice: "Paper type was successfully created.") }
         format.json { render(:show, status: :created, location: @paper_type) }
       else
-        format.html { render(:new, status: :unprocessable_entity) }
-        format.json { render(json: @paper_type.errors, status: :unprocessable_entity) }
+        format.html { render(:new, status: :unprocessable_content) }
+        format.json { render(json: @paper_type.errors, status: :unprocessable_content) }
       end
     end
   end
@@ -43,8 +43,8 @@ class PaperTypesController < ApplicationController
         format.html { redirect_to(@paper_type, notice: "Paper type was successfully updated.", status: :see_other) }
         format.json { render(:show, status: :ok, location: @paper_type) }
       else
-        format.html { render(:edit, status: :unprocessable_entity) }
-        format.json { render(json: @paper_type.errors, status: :unprocessable_entity) }
+        format.html { render(:edit, status: :unprocessable_content) }
+        format.json { render(json: @paper_type.errors, status: :unprocessable_content) }
       end
     end
   end

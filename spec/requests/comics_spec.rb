@@ -25,7 +25,7 @@ RSpec.describe("Comics", type: :request) do
       author_ids: [author.id],
       character_ids: [character.id],
       readings_attributes: [
-        { read_at: Date.today },
+        { read_at: Time.zone.today },
       ],
     }
   end

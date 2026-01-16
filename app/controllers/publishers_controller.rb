@@ -30,8 +30,8 @@ class PublishersController < ApplicationController
         format.html { redirect_to(@publisher, notice: "Publisher was successfully created.") }
         format.json { render(:show, status: :created, location: @publisher) }
       else
-        format.html { render(:new, status: :unprocessable_entity) }
-        format.json { render(json: @publisher.errors, status: :unprocessable_entity) }
+        format.html { render(:new, status: :unprocessable_content) }
+        format.json { render(json: @publisher.errors, status: :unprocessable_content) }
       end
     end
   end
@@ -43,8 +43,8 @@ class PublishersController < ApplicationController
         format.html { redirect_to(@publisher, notice: "Publisher was successfully updated.", status: :see_other) }
         format.json { render(:show, status: :ok, location: @publisher) }
       else
-        format.html { render(:edit, status: :unprocessable_entity) }
-        format.json { render(json: @publisher.errors, status: :unprocessable_entity) }
+        format.html { render(:edit, status: :unprocessable_content) }
+        format.json { render(json: @publisher.errors, status: :unprocessable_content) }
       end
     end
   end

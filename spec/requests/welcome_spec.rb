@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# spec/requests/welcome_spec.rb
 require "rails_helper"
 
 RSpec.describe("Welcome", type: :request) do
