@@ -8,4 +8,8 @@ class Collection < ApplicationRecord
   has_many :comics, dependent: :nullify
 
   validates :name, presence: true
+
+  def should_generate_new_friendly_id?
+    name_changed?
+  end
 end
