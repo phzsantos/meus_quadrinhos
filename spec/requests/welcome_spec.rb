@@ -1,0 +1,53 @@
+# frozen_string_literal: true
+
+# spec/requests/welcome_spec.rb
+require "rails_helper"
+
+RSpec.describe("Welcome", type: :request) do
+  describe "GET /" do
+    let(:context_double) do
+      instance_double(
+        "Welcome::Dashboard::Context",
+        read_comics_years: [2023, 2024],
+        read_comics_count_by_year: [10, 20],
+
+        pages_read_years: [2023, 2024],
+        pages_read_count_by_year: [300, 600],
+
+        read_comics_months: [
+          Date.new(2024, 1, 1),
+          Date.new(2024, 2, 1),
+        ],
+        read_comics_count_by_month: [2, 3],
+
+        pages_read_months: [
+          Date.new(2024, 1, 1),
+          Date.new(2024, 2, 1),
+        ],
+        pages_read_count_by_month: [50, 80],
+
+        latest_readings: [],
+        total_comics_read: 30,
+        total_story_count: 120,
+        total_pages_read: 900,
+        comics_read_this_month: 3,
+      )
+    end
+
+    before do
+      allow(Welcome::Dashboard::Organizer)
+        .to(receive(:call)
+        .and_return(context_double))
+    end
+
+    it "retorna sucesso" do
+      get root_path
+      expect(response).to(have_http_status(:ok))
+    end
+
+    it "chama o organizer do dashboard" do
+      get root_path
+      expect(Welcome::Dashboard::Organizer).to(have_received(:call))
+    end
+  end
+end
