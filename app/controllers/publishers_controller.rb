@@ -27,7 +27,7 @@ class PublishersController < ApplicationController
 
     respond_to do |format|
       if @publisher.save
-        format.html { redirect_to(@publisher, notice: "Publisher was successfully created.") }
+        format.html { redirect_to(@publisher, notice: "Editora criada com sucesso.") }
         format.json { render(:show, status: :created, location: @publisher) }
       else
         format.html { render(:new, status: :unprocessable_content) }
@@ -40,7 +40,7 @@ class PublishersController < ApplicationController
   def update
     respond_to do |format|
       if @publisher.update(publisher_params)
-        format.html { redirect_to(@publisher, notice: "Publisher was successfully updated.", status: :see_other) }
+        format.html { redirect_to(@publisher, notice: "Editora atualizada com sucesso.", status: :see_other) }
         format.json { render(:show, status: :ok, location: @publisher) }
       else
         format.html { render(:edit, status: :unprocessable_content) }
@@ -54,7 +54,7 @@ class PublishersController < ApplicationController
     @publisher.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(publishers_path, notice: "Publisher was successfully destroyed.", status: :see_other) }
+      format.html { redirect_to(publishers_path, notice: "Editora foi deletada com sucesso.", status: :see_other) }
       format.json { head(:no_content) }
     end
   end
