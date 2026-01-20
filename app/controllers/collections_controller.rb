@@ -27,7 +27,7 @@ class CollectionsController < ApplicationController
 
     respond_to do |format|
       if @collection.save
-        format.html { redirect_to(@collection, notice: "Collection was successfully created.") }
+        format.html { redirect_to(@collection, notice: "Coleção criada com sucesso.") }
         format.json { render(:show, status: :created, location: @collection) }
       else
         format.html { render(:new, status: :unprocessable_content) }
@@ -40,7 +40,7 @@ class CollectionsController < ApplicationController
   def update
     respond_to do |format|
       if @collection.update(collection_params)
-        format.html { redirect_to(@collection, notice: "Collection was successfully updated.", status: :see_other) }
+        format.html { redirect_to(@collection, notice: "Coleção atualizada com sucesso.", status: :see_other) }
         format.json { render(:show, status: :ok, location: @collection) }
       else
         format.html { render(:edit, status: :unprocessable_content) }
@@ -54,7 +54,7 @@ class CollectionsController < ApplicationController
     @collection.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(collections_path, notice: "Collection was successfully destroyed.", status: :see_other) }
+      format.html { redirect_to(collections_path, notice: "Coleção foi deletada com sucesso.", status: :see_other) }
       format.json { head(:no_content) }
     end
   end
