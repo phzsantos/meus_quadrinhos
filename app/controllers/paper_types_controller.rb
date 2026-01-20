@@ -27,7 +27,7 @@ class PaperTypesController < ApplicationController
 
     respond_to do |format|
       if @paper_type.save
-        format.html { redirect_to(@paper_type, notice: "Paper type was successfully created.") }
+        format.html { redirect_to(@paper_type, notice: "Tipo de papel criado com sucesso.") }
         format.json { render(:show, status: :created, location: @paper_type) }
       else
         format.html { render(:new, status: :unprocessable_content) }
@@ -40,7 +40,7 @@ class PaperTypesController < ApplicationController
   def update
     respond_to do |format|
       if @paper_type.update(paper_type_params)
-        format.html { redirect_to(@paper_type, notice: "Paper type was successfully updated.", status: :see_other) }
+        format.html { redirect_to(@paper_type, notice: "Tipo de papel atualizado com sucesso.", status: :see_other) }
         format.json { render(:show, status: :ok, location: @paper_type) }
       else
         format.html { render(:edit, status: :unprocessable_content) }
@@ -54,7 +54,7 @@ class PaperTypesController < ApplicationController
     @paper_type.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(paper_types_path, notice: "Paper type was successfully destroyed.", status: :see_other) }
+      format.html { redirect_to(paper_types_path, notice: "Tipo de papel foi deletado com sucesso.", status: :see_other) }
       format.json { head(:no_content) }
     end
   end
