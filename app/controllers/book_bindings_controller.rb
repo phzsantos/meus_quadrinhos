@@ -27,7 +27,7 @@ class BookBindingsController < ApplicationController
 
     respond_to do |format|
       if @book_binding.save
-        format.html { redirect_to(@book_binding, notice: "Book binding was successfully created.") }
+        format.html { redirect_to(@book_binding, notice: "Encadernação criada com sucesso.") }
         format.json { render(:show, status: :created, location: @book_binding) }
       else
         format.html { render(:new, status: :unprocessable_content) }
@@ -40,7 +40,7 @@ class BookBindingsController < ApplicationController
   def update
     respond_to do |format|
       if @book_binding.update(book_binding_params)
-        format.html { redirect_to(@book_binding, notice: "Book binding was successfully updated.", status: :see_other) }
+        format.html { redirect_to(@book_binding, notice: "Encadernação atualizada com sucesso.", status: :see_other) }
         format.json { render(:show, status: :ok, location: @book_binding) }
       else
         format.html { render(:edit, status: :unprocessable_content) }
@@ -54,7 +54,7 @@ class BookBindingsController < ApplicationController
     @book_binding.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(book_bindings_path, notice: "Book binding was successfully destroyed.", status: :see_other) }
+      format.html { redirect_to(book_bindings_path, notice: "Encadernação foi deletada com sucesso.", status: :see_other) }
       format.json { head(:no_content) }
     end
   end
