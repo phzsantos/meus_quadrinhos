@@ -27,7 +27,7 @@ class PublicationTypesController < ApplicationController
 
     respond_to do |format|
       if @publication_type.save
-        format.html { redirect_to(@publication_type, notice: "Publication type was successfully created.") }
+        format.html { redirect_to(@publication_type, notice: "Tipo de quadrinho criado com sucesso.") }
         format.json { render(:show, status: :created, location: @publication_type) }
       else
         format.html { render(:new, status: :unprocessable_content) }
@@ -40,7 +40,7 @@ class PublicationTypesController < ApplicationController
   def update
     respond_to do |format|
       if @publication_type.update(publication_type_params)
-        format.html { redirect_to(@publication_type, notice: "Publication type was successfully updated.", status: :see_other) }
+        format.html { redirect_to(@publication_type, notice: "Tipo de quadrinho atualizado com sucesso.", status: :see_other) }
         format.json { render(:show, status: :ok, location: @publication_type) }
       else
         format.html { render(:edit, status: :unprocessable_content) }
@@ -54,7 +54,7 @@ class PublicationTypesController < ApplicationController
     @publication_type.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(publication_types_path, notice: "Publication type was successfully destroyed.", status: :see_other) }
+      format.html { redirect_to(publication_types_path, notice: "Tipo de quadrinho foi deletado com sucesso.", status: :see_other) }
       format.json { head(:no_content) }
     end
   end
