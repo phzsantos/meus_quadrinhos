@@ -13,9 +13,10 @@ export default class extends Controller {
       text: this.messageValue,
       duration: 4500,
       gravity: "top",
-      position: "right",
+      position: "center",
       style: {
-        background: this.backgroundColor()
+        background: this.backgroundColor(),
+        borderRadius: "0.375rem",
       }
     }).showToast()
     
