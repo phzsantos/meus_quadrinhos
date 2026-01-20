@@ -30,7 +30,7 @@ class ComicsController < ApplicationController
 
     respond_to do |format|
       if @comic.save
-        format.html { redirect_to(@comic, notice: "Comic was successfully created.") }
+        format.html { redirect_to(@comic, notice: "Quadrinho criado com sucesso.") }
         format.json { render(:show, status: :created, location: @comic) }
       else
         format.html { render(:new, status: :unprocessable_content) }
@@ -43,7 +43,7 @@ class ComicsController < ApplicationController
   def update
     respond_to do |format|
       if @comic.update(comic_params)
-        format.html { redirect_to(@comic, notice: "Comic was successfully updated.", status: :see_other) }
+        format.html { redirect_to(@comic, notice: "Quadrinho atualizado com sucesso.", status: :see_other) }
         format.json { render(:show, status: :ok, location: @comic) }
       else
         format.html { render(:edit, status: :unprocessable_content) }
@@ -57,7 +57,7 @@ class ComicsController < ApplicationController
     @comic.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(comics_path, notice: "Comic was successfully destroyed.", status: :see_other) }
+      format.html { redirect_to(comics_path, notice: "Quadrinho foi deletado com sucesso.", status: :see_other) }
       format.json { head(:no_content) }
     end
   end
