@@ -6,6 +6,7 @@ class ComicsController < ApplicationController
   # GET /comics or /comics.json
   def index
     @comics = Comic.includes(:readings)
+      .order(created_at: :asc)
       .sort_by { |comic| comic.readings.maximum(:read_at) || Date.new(1970, 1, 1) }
   end
 
