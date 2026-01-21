@@ -23,6 +23,13 @@
 
     <% when "index" %>
       <div class="ml-auto">
+        <% if controller_name == "comics" %>
+          <%= link_to "Exportar",
+            export_comics_path,
+            target: "_blank",
+            class: "px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700 transition" %>
+        <% end %>
+
         <%= link_to "Adicionar #{controller_name.classify.constantize.model_name.human}",
           url_for(controller: controller_name, action: :new),
           class: "px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition" %>

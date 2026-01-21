@@ -3,12 +3,16 @@
 Rails.application.routes.draw do
   resources :characters, path: "personagens"
   resources :collections, path: "colecoes"
-  resources :comics, path: "quadrinhos"
   resources :publication_types, path: "tipos_de_hq"
   resources :authors, path: "autores"
   resources :paper_types, path: "papel"
   resources :book_bindings, path: "encadernacoes"
   resources :publishers, path: "editoras"
+  resources :comics, path: "quadrinhos" do
+    collection do
+      get :export
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

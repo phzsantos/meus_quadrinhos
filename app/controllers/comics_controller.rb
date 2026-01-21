@@ -23,6 +23,23 @@ class ComicsController < ApplicationController
   def edit
   end
 
+  def export
+    comics = Comic
+      .includes(
+        :publisher,
+        :publication_type,
+        :book_binding,
+        :paper_type,
+        :collection,
+        :authors,
+        :characters,
+        :readings,
+      )
+      .order(:created_at)
+
+    render(json: comics.map { |comic| export_comic(comic) })
+  end
+
   # POST /comics or /comics.json
   def create
     @comic = Comic.new(comic_params)
@@ -63,6 +80,28 @@ class ComicsController < ApplicationController
   end
 
   private
+
+  def export_comic(comic)
+    {
+      title: comic.title,
+      page_count: comic.page_count,
+      collection_name: comic.collection&.name,
+      published_year: comic.published_year,
+      author_names: comic.authors.pluck(:name),
+      character_names: comic.characters.pluck(:name),
+      publisher_name: comic.publisher.name,
+      publication_type_name: comic.publication_type.name,
+      book_binding_name: comic.book_binding.name,
+      paper_type_name: comic.paper_type.name,
+      link_guia_dos_quadrinhos: comic.link_guia_dos_quadrinhos,
+      story_count: comic.story_count,
+      read_dates: comic.readings
+        .where.not(read_at: nil)
+        .order(:read_at)
+        .pluck(:read_at)
+        .map { |d| d.to_date.iso8601 },
+    }
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_comic
