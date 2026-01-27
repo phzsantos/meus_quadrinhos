@@ -84,13 +84,6 @@ authors.each do |name|
   Author.find_or_create_by!(name: name)
 end
 
-publication_types = [
-  "HQ",
-  "Mangá",
-  "Manhwa",
-  "Manhua",
-]
-
 file_path = Rails.root.join("db/seeds/characters.json")
 
 characters = JSON.parse(File.read(file_path), symbolize_names: true)
@@ -98,6 +91,10 @@ characters = JSON.parse(File.read(file_path), symbolize_names: true)
 characters.each do |name|
   Character.find_or_create_by!(name: name)
 end
+
+file_path = Rails.root.join("db/seeds/publication_types.json")
+
+publication_types = JSON.parse(File.read(file_path), symbolize_names: true)
 
 publication_types.each do |name|
   PublicationType.find_or_create_by!(name: name)
