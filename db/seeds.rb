@@ -51,34 +51,9 @@ paper_types.each do |name|
   PaperType.find_or_create_by!(name: name)
 end
 
-authors = [
-  "Alan Moore",
-  "Frank Miller",
-  "Garth Ennis",
-  "Mark Millar",
-  "Jason Aaron",
-  "Matthew Rosenberg",
-  "Gerry Duggan",
-  "Dan Abnett",
-  "Greg Rucka",
-  "Steven Grant",
-  "Mike Baron",
-  "David Pepose",
-  "Chuck Dixon",
-  "Howard Mackie",
-  "Nathan Edmondson",
-  "Dan D. G. Chichester",
-  "Andy Lanning",
-  "Mark Waid",
-  "Torunn Grønbekk",
-  "Gerry Conway",
-  "Margaret Clark",
-  "Grant Morrison",
-  "Dan Jurgens",
-  "Paul Jenkins",
-  "Kevin Maurer",
-  "Mauro Boselli",
-]
+file_path = Rails.root.join("db/seeds/authors.json")
+
+authors = JSON.parse(File.read(file_path), symbolize_names: true)
 
 authors.each do |name|
   Author.find_or_create_by!(name: name)
