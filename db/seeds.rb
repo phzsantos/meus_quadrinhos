@@ -40,12 +40,9 @@ book_bindings.each do |name|
   BookBinding.find_or_create_by!(name: name)
 end
 
-paper_types = [
-  "Couché",
-  "Offset",
-  "LWC",
-  "Jornal",
-]
+file_path = Rails.root.join("db/seeds/paper_types.json")
+
+paper_types = JSON.parse(File.read(file_path), symbolize_names: true)
 
 paper_types.each do |name|
   PaperType.find_or_create_by!(name: name)
