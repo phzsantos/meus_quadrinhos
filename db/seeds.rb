@@ -91,29 +91,9 @@ publication_types = [
   "Manhua",
 ]
 
-characters = [
-  "Justiceiro",
-  "Capitão América",
-  "Homem-Aranha",
-  "Thor",
-  "Motoqueiro Fantasma",
-  "Wolverine",
-  "Superman",
-  "Tex Willer",
-  "Hulk",
-  "Demolidor",
-  "Cavaleiro da Lua",
-  "Doutor Estranho",
-  "Homem de Ferro",
-  "Batman",
-  "Lex Luthor",
-  "Viuva Negra",
-  "Reed Richards",
-  "Sue Storm",
-  "Johnny Storm",
-  "Ben Grimm",
-  "V",
-]
+file_path = Rails.root.join("db/seeds/characters.json")
+
+characters = JSON.parse(File.read(file_path), symbolize_names: true)
 
 characters.each do |name|
   Character.find_or_create_by!(name: name)
