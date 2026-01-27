@@ -12,18 +12,9 @@
 
 require "json"
 
-publishers = [
-  "Abril",
-  "Mythos",
-  "Devir",
-  "Panini",
-  "JBC",
-  "Comix Zone",
-  "Globo",
-  "Record",
-  "Pipoca & Nanquim",
-  "Alta Geek",
-]
+file_path = Rails.root.join("db/seeds/publishers.json")
+
+publishers = JSON.parse(File.read(file_path), symbolize_names: true)
 
 publishers.each do |name|
   Publisher.find_or_create_by!(name: name)
