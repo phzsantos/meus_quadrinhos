@@ -182,7 +182,7 @@ comics.each do |attrs|
   next if comic.cover_image.attached?
 
   filename = "#{comic.title}.jpg"
-  path = Rails.root.join("app/assets/images/covers", filename)
+  path = Rails.root.join("db/seeds/covers", filename)
 
   next unless File.exist?(path)
 
