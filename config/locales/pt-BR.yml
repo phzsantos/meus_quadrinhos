@@ -1,5 +1,6 @@
 pt-BR:
   controllers:
+    welcome: "Dashboard"
     comics: "Quadrinhos"
     collections: "Coleções"
     authors: "Autores"

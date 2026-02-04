@@ -11,4 +11,13 @@ module ApplicationHelper
 
     link_to(name, path, class: "#{base_classes} #{classes}", **options)
   end
+
+  def page_title
+    base = "MeusQuadrinhos"
+
+    # title = "controllers.#{controller_name}"
+    title = t("controllers.#{controller_name}")
+
+    [title, base].compact.join(" | ")
+  end
 end
