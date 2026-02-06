@@ -12,6 +12,10 @@ export default class extends Controller {
   connect() {
     if (this.chart) return
 
+    if (window.ChartDataLabels) {
+      window.Chart.register(window.ChartDataLabels)
+    }
+
     this.chart = new window.Chart(this.element, {
       type: this.typeValue,
       data: {
@@ -33,6 +37,15 @@ export default class extends Controller {
               label: function(context) {
                 return context.parsed.y
               }
+            }
+          },
+          datalabels: {
+            color: "#FFFE01",
+            anchor: "center",
+            align: "center",
+            formatter: (value) => value,
+            font: {
+              weight: "bold"
             }
           }
         },
