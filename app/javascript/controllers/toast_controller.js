@@ -13,7 +13,7 @@ export default class extends Controller {
       text: this.messageValue,
       duration: 4500,
       gravity: "top",
-      position: "center",
+      position: "right",
       style: {
         background: this.backgroundColor(),
         borderRadius: "0.375rem",
