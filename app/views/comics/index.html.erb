@@ -1,26 +1,26 @@
-<div class="bg-bada p-4 text-shadow-md rounded-md shadow-md">
-  <div
-    id="comics"
-    class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4"
-  >
-    <% @comics.each do |comic| %>
-      <%= link_to comic, class: "group" do %>
-        <div class="aspect-[2/3] overflow-hidden rounded-md shadow-lg bg-black/80">
-          <%= image_tag(
-            comic.cover_image.attached? ?
-              comic.cover_image.variant(resize_to_fill: [300, 450]) :
-              "covers/no-cover.jpg",
-            class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-          ) %>
-        </div>
+<div class="bg-bada p-5 text-shadow-md rounded-md shadow-md">
+  <div class="text-black">
+    <div class="text-3xl patrick-hand-regular">
+      <div class="flex flex-wrap bangers-regular text-4xl">
+        <span class="p-2 text-shadow-md">Quadrinhos (<%= @comics.count %>)</span>
+        <span class="ml-auto">Data de leitura</span>
+      </div>
 
-        <p
-          class="mt-1 text-center truncate text-black"
-          title="<%= comic.title %>"
-        >
-          <%= comic.title %>
-        </p>
-      <% end %>
-    <% end %>
+      <hr>
+
+      <div class="text-3xl patrick-hand-regular">
+        <% @comics.each do |comic| %>
+          <div class="flex flex-wrap">
+            <span class="p-2" >
+              <%= link_to comic.title, comic %>
+            </span>
+            <span class="ml-auto p-2">
+              <%= comic.readings.order(read_at: :asc).map { |r| l(r.read_at, format: "%d/%m/%Y") }.join(", ") %> 
+            </span>
+          </div>
+          <hr>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
