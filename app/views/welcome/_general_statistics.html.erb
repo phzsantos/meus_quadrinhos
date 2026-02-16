@@ -1,19 +1,43 @@
 <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
   <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Quadrinhos lidos:</h3>
-  <p class="text-5xl font-bold bangers-regular"><%= @total_comics_read %></p> 
+  <p
+    data-controller="counter"
+    data-counter-value-value="<%= @total_comics_read %>"
+    class="text-5xl font-bold bangers-regular"
+  >
+  0
+  </p>
 </div>
 
 <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
   <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Histórias lidas:</h3>
-  <p class="text-5xl font-bold bangers-regular"><%= @total_story_count %></p>
+  <p
+    data-controller="counter"
+    data-counter-value-value="<%= @total_story_count %>"
+    class="text-5xl font-bold bangers-regular"
+  >
+  0
+  </p>
 </div>
 
 <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
   <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Páginas lidas:</h3>
-  <p class="text-5xl font-bold bangers-regular"><%= @total_pages_read %></p>
+  <p
+    data-controller="counter"
+    data-counter-value-value="<%= @total_pages_read %>"
+    class="text-5xl font-bold bangers-regular"
+  >
+  0
+  </p>
 </div>
 
 <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
   <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Lidos esse mês:</h3>
-  <p class="text-5xl font-bold bangers-regular"><%= @comics_read_this_month %></p>
+  <p
+    data-controller="counter"
+    data-counter-value-value="<%= @comics_read_this_month %>"
+    class="text-5xl font-bold bangers-regular"
+  >
+  0
+  </p>
 </div>
