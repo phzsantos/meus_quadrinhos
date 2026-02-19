@@ -48,7 +48,7 @@ export default class extends Controller {
             align: "center",
             formatter: (value) => value,
             font: {
-              weight: "bold"
+              family: "'Bangers'"
             }
           }
         },
