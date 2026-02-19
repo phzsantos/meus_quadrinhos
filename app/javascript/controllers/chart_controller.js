@@ -12,6 +12,9 @@ export default class extends Controller {
   connect() {
     if (this.chart) return
 
+    window.Chart.defaults.font.family = "'Patrick Hand', cursive"
+    window.Chart.defaults.font.size = 20
+
     if (window.ChartDataLabels) {
       window.Chart.register(window.ChartDataLabels)
     }
