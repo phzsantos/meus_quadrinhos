@@ -24,10 +24,10 @@
 
   <div class="flex gap-3">
     <%= form.submit "Salvar",
-      class: "px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition cursor-pointer" %>
+      class: "patrick-hand-regular text-xl text-shadow-md px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition cursor-pointer" %>
 
     <%= link_to "Cancelar",
       book_binding.persisted? ? book_binding : book_bindings_path,
-      class: "px-6 py-2 bg-black/30 text-white rounded-md hover:bg-black/40 transition" %>
+      class: "patrick-hand-regular text-xl text-shadow-md px-6 py-2 bg-black/30 text-white rounded-md hover:bg-black/40 transition" %>
   </div>
 <% end %>
