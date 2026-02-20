@@ -17,6 +17,9 @@ export default class extends Controller {
       style: {
         background: this.backgroundColor(),
         borderRadius: "0.375rem",
+        fontFamily: "Patrick Hand, cursive",
+        fontSize: "1.5rem",
+        textShadow: "0 1px 2px rgba(0, 0, 0, 0.5)",
       }
     }).showToast()
     
