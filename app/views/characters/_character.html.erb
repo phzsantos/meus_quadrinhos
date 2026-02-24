@@ -13,7 +13,7 @@
     <hr>
 
     <div class="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-      <% @character.comics.each do |comic| %>
+      <% @character.comics.order(:title).each do |comic| %>
         <%= link_to comic, class: "group" do %>
           <div class="aspect-[2/3] overflow-hidden rounded shadow-lg bg-slate-900">
             <%= image_tag(
@@ -22,7 +22,7 @@
                 ) %>
           </div>
 
-          <p class="mt-1 text-center truncate">
+          <p class="mt-1 patrick-hand-regular text-xl text-shadow-md text-center truncate">
             <%= comic.title %>
           </p>
         <% end %>
