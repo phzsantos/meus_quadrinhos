@@ -6,9 +6,13 @@ module Welcome
       include Interactor
 
       def call
-        grouped = Reading
-          .where.not(read_at: nil)
-          .group_by { |r| r.read_at.beginning_of_month }
+        scope = Reading.where.not(read_at: nil)
+
+        if context.start_date.present?
+          scope = scope.where(read_at: context.start_date..context.end_date)
+        end
+
+        grouped = scope.group_by { |r| r.read_at.beginning_of_month }
 
         months = grouped.keys.sort
 

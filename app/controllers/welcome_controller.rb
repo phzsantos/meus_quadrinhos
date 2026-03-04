@@ -2,8 +2,17 @@
 
 class WelcomeController < ApplicationController
   def index
-    context = Welcome::Dashboard::Organizer.call
+    context = Welcome::Dashboard::Organizer.call(
+      start_date: 11.months.ago.beginning_of_month,
+      end_date: Time.current.end_of_month,
+    )
 
+    load_dashboard_data(context)
+  end
+
+  private
+
+  def load_dashboard_data(context)
     @read_comics_years = context.read_comics_years
     @read_comics_count_by_year = context.read_comics_count_by_year
 
