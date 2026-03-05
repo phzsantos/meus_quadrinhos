@@ -2,10 +2,7 @@
 
 class WelcomeController < ApplicationController
   def index
-    context = Welcome::Dashboard::Organizer.call(
-      start_date: 11.months.ago.beginning_of_month,
-      end_date: Time.current.end_of_month,
-    )
+    context = Welcome::Dashboard::Organizer.call
 
     load_dashboard_data(context)
   end
