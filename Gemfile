@@ -55,6 +55,12 @@ gem "image_processing", "~> 1.2"
 # Interactor for service objects
 gem "interactor", "~> 3.0"
 
+# Use Tailwind CSS with Rails
+gem "cssbundling-rails", "~> 1.4"
+
+# Authentication with Devise
+gem "devise", "~> 5.0"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: [:mri, :windows]
@@ -77,5 +83,3 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
-
-gem "cssbundling-rails", "~> 1.4"
