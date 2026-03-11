@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  devise_for :users
   resources :characters, path: "personagens"
   resources :collections, path: "colecoes"
   resources :publication_types, path: "tipos_de_hq"
