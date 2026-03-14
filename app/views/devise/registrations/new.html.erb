@@ -1,29 +1,55 @@
-<h2>Sign up</h2>
+<div class="max-w-md mx-auto text-black bg-bada text-shadow-md p-2 rounded-md shadow-md flex justify-center flex-wrap gap-3 mb-6">
+  <h2 class="text-3xl text-black bangers-regular">
+    Criar conta
+  </h2>
+</div>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<div class="max-w-md mx-auto text-black bg-bada p-5 text-shadow-md rounded-md shadow-md mb-6">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-4" }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
+    <div>
+      <p class="bangers-regular text-2xl font-bold"><%= f.label :username %></p>
+      <%= f.text_field :username,
+        autofocus: true,
+        class: "w-full rounded-md border border-gray-300 p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-black" %>
+    </div>
+
+    <div>
+      <p class="bangers-regular text-2xl font-bold"><%= f.label :email %></p>
+      <%= f.email_field :email,
+        autocomplete: "email",
+        class: "w-full rounded-md border border-gray-300 p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-black" %>
+    </div>
+
+    <div>
+      <p class="bangers-regular text-2xl font-bold"><%= f.label :password %></p>
+
+      <% if @minimum_password_length %>
+        <p class="text-xl patrick-hand-regular opacity-70">
+          (<%= @minimum_password_length %> caracteres mínimo)
+        </p>
+      <% end %>
+
+      <%= f.password_field :password,
+        autocomplete: "new-password",
+        class: "w-full rounded-md border border-gray-300 p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-black" %>
+    </div>
+
+    <div>
+      <p class="bangers-regular text-2xl font-bold"><%= f.label :password_confirmation %></p>
+      <%= f.password_field :password_confirmation,
+        autocomplete: "new-password",
+        class: "w-full rounded-md border border-gray-300 p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-black" %>
+    </div>
+
+    <div class="pt-2 text-center">
+      <%= f.submit "Criar conta",
+        class: "w-full bg-black bangers-regular text-xl text-white px-6 py-2 rounded-md shadow-md hover:opacity-90 cursor-pointer" %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= render "devise/shared/links" %>
   </div>
-
-  <div class="field">
-    <p><%= f.label :password %></p>
-    <% if @minimum_password_length %>
-      <p><em>(<%= @minimum_password_length %> characters minimum)</em></p>
-    <% end %>
-    <p><%= f.password_field :password, autocomplete: "new-password" %></p>
-  </div>
-
-  <div class="field">
-    <p><%= f.label :password_confirmation %></p>
-    <p><%= f.password_field :password_confirmation, autocomplete: "new-password" %></p>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
