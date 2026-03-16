@@ -1,7 +1,7 @@
 <header class="bg-black h-32 w-full flex items-center justify-center">
   <div class="text-center">
     <h1>
-      <%= link_to 'Meus Quadrinhos', root_path, class: "text-bada text-7xl bangers-regular text-shadow-md" %>
+      <%= link_to 'Meus Quadrinhos', user_signed_in? ? root_path : new_user_session_path, class: "text-bada text-7xl bangers-regular text-shadow-md" %>
     </h1>
   </div>
 </header>
@@ -9,15 +9,17 @@
 <nav class="bg-bada shadow-md">
   <div class="container mx-auto px-4">
     <ul class="flex justify-center space-x-4 text-2xl bangers-regular">
-      <li><%= nav_link_to 'Dashboard', root_path, controllers: %w[welcome] %></li>
-      <li><%= nav_link_to 'Quadrinhos', comics_path, controllers: %w[comics] %></li>
-      <li><%= nav_link_to 'Coleções', collections_path, controllers: %w[collections] %></li>
-      <li><%= nav_link_to 'Autores', authors_path, controllers: %w[authors] %></li>
-      <li><%= nav_link_to 'Personagens', characters_path, controllers: %w[characters] %></li>
-      <li><%= nav_link_to 'Editoras', publishers_path, controllers: %w[publishers] %></li>
-      <li><%= nav_link_to 'Encadernações', book_bindings_path, controllers: %w[book_bindings] %></li>
-      <li><%= nav_link_to 'Papel', paper_types_path, controllers: %w[paper_types] %></li>
-      <li><%= nav_link_to 'Tipo de HQ', publication_types_path, controllers: %w[publication_types] %></li>
+      <% if user_signed_in? %>
+        <li><%= nav_link_to 'Dashboard', root_path, controllers: %w[welcome] %></li>
+        <li><%= nav_link_to 'Quadrinhos', comics_path, controllers: %w[comics] %></li>
+        <li><%= nav_link_to 'Coleções', collections_path, controllers: %w[collections] %></li>
+        <li><%= nav_link_to 'Autores', authors_path, controllers: %w[authors] %></li>
+        <li><%= nav_link_to 'Personagens', characters_path, controllers: %w[characters] %></li>
+        <li><%= nav_link_to 'Editoras', publishers_path, controllers: %w[publishers] %></li>
+        <li><%= nav_link_to 'Encadernações', book_bindings_path, controllers: %w[book_bindings] %></li>
+        <li><%= nav_link_to 'Papel', paper_types_path, controllers: %w[paper_types] %></li>
+        <li><%= nav_link_to 'Tipo de HQ', publication_types_path, controllers: %w[publication_types] %></li>
+      <% end %>
     </ul>
   </div>
 </nav>
