@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PaperTypesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_paper_type, only: [:show, :edit, :update, :destroy]
 
   # GET /paper_types or /paper_types.json

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class BookBindingsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_book_binding, only: [:show, :edit, :update, :destroy]
 
   # GET /book_bindings or /book_bindings.json

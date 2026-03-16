@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ComicsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_comic, only: [:show, :edit, :update, :destroy]
 
   # GET /comics or /comics.json

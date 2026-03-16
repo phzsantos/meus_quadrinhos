@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PublicationTypesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_publication_type, only: [:show, :edit, :update, :destroy]
 
   # GET /publication_types or /publication_types.json

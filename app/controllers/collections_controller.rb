@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CollectionsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_collection, only: [:show, :edit, :update, :destroy]
 
   # GET /collections or /collections.json
