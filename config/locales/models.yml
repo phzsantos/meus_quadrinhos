@@ -9,3 +9,11 @@ pt-BR:
       book_binding: "Encadernação"
       paper_type: "Papel"
       publication_type: "Tipo de HQ"
+    errors:
+      models:
+        user:
+          attributes:
+            username:
+              blank: "não pode ficar em branco"
+            email:
+              blank: "não pode ficar em branco"
