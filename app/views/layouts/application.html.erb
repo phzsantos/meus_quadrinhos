@@ -21,7 +21,7 @@
   <body class="bg-black overflow-y-scroll">
     <%= render "layouts/header" %>
     <div class="container mx-auto bg-black/50 shadow-lg p-5 mt-3 mb-3 rounded-lg text-white">
-      <% unless ["welcome", "sessions", "registrations"].include?(controller_name) %>
+      <% unless ["welcome", "sessions", "registrations", "passwords"].include?(controller_name) %>
         <div class="bg-bada text-shadow-md p-3 rounded-md shadow-md flex flex-wrap gap-3 mb-6">
           <%= render "layouts/breadcrumb" %>
         </div>
