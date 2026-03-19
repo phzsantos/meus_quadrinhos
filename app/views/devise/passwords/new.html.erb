@@ -1,16 +1,28 @@
-<h2>Forgot your password?</h2>
+<div class="max-w-md mx-auto text-black bg-bada text-shadow-md p-2 rounded-md shadow-md flex justify-center flex-wrap gap-3 mb-6">
+  <h2 class="text-3xl text-black bangers-regular">
+    Recuperar senha
+  </h2>
+</div>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<div class="max-w-md mx-auto text-black bg-bada p-5 text-shadow-md rounded-md shadow-md mb-6">
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "space-y-4" }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
+    <div>
+      <p class="bangers-regular text-2xl font-bold"><%= f.label :email %></p>
+      <%= f.email_field :email,
+        autofocus: true,
+        autocomplete: "email",
+        class: "w-full rounded-md border border-gray-300 p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-black" %>
+    </div>
+
+    <div class="pt-2 text-center">
+      <%= f.submit "Enviar instruções",
+        class: "w-full bg-black bangers-regular text-xl text-white px-6 py-2 rounded-md shadow-md hover:opacity-90 cursor-pointer" %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= render "devise/shared/links" %>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Send me password reset instructions" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
