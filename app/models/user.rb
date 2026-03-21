@@ -10,4 +10,5 @@ class User < ApplicationRecord
     :validatable
 
   validates :username, presence: true, uniqueness: true
+  attribute :admin, :boolean, default: false
 end
