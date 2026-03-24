@@ -10,23 +10,23 @@
       </h1>
     </div>
 
-    <div class="flex justify-end self-end pb-2">
+    <div class="flex text-black text-xl bangers-regular justify-end self-end pb-2">
       <% if user_signed_in? %>
         <div class="relative group">
           
-          <button class="bg-bada text-xl bangers-regular text-black px-4 py-2 rounded-md shadow-md hover:opacity-90">
+          <button class="bg-bada px-4 py-2 rounded-md shadow-md hover:opacity-90">
             <%= current_user.username %>
           </button>
 
-          <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition">
+          <div class="absolute right-0 mt-2 w-48 bg-bada rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition">
             <%= link_to "Editar perfil",
               edit_user_registration_path,
-              class: "block px-4 py-2 text-black hover:bg-gray-200" %>
+              class: "block px-4 py-2 hover:bg-black/20" %>
 
             <%= link_to "Sair",
               destroy_user_session_path,
               data: { turbo_method: :delete },
-              class: "block px-4 py-2 text-black hover:bg-gray-200" %>
+              class: "block px-4 py-2 hover:bg-black/20" %>
           </div>
         </div>
       <% end %>
