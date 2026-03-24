@@ -10,18 +10,19 @@
       </h1>
     </div>
 
-    <div class="flex text-black text-xl bangers-regular justify-end self-end">
+    <div class="flex text-black text-2xl bangers-regular justify-end self-end">
       <% if user_signed_in? %>
         <div data-controller="dropdown" class="relative">
           <button
             data-action="click->dropdown#toggle"
-            class="bg-bada cursor-pointer px-4 py-2 rounded-md shadow-md hover:opacity-90">
+            class="bg-bada cursor-pointer w-38 px-3 py-2 rounded-md shadow-md hover:opacity-90">
+            <%= image_tag 'icons/user-solid-full.svg', class: "w-7 h-7 inline-block" %>
             <%= current_user.username %>
           </button>
 
           <div
             data-dropdown-target="menu"
-            class="absolute right-0 mt-2 w-48 bg-bada rounded-md shadow-lg hidden z-50">
+            class="absolute right-0 mt-2 w-38 bg-bada rounded-md shadow-lg hidden z-50">
 
             <%= link_to "Editar perfil",
               edit_user_registration_path,
