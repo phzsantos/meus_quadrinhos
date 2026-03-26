@@ -3,6 +3,12 @@
 require "rails_helper"
 
 RSpec.describe("PaperTypes", type: :request) do
+  let(:user) { create(:user) }
+
+  before do
+    sign_in user
+  end
+
   describe "GET /paper_types" do
     it "retorna sucesso" do
       get paper_types_path

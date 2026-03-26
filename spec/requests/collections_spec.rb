@@ -3,6 +3,12 @@
 require "rails_helper"
 
 RSpec.describe("Collections", type: :request) do
+  let(:user) { create(:user) }
+
+  before do
+    sign_in user
+  end
+
   describe "GET /collections" do
     it "retorna sucesso" do
       get collections_path

@@ -3,6 +3,12 @@
 require "rails_helper"
 
 RSpec.describe("Characters", type: :request) do
+  let(:user) { create(:user) }
+
+  before do
+    sign_in user
+  end
+
   describe "GET /characters" do
     it "retorna sucesso" do
       get characters_path

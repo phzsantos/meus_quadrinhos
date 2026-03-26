@@ -38,6 +38,12 @@ RSpec.describe("Comics", type: :request) do
     }
   end
 
+  let(:user) { create(:user) }
+
+  before do
+    sign_in user
+  end
+
   describe "GET /comics" do
     it "retorna sucesso" do
       get comics_path

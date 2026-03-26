@@ -3,6 +3,12 @@
 require "rails_helper"
 
 RSpec.describe("Publishers", type: :request) do
+  let(:user) { create(:user) }
+
+  before do
+    sign_in user
+  end
+
   describe "GET /publishers" do
     it "retorna sucesso" do
       get publishers_path
