@@ -2,6 +2,7 @@
 
 class CharactersController < ApplicationController
   before_action :authenticate_user!
+  before_action :require_admin!, except: [:index, :show]
   before_action :set_character, only: [:show, :edit, :update, :destroy]
 
   # GET /characters or /characters.json

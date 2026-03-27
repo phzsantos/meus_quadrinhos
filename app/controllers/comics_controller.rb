@@ -2,6 +2,7 @@
 
 class ComicsController < ApplicationController
   before_action :authenticate_user!
+  before_action :require_admin!, except: [:index, :show]
   before_action :set_comic, only: [:show, :edit, :update, :destroy]
 
   # GET /comics or /comics.json

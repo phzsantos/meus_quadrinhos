@@ -2,6 +2,7 @@
 
 class PaperTypesController < ApplicationController
   before_action :authenticate_user!
+  before_action :require_admin!, except: [:index, :show]
   before_action :set_paper_type, only: [:show, :edit, :update, :destroy]
 
   # GET /paper_types or /paper_types.json

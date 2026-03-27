@@ -2,6 +2,7 @@
 
 class CollectionsController < ApplicationController
   before_action :authenticate_user!
+  before_action :require_admin!, except: [:index, :show]
   before_action :set_collection, only: [:show, :edit, :update, :destroy]
 
   # GET /collections or /collections.json
