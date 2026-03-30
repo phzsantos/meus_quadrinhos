@@ -39,65 +39,104 @@ RSpec.describe("Comics", type: :request) do
   end
 
   let(:user) { create(:user) }
-
-  before do
-    sign_in user
-  end
+  let(:admin) { create(:user, :admin) }
 
   describe "GET /comics" do
+    before { sign_in user }
+
     it "retorna sucesso" do
       get comics_path
-
       expect(response).to(have_http_status(:ok))
     end
   end
 
   describe "GET /comics/:id" do
+    before { sign_in user }
+
     it "retorna sucesso" do
       comic = create(:comic)
 
       get comic_path(comic)
-
       expect(response).to(have_http_status(:ok))
     end
   end
 
   describe "GET /comics/new" do
-    it "retorna sucesso" do
-      get new_comic_path
+    context "como usuário comum" do
+      before { sign_in user }
 
-      expect(response).to(have_http_status(:ok))
+      it "bloqueia acesso" do
+        get new_comic_path
+        expect(response).to(redirect_to(root_path))
+      end
+    end
+
+    context "como admin" do
+      before { sign_in admin }
+
+      it "permite acesso" do
+        get new_comic_path
+        expect(response).to(have_http_status(:ok))
+      end
     end
   end
 
   describe "GET /comics/:id/edit" do
-    it "retorna sucesso" do
-      comic = create(:comic)
+    let(:comic) { create(:comic) }
 
-      get edit_comic_path(comic)
+    context "como usuário comum" do
+      before { sign_in user }
 
-      expect(response).to(have_http_status(:ok))
+      it "bloqueia acesso" do
+        get edit_comic_path(comic)
+        expect(response).to(redirect_to(root_path))
+      end
+    end
+
+    context "como admin" do
+      before { sign_in admin }
+
+      it "permite acesso" do
+        get edit_comic_path(comic)
+        expect(response).to(have_http_status(:ok))
+      end
     end
   end
 
   describe "POST /comics" do
-    context "com parâmetros válidos" do
-      it "cria um comic" do
+    context "como usuário comum" do
+      before { sign_in user }
+
+      it "não cria comic" do
         expect do
           post(comics_path, params: { comic: valid_attributes })
-        end.to(change(Comic, :count).by(1))
+        end.not_to(change(Comic, :count))
 
-        expect(response).to(redirect_to(comic_path(Comic.last)))
+        expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "com parâmetros inválidos" do
-      it "não cria e renderiza new" do
-        expect do
-          post(comics_path, params: { comic: invalid_attributes })
-        end.not_to(change(Comic, :count))
+    context "como admin" do
+      before { sign_in admin }
 
-        expect(response).to(have_http_status(:unprocessable_content))
+      context "com parâmetros válidos" do
+        it "cria um comic" do
+          expect do
+            post(comics_path, params: { comic: valid_attributes })
+          end.to(change(Comic, :count).by(1))
+
+          expect(response).to(redirect_to(comic_path(Comic.last)))
+        end
+      end
+
+      context "com parâmetros inválidos" do
+        it "não cria e renderiza new" do
+          expect do
+            post(comics_path, params: { comic: invalid_attributes })
+          end.not_to(change(Comic, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
       end
     end
   end
@@ -105,38 +144,71 @@ RSpec.describe("Comics", type: :request) do
   describe "PATCH /comics/:id" do
     let!(:comic) { create(:comic) }
 
-    context "com parâmetros válidos" do
-      it "atualiza o comic" do
+    context "como usuário comum" do
+      before { sign_in user }
+
+      it "não atualiza" do
         patch comic_path(comic), params: {
           comic: { title: "Novo título" },
         }
 
-        expect(response).to(redirect_to(comic_path(comic.reload)))
-        expect(comic.reload.title).to(eq("Novo título"))
+        expect(response).to(redirect_to(root_path))
+        expect(comic.reload.title).not_to(eq("Novo título"))
       end
     end
 
-    context "com parâmetros inválidos" do
-      it "não atualiza e renderiza edit" do
-        patch comic_path(comic), params: {
-          comic: { title: "" },
-        }
+    context "como admin" do
+      before { sign_in admin }
 
-        expect(response).to(have_http_status(:unprocessable_content))
-        expect(comic.reload.title).not_to(eq(""))
+      context "com parâmetros válidos" do
+        it "atualiza o comic" do
+          patch comic_path(comic), params: {
+            comic: { title: "Novo título" },
+          }
+
+          expect(response).to(redirect_to(comic_path(comic.reload)))
+          expect(comic.reload.title).to(eq("Novo título"))
+        end
+      end
+
+      context "com parâmetros inválidos" do
+        it "não atualiza e renderiza edit" do
+          patch comic_path(comic), params: {
+            comic: { title: "" },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(comic.reload.title).not_to(eq(""))
+        end
       end
     end
   end
 
   describe "DELETE /comics/:id" do
-    it "remove o comic" do
-      comic = create(:comic)
+    let!(:comic) { create(:comic) }
 
-      expect do
-        delete(comic_path(comic))
-      end.to(change(Comic, :count).by(-1))
+    context "como usuário comum" do
+      before { sign_in user }
 
-      expect(response).to(redirect_to(comics_path))
+      it "não remove" do
+        expect do
+          delete(comic_path(comic))
+        end.not_to(change(Comic, :count))
+
+        expect(response).to(redirect_to(root_path))
+      end
+    end
+
+    context "como admin" do
+      before { sign_in admin }
+
+      it "remove o comic" do
+        expect do
+          delete(comic_path(comic))
+        end.to(change(Comic, :count).by(-1))
+
+        expect(response).to(redirect_to(comics_path))
+      end
     end
   end
 end
