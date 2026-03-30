@@ -4,69 +4,110 @@ require "rails_helper"
 
 RSpec.describe("Authors", type: :request) do
   let(:user) { create(:user) }
-
-  before do
-    sign_in user
-  end
+  let(:admin) { create(:user, :admin) }
 
   describe "GET /authors" do
+    before { sign_in user }
+
     it "retorna sucesso" do
       get authors_path
-
       expect(response).to(have_http_status(:ok))
     end
   end
 
   describe "GET /authors/:id" do
+    before { sign_in user }
+
     it "retorna sucesso" do
       author = create(:author)
 
       get author_path(author)
-
       expect(response).to(have_http_status(:ok))
     end
   end
 
   describe "GET /authors/new" do
-    it "retorna sucesso" do
-      get new_author_path
+    context "como usuário comum" do
+      before { sign_in user }
 
-      expect(response).to(have_http_status(:ok))
+      it "bloqueia acesso" do
+        get new_author_path
+        expect(response).to(redirect_to(root_path))
+      end
+    end
+
+    context "como admin" do
+      before { sign_in admin }
+
+      it "permite acesso" do
+        get new_author_path
+        expect(response).to(have_http_status(:ok))
+      end
     end
   end
 
   describe "GET /authors/:id/edit" do
-    it "retorna sucesso" do
-      author = create(:author)
+    let(:author) { create(:author) }
 
-      get edit_author_path(author)
+    context "como usuário comum" do
+      before { sign_in user }
 
-      expect(response).to(have_http_status(:ok))
+      it "bloqueia acesso" do
+        get edit_author_path(author)
+        expect(response).to(redirect_to(root_path))
+      end
+    end
+
+    context "como admin" do
+      before { sign_in admin }
+
+      it "permite acesso" do
+        get edit_author_path(author)
+        expect(response).to(have_http_status(:ok))
+      end
     end
   end
 
   describe "POST /authors" do
-    context "com parâmetros válidos" do
-      it "cria um author" do
+    context "como usuário comum" do
+      before { sign_in user }
+
+      it "não cria author" do
         expect do
           post(authors_path, params: {
             author: { name: "Alan Moore" },
           })
-        end.to(change(Author, :count).by(1))
+        end.not_to(change(Author, :count))
 
-        expect(response).to(redirect_to(author_path(Author.last)))
+        expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "com parâmetros inválidos" do
-      it "não cria author e renderiza new" do
-        expect do
-          post(authors_path, params: {
-            author: { name: "" },
-          })
-        end.not_to(change(Author, :count))
+    context "como admin" do
+      before { sign_in admin }
 
-        expect(response).to(have_http_status(:unprocessable_content))
+      context "com parâmetros válidos" do
+        it "cria um author" do
+          expect do
+            post(authors_path, params: {
+              author: { name: "Alan Moore" },
+            })
+          end.to(change(Author, :count).by(1))
+
+          expect(response).to(redirect_to(author_path(Author.last)))
+        end
+      end
+
+      context "com parâmetros inválidos" do
+        it "não cria author e renderiza new" do
+          expect do
+            post(authors_path, params: {
+              author: { name: "" },
+            })
+          end.not_to(change(Author, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
       end
     end
   end
@@ -74,38 +115,71 @@ RSpec.describe("Authors", type: :request) do
   describe "PATCH /authors/:id" do
     let(:author) { create(:author, name: "Old Name") }
 
-    context "com parâmetros válidos" do
-      it "atualiza o author" do
+    context "como usuário comum" do
+      before { sign_in user }
+
+      it "não atualiza" do
         patch author_path(author), params: {
           author: { name: "New Name" },
         }
 
-        expect(response).to(redirect_to(author_path(author.reload)))
-        expect(author.reload.name).to(eq("New Name"))
+        expect(response).to(redirect_to(root_path))
+        expect(author.reload.name).to(eq("Old Name"))
       end
     end
 
-    context "com parâmetros inválidos" do
-      it "não atualiza e renderiza edit" do
-        patch author_path(author), params: {
-          author: { name: "" },
-        }
+    context "como admin" do
+      before { sign_in admin }
 
-        expect(response).to(have_http_status(:unprocessable_content))
-        expect(author.reload.name).to(eq("Old Name"))
+      context "com parâmetros válidos" do
+        it "atualiza o author" do
+          patch author_path(author), params: {
+            author: { name: "New Name" },
+          }
+
+          expect(response).to(redirect_to(author_path(author.reload)))
+          expect(author.reload.name).to(eq("New Name"))
+        end
+      end
+
+      context "com parâmetros inválidos" do
+        it "não atualiza e renderiza edit" do
+          patch author_path(author), params: {
+            author: { name: "" },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(author.reload.name).to(eq("Old Name"))
+        end
       end
     end
   end
 
   describe "DELETE /authors/:id" do
-    it "remove o author" do
-      author = create(:author)
+    let!(:author) { create(:author) }
 
-      expect do
-        delete(author_path(author))
-      end.to(change(Author, :count).by(-1))
+    context "como usuário comum" do
+      before { sign_in user }
 
-      expect(response).to(redirect_to(authors_path))
+      it "não remove o author" do
+        expect do
+          delete(author_path(author))
+        end.not_to(change(Author, :count))
+
+        expect(response).to(redirect_to(root_path))
+      end
+    end
+
+    context "como admin" do
+      before { sign_in admin }
+
+      it "remove o author" do
+        expect do
+          delete(author_path(author))
+        end.to(change(Author, :count).by(-1))
+
+        expect(response).to(redirect_to(authors_path))
+      end
     end
   end
 end
