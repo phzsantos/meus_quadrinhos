@@ -7,15 +7,17 @@
     index_path,
     class: "px-4 py-2 bg-black rounded-lg hover:bg-black/80 transition" %>
 
-  <%= link_to "Editar",
-    edit_path,
-    class: "px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition" %>
+  <% if current_user.admin? %>
+    <%= link_to "Editar",
+      edit_path,
+      class: "px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition" %>
 
-  <div class="ml-auto">
-    <%= button_to "Excluir",
-      resource,
-      method: :delete,
-      data: { confirm: "Tem certeza?" },
-      class: "px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition cursor-pointer" %>
-  </div>
+    <div class="ml-auto">
+      <%= button_to "Excluir",
+        resource,
+        method: :delete,
+        data: { confirm: "Tem certeza?" },
+        class: "px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition cursor-pointer" %>
+    </div>
+  <% end %>
 </div>
