@@ -6,20 +6,42 @@
     remote:        data-remote
     paginator:     the paginator that renders the pagination tags inside
 -%>
-<%= paginator.render do -%>
-  <nav class="pagination" role="navigation" aria-label="pager">
-    <%= first_page_tag unless current_page.first? %>
-    <%= prev_page_tag unless current_page.first? %>
-    <% each_page do |page| -%>
-      <% if page.display_tag? -%>
-        <%= page_tag page %>
-      <% elsif !page.was_truncated? -%>
-        <%= gap_tag %>
-      <% end -%>
-    <% end -%>
-    <% unless current_page.out_of_range? %>
-      <%= next_page_tag unless current_page.last? %>
-      <%= last_page_tag unless current_page.last? %>
-    <% end %>
+<%= paginator.render do %>
+  <nav class="flex justify-center bangers-regular text-xl" role="navigation" aria-label="pager">
+    <div class="flex items-center gap-2 bg-bada px-4 py-2 rounded-md shadow-md text-black">
+
+      <%= first_page_tag unless current_page.first? %>
+      <%= prev_page_tag unless current_page.first? %>
+
+      <% last_was_gap = false %>
+
+      <% each_page do |page| %>
+        <% if page.display_tag? %>
+          <% last_was_gap = false %>
+
+          <% if page.current? %>
+            <span class="px-3 py-1 bg-black text-white rounded-md shadow">
+              <%= page.number %>
+            </span>
+          <% else %>
+            <%= link_to page.number,
+              url_for(page: page.number),
+              class: "px-3 py-1 rounded-md hover:bg-black/20 transition" %>
+          <% end %>
+
+        <% else %>
+          <% unless last_was_gap %>
+            <%= gap_tag %>
+            <% last_was_gap = true %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% unless current_page.out_of_range? %>
+        <%= next_page_tag unless current_page.last? %>
+        <%= last_page_tag unless current_page.last? %>
+      <% end %>
+
+    </div>
   </nav>
-<% end -%>
+<% end %>
