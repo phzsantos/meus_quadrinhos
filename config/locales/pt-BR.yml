@@ -12,3 +12,10 @@ pt-BR:
     sessions: "Entrar"
     registrations: "Registrar"
     passwords: "Esqueci minha senha"
+  views:
+    pagination:
+      first: "Início"
+      last: "Fim"
+      previous: "<-"
+      next: "->"
+      truncate: "..."
