@@ -7,7 +7,11 @@ class AuthorsController < ApplicationController
 
   # GET /authors or /authors.json
   def index
-    @authors = Author.all.order(:name)
+    @authors = Author
+      .includes(:comics)
+      .order(:name)
+      .page(params[:page])
+      .per(20)
   end
 
   # GET /authors/1 or /authors/1.json
