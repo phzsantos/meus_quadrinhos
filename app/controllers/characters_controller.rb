@@ -7,7 +7,11 @@ class CharactersController < ApplicationController
 
   # GET /characters or /characters.json
   def index
-    @characters = Character.all.order(:name)
+    @characters = Character
+      .includes(:comics)
+      .order(:name)
+      .page(params[:page])
+      .per(20)
   end
 
   # GET /characters/1 or /characters/1.json
