@@ -9,7 +9,7 @@
       <hr>
 
       <div class="text-3xl patrick-hand-regular">
-        <% @book_bindings.each do |book_binding| %>
+        <% @book_bindings.each_with_index do |book_binding, index| %>
           <div class="flex flex-wrap">
             <span class="p-2" >
               <%= link_to book_binding.name, book_binding %>
@@ -18,7 +18,10 @@
               <%= book_binding.comics.count %> 
             </span>
           </div>
-          <hr>
+          
+          <% unless index == @book_bindings.size - 1 %>
+            <hr>
+          <% end %>
         <% end %>
       </div>
     </div>

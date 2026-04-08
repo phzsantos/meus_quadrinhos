@@ -9,7 +9,7 @@
       <hr>
 
       <div class="text-3xl patrick-hand-regular">
-        <% @authors.each do |author| %>
+        <% @authors.each_with_index do |author, index| %>
           <div class="flex flex-wrap">
             <span class="p-2" >
               <%= link_to author.name, author %>
@@ -18,7 +18,10 @@
               <%= author.comics.size %> 
             </span>
           </div>
-          <hr>
+          
+          <% unless index == @authors.size - 1 %>
+            <hr>
+          <% end %>
         <% end %>
       </div>
     </div>

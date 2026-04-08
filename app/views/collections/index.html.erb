@@ -9,7 +9,7 @@
       <hr>
 
       <div class="text-3xl patrick-hand-regular">
-        <% @collections.each do |collection| %>
+        <% @collections.each_with_index do |collection, index| %>
           <div class="flex flex-wrap">
             <span class="p-2" >
               <%= link_to collection.name, collection %>
@@ -18,7 +18,10 @@
               <%= collection.comics.count %> 
             </span>
           </div>
-          <hr>
+          
+          <% unless index == @collections.size - 1 %>
+            <hr>
+          <% end %>
         <% end %>
       </div>
     </div>

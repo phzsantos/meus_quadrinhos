@@ -9,7 +9,7 @@
       <hr>
 
       <div class="text-3xl patrick-hand-regular">
-        <% @comics.each do |comic| %>
+        <% @comics.each_with_index do |comic, index| %>
           <div class="flex flex-wrap">
             <span class="p-2" >
               <%= link_to comic.title, comic %>
@@ -18,7 +18,10 @@
               <%= comic.readings.order(read_at: :asc).map { |r| l(r.read_at, format: "%d/%m/%Y") }.join(", ") %> 
             </span>
           </div>
-          <hr>
+          
+          <% unless index == @comics.size - 1 %>
+            <hr>
+          <% end %>
         <% end %>
       </div>
     </div>
