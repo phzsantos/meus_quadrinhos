@@ -7,7 +7,11 @@ class CollectionsController < ApplicationController
 
   # GET /collections or /collections.json
   def index
-    @collections = Collection.all.order(:name)
+    @collections = Collection
+      .includes(:comics)
+      .order(:name)
+      .page(params[:page])
+      .per(20)
   end
 
   # GET /collections/1 or /collections/1.json
