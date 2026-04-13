@@ -6,7 +6,7 @@
       >
       <%= image_tag(
             reading.comic.cover_image.attached? ? reading.comic.cover_image : "covers/no-cover.jpg",
-            class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+            class: "w-full h-full object-fill group-hover:scale-105 transition-transform duration-200"
           ) %>
     </div>
 

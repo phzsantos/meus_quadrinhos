@@ -74,7 +74,7 @@
         @comic.cover_image.attached? ?
           @comic.cover_image.variant(resize_to_fill: [402, 602]) :
           "covers/no-cover.jpg",
-        class: "shadow-lg w-[402px] h-[602px] object-cover"
+        class: "shadow-lg w-[402px] h-[602px] object-fill"
       ) %>
     </div>
   </div>
