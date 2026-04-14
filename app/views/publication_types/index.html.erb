@@ -10,14 +10,16 @@
 
       <div class="text-3xl patrick-hand-regular">
         <% @publication_types.each_with_index do |publication_type, index| %>
-          <div class="flex flex-wrap">
-            <span class="p-2" >
-              <%= link_to publication_type.name, publication_type %>
-            </span>
-            <span class="ml-auto p-2">
-              <%= publication_type.comics.count %> 
-            </span>
-          </div>
+          <%= link_to publication_type, class: "block transition-colors duration-200 hover:bg-black/20" do %>
+            <div class="flex flex-wrap py-2 items-center">
+              <span>
+                <%= publication_type.name %>
+              </span>
+              <span class="ml-auto">
+                <%= publication_type.comics.size %>
+              </span>
+            </div>
+          <% end %>
           
           <% unless index == @publication_types.size - 1 %>
             <hr>

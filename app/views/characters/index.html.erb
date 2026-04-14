@@ -10,14 +10,16 @@
 
       <div class="text-3xl patrick-hand-regular">
         <% @characters.each_with_index do |character, index| %>
-          <div class="flex flex-wrap">
-            <span class="p-2" >
-              <%= link_to character.name, character %>
-            </span>
-            <span class="ml-auto p-2">
-              <%= character.comics.size %> 
-            </span>
-          </div>
+          <%= link_to character, class: "block transition-colors duration-200 hover:bg-black/20" do %>
+            <div class="flex flex-wrap py-2 items-center">
+              <span>
+                <%= character.name %>
+              </span>
+              <span class="ml-auto">
+                <%= character.comics.size %>
+              </span>
+            </div>
+          <% end %>
 
           <% unless index == @characters.size - 1 %>
             <hr>

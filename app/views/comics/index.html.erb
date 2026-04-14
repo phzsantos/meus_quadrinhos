@@ -10,14 +10,16 @@
 
       <div class="text-3xl patrick-hand-regular">
         <% @comics.each_with_index do |comic, index| %>
-          <div class="flex flex-wrap">
-            <span class="p-2" >
-              <%= link_to comic.title, comic %>
-            </span>
-            <span class="ml-auto p-2">
-              <%= comic.readings.order(read_at: :asc).map { |r| l(r.read_at, format: "%d/%m/%Y") }.join(", ") %> 
-            </span>
-          </div>
+          <%= link_to comic, class: "block transition-colors duration-200 hover:bg-black/20" do %>
+            <div class="flex flex-wrap py-2 items-center">
+              <span>
+                <%= comic.title %>
+              </span>
+              <span class="ml-auto">
+                <%= comic.readings.order(read_at: :asc).map { |r| l(r.read_at, format: "%d/%m/%Y") }.join(", ") %> 
+              </span>
+            </div>
+          <% end %>
           
           <% unless index == @comics.size - 1 %>
             <hr>
