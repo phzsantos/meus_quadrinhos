@@ -13,7 +13,7 @@
           <%= link_to comic, class: "block transition-colors duration-200 hover:bg-black/20" do %>
             <div class="flex flex-wrap py-2 items-center">
               <span>
-                <%= comic.title %>
+                <%= sprintf("%03d | %s", (@comics.offset_value + index + 1), comic.title) %>
               </span>
               <span class="ml-auto">
                 <%= comic.readings.order(read_at: :asc).map { |r| l(r.read_at, format: "%d/%m/%Y") }.join(", ") %> 
