@@ -73,7 +73,7 @@
       <%= image_tag(
         @comic.cover_image.attached? ?
           @comic.cover_image : "covers/no-cover.jpg",
-        class: "shadow-lg w-[402px] h-[602px] object-fill"
+        class: "shadow-lg w-[402px] h-[602px] object-fill rounded-md"
       ) %>
     </div>
   </div>
