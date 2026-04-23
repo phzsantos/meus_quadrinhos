@@ -12,6 +12,7 @@ class BookBindingsController < ApplicationController
 
   # GET /book_bindings/1 or /book_bindings/1.json
   def show
+    @comics = @book_binding.comics.order(:title).page(params[:page]).per(18)
   end
 
   # GET /book_bindings/new
