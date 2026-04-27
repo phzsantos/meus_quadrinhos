@@ -53,6 +53,8 @@ load_seed("comics.json").each do |attrs|
     collection: Collection.find_by(name: attrs[:collection_name]),
     story_count: attrs[:story_count],
     link_guia_dos_quadrinhos: attrs[:link_guia_dos_quadrinhos],
+    issue_number: attrs[:issue_number],
+    issue_title: attrs[:issue_title],
   )
 
   comic.authors =

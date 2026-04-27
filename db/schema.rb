@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_21_013118) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_27_172750) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -108,8 +108,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_21_013118) do
     t.string "link_guia_dos_quadrinhos"
     t.integer "story_count"
     t.uuid "collection_id"
+    t.integer "issue_number", null: false
+    t.string "issue_title"
     t.index ["book_binding_id"], name: "index_comics_on_book_binding_id"
     t.index ["collection_id"], name: "index_comics_on_collection_id"
+    t.index ["issue_number"], name: "index_comics_on_issue_number"
     t.index ["paper_type_id"], name: "index_comics_on_paper_type_id"
     t.index ["publication_type_id"], name: "index_comics_on_publication_type_id"
     t.index ["publisher_id"], name: "index_comics_on_publisher_id"
