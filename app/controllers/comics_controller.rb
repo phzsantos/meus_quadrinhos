@@ -104,6 +104,8 @@ class ComicsController < ApplicationController
         .order(:read_at)
         .pluck(:read_at)
         .map { |d| d.to_date.iso8601 },
+      issue_number: comic.issue_number,
+      issue_title: comic.issue_title,
     }
   end
 
