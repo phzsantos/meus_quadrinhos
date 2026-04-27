@@ -16,6 +16,7 @@ RSpec.describe("Comics", type: :request) do
       title: "Tex Willer #1",
       page_count: 100,
       published_year: 2020,
+      issue_number: 1,
       publisher_id: publisher.id,
       publication_type_id: publication_type.id,
       book_binding_id: book_binding.id,
@@ -35,6 +36,7 @@ RSpec.describe("Comics", type: :request) do
       title: "",
       page_count: nil,
       published_year: nil,
+      issue_number: nil,
     }
   end
 

@@ -5,6 +5,7 @@ FactoryBot.define do
     title { Faker::Book.title }
     page_count { 100 }
     published_year { 2020 }
+    issue_number { 1 }
 
     publisher
     publication_type

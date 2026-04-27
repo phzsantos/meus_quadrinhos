@@ -126,6 +126,8 @@ class ComicsController < ApplicationController
       :cover_image,
       :link_guia_dos_quadrinhos,
       :story_count,
+      :issue_number,
+      :issue_title,
       readings_attributes: [:id, :read_at, :_destroy],
       author_ids: [],
       character_ids: [],
