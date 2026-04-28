@@ -3,7 +3,19 @@
 class Comic < ApplicationRecord
   extend FriendlyId
 
-  friendly_id :title, use: :slugged
+  friendly_id :slug_candidates, use: :slugged
+
+  def slug_candidates
+    if collection.present?
+      [
+        [:title, :issue_number],
+      ]
+    else
+      [
+        :title,
+      ]
+    end
+  end
 
   belongs_to :publisher
   belongs_to :publication_type
@@ -29,7 +41,7 @@ class Comic < ApplicationRecord
   validates :published_year, numericality: { only_integer: true }, presence: true
 
   def should_generate_new_friendly_id?
-    title_changed?
+    title_changed? || issue_number_changed?
   end
 
   before_validation :remove_blank_author_ids

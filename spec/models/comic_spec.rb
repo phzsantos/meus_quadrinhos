@@ -39,13 +39,13 @@ RSpec.describe(Comic, type: :model) do
 
   describe "friendly_id" do
     it "gera slug a partir do título" do
-      comic = create(:comic, title: "Watchmen")
+      comic = create(:comic, title: "Watchmen", collection: nil)
 
       expect(comic.slug).to(eq("watchmen"))
     end
 
     it "atualiza o slug quando o título muda" do
-      comic = create(:comic, title: "Watchmen")
+      comic = create(:comic, title: "Watchmen", collection: nil)
 
       comic.update!(title: "V for Vendetta")
 
