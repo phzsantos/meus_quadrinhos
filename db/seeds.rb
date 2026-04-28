@@ -41,7 +41,7 @@ load_seed("collections.json").each do |collection|
 end
 
 load_seed("comics.json").each do |attrs|
-  comic = Comic.find_or_initialize_by(title: attrs[:title])
+  comic = Comic.find_or_initialize_by(title: attrs[:title], issue_number: attrs[:issue_number])
 
   comic.assign_attributes(
     page_count: attrs[:page_count],
@@ -71,7 +71,12 @@ load_seed("comics.json").each do |attrs|
 
   next if comic.cover_image.attached?
 
-  filename = "#{comic.title}.jpg"
+  filename = if comic.collection.present?
+    "#{comic.title} n° #{comic.issue_number}.jpg"
+  else
+    "#{comic.title}.jpg"
+  end
+
   path = Rails.root.join("db", "seeds", "covers", filename)
 
   next unless File.exist?(path)
