@@ -16,7 +16,7 @@ class AuthorsController < ApplicationController
 
   # GET /authors/1 or /authors/1.json
   def show
-    @comics = @author.comics.order(:title).page(params[:page]).per(18)
+    @comics = @author.comics.order(:title, :issue_number).page(params[:page]).per(18)
   end
 
   # GET /authors/new

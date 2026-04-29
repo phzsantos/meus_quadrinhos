@@ -12,7 +12,7 @@ class PaperTypesController < ApplicationController
 
   # GET /paper_types/1 or /paper_types/1.json
   def show
-    @comics = @paper_type.comics.order(:title).page(params[:page]).per(18)
+    @comics = @paper_type.comics.order(:title, :issue_number).page(params[:page]).per(18)
   end
 
   # GET /paper_types/new
