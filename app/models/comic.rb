@@ -17,6 +17,14 @@ class Comic < ApplicationRecord
     end
   end
 
+  def display_title
+    if collection.present?
+      "#{title} n° #{issue_number}"
+    else
+      title
+    end
+  end
+
   belongs_to :publisher
   belongs_to :publication_type
   belongs_to :book_binding
