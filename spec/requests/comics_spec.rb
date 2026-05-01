@@ -139,6 +139,70 @@ RSpec.describe("Comics", type: :request) do
 
           expect(response).to(have_http_status(:unprocessable_content))
         end
+
+        it "tenta criar sem title" do
+          expect do
+            post(comics_path, params: { comic: valid_attributes.merge(title: "") })
+          end.not_to(change(Comic, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
+
+        it "tenta criar sem page_count" do
+          expect do
+            post(comics_path, params: { comic: valid_attributes.merge(page_count: nil) })
+          end.not_to(change(Comic, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
+
+        it "tenta criar sem published_year" do
+          expect do
+            post(comics_path, params: { comic: valid_attributes.merge(published_year: nil) })
+          end.not_to(change(Comic, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
+
+        it "tenta criar sem publisher_id" do
+          expect do
+            post(comics_path, params: { comic: valid_attributes.merge(publisher_id: nil) })
+          end.not_to(change(Comic, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
+
+        it "tenta criar sem publication_type_id" do
+          expect do
+            post(comics_path, params: { comic: valid_attributes.merge(publication_type_id: nil) })
+          end.not_to(change(Comic, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
+
+        it "tenta criar sem book_binding_id" do
+          expect do
+            post(comics_path, params: { comic: valid_attributes.merge(book_binding_id: nil) })
+          end.not_to(change(Comic, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
+
+        it "tenta criar sem paper_type_id" do
+          expect do
+            post(comics_path, params: { comic: valid_attributes.merge(paper_type_id: nil) })
+          end.not_to(change(Comic, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
+
+        it "tenta criar sem issue_number" do
+          expect do
+            post(comics_path, params: { comic: valid_attributes.merge(issue_number: nil) })
+          end.not_to(change(Comic, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
       end
     end
   end
