@@ -6,6 +6,7 @@ FactoryBot.define do
     page_count { 100 }
     published_year { 2020 }
     issue_number { 1 }
+    authors { [create(:author)] }
 
     publisher
     publication_type
