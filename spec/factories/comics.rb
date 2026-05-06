@@ -7,6 +7,7 @@ FactoryBot.define do
     published_year { 2020 }
     issue_number { 1 }
     authors { [create(:author)] }
+    characters { [create(:character)] }
 
     publisher
     publication_type

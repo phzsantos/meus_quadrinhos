@@ -42,6 +42,7 @@ RSpec.describe("Comics", type: :request) do
       publication_type_id: nil,
       book_binding_id: nil,
       paper_type_id: nil,
+      character_ids: [],
     }
   end
 
@@ -172,6 +173,14 @@ RSpec.describe("Comics", type: :request) do
         it "tenta criar sem authors" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(author_ids: []) })
+          end.not_to(change(Comic, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
+
+        it "tenta criar sem characters" do
+          expect do
+            post(comics_path, params: { comic: valid_attributes.merge(character_ids: []) })
           end.not_to(change(Comic, :count))
 
           expect(response).to(have_http_status(:unprocessable_content))
