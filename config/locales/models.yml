@@ -3,7 +3,7 @@ pt-BR:
     attributes:
       comic:
         title: "Título"
-        issue_number: "Número"
+        issue_number: "Volume"
         page_count: "Páginas"
         published_year: "Ano de Publicação"
         authors: "Autores"
