@@ -1,5 +1,17 @@
 pt-BR:
   activerecord:
+    attributes:
+      comic:
+        title: "Título"
+        issue_number: "Número"
+        page_count: "Páginas"
+        published_year: "Ano de Publicação"
+        authors: "Autores"
+        characters: "Personagens"
+        publisher: "Editora"
+        publication_type: "Tipo"
+        book_binding: "Encadernação"
+        paper_type: "Papel"
     models:
       comic: "Quadrinho"
       collection: "Coleção"
@@ -10,10 +22,7 @@ pt-BR:
       paper_type: "Papel"
       publication_type: "Tipo de HQ"
     errors:
-      models:
-        user:
-          attributes:
-            username:
-              blank: "não pode ficar em branco"
-            email:
-              blank: "não pode ficar em branco"
+      messages:
+        blank: "não pode ficar em branco"
+        required: "é obrigatório"
+        not_a_number: "não é um número"
