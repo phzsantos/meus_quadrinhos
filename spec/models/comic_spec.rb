@@ -29,6 +29,11 @@ RSpec.describe(Comic, type: :model) do
         .only_integer
         .is_greater_than(0))
     end
+
+    it do
+      is_expected.to(validate_numericality_of(:issue_number)
+        .only_integer)
+    end
   end
 
   describe "associations" do
