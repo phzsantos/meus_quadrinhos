@@ -9,6 +9,7 @@ RSpec.describe(Comic, type: :model) do
     it { is_expected.to(validate_presence_of(:title)) }
     it { is_expected.to(validate_presence_of(:page_count)) }
     it { is_expected.to(validate_presence_of(:published_year)) }
+    it { is_expected.to(validate_presence_of(:story_count)) }
     it { is_expected.to(validate_presence_of(:authors)) }
     it { is_expected.to(validate_presence_of(:characters)) }
     it { is_expected.to(validate_presence_of(:issue_number)) }
@@ -21,6 +22,12 @@ RSpec.describe(Comic, type: :model) do
     it do
       is_expected.to(validate_numericality_of(:published_year)
         .only_integer)
+    end
+
+    it do
+      is_expected.to(validate_numericality_of(:story_count)
+        .only_integer
+        .is_greater_than(0))
     end
   end
 
