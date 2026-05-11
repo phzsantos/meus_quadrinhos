@@ -12,6 +12,7 @@ pt-BR:
         publication_type: "Tipo"
         book_binding: "Encadernação"
         paper_type: "Papel"
+        cover_image: "Imagem de capa"
     models:
       comic: "Quadrinho"
       collection: "Coleção"
