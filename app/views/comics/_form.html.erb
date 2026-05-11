@@ -193,7 +193,7 @@
         <%= form.file_field :cover_image,
           class: "text-white text-sm" %>
         <%= image_tag(
-          comic.cover_image.attached? ?
+          comic.cover_image.attached? && comic.persisted? ?
             comic.cover_image.variant(resize_to_fill: [402, 602]) :
             "covers/no-cover.jpg",
           class: "shadow-lg w-[402px] h-[602px] object-fill"
