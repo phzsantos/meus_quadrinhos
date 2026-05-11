@@ -51,11 +51,6 @@ class Comic < ApplicationRecord
   validates :authors, presence: true
   validates :characters, presence: true
   validates :issue_number, numericality: { only_integer: true }, presence: true
-  validate :cover_image_presence
-
-  def cover_image_presence
-    errors.add(:cover_image, :blank) unless cover_image.attached?
-  end
 
   def should_generate_new_friendly_id?
     title_changed? || issue_number_changed?

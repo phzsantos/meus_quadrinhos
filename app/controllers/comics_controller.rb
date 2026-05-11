@@ -47,7 +47,14 @@ class ComicsController < ApplicationController
   # POST /comics or /comics.json
   def create
     @comic = Comic.new(comic_params)
-    @comic.cover_image.attach(comic_params[:cover_image]) if comic_params[:cover_image].present?
+
+    if comic_params[:cover_image].blank?
+      @comic.errors.add(:cover_image, :blank)
+
+      return render(:new, status: :unprocessable_content)
+    end
+
+    @comic.cover_image.attach(comic_params[:cover_image])
 
     respond_to do |format|
       if @comic.save

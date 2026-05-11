@@ -28,6 +28,7 @@ RSpec.describe("Comics", type: :request) do
       readings_attributes: [
         { read_at: Time.zone.today },
       ],
+      cover_image: fixture_file_upload(Rails.root.join("spec/fixtures/files/test-cover.jpg"), "image/jpeg"),
     }
   end
 
@@ -44,6 +45,7 @@ RSpec.describe("Comics", type: :request) do
       book_binding_id: nil,
       paper_type_id: nil,
       character_ids: [],
+      cover_image: nil,
     }
   end
 
@@ -230,6 +232,14 @@ RSpec.describe("Comics", type: :request) do
         it "tenta criar sem issue_number" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(issue_number: nil) })
+          end.not_to(change(Comic, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
+
+        it "tenta criar sem cover_image" do
+          expect do
+            post(comics_path, params: { comic: valid_attributes.merge(cover_image: nil) })
           end.not_to(change(Comic, :count))
 
           expect(response).to(have_http_status(:unprocessable_content))
