@@ -180,6 +180,16 @@ RSpec.describe("Authors", type: :request) do
 
         expect(response).to(redirect_to(authors_path))
       end
+
+      it "não remove o author quando tem quadrinhos associados" do
+        create(:comic, authors: [author])
+
+        expect do
+          delete(author_path(author))
+        end.not_to(change(Author, :count))
+
+        expect(response).to(redirect_to(authors_path))
+      end
     end
   end
 end
