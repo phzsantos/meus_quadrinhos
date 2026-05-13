@@ -58,11 +58,18 @@ class AuthorsController < ApplicationController
 
   # DELETE /authors/1 or /authors/1.json
   def destroy
-    @author.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to(authors_path, notice: "Autor foi deletado com sucesso.", status: :see_other) }
-      format.json { head(:no_content) }
+    if @author.destroy
+      redirect_to(
+        authors_path,
+        notice: "Autor foi deletado com sucesso.",
+        status: :see_other,
+      )
+    else
+      redirect_to(
+        authors_path,
+        alert: @author.errors.full_messages.to_sentence,
+        status: :see_other,
+      )
     end
   end
 
