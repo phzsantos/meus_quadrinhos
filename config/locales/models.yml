@@ -13,6 +13,20 @@ pt-BR:
         book_binding: "Encadernação"
         paper_type: "Papel"
         cover_image: "Imagem de capa"
+      collection:
+        name: "Nome"
+      author:
+        name: "Nome"
+      character:
+        name: "Nome"
+      publisher:
+        name: "Nome"
+      book_binding:
+        name: "Nome"
+      paper_type:
+        name: "Nome"
+      publication_type:
+        name: "Nome"
     models:
       comic: "Quadrinho"
       collection: "Coleção"
