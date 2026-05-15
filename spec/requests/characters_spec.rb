@@ -180,6 +180,16 @@ RSpec.describe("Characters", type: :request) do
 
         expect(response).to(redirect_to(characters_path))
       end
+
+      it "não remove o personagem quando tem quadrinhos associados" do
+        create(:comic, characters: [character])
+
+        expect do
+          delete(character_path(character))
+        end.not_to(change(Character, :count))
+
+        expect(response).to(redirect_to(characters_path))
+      end
     end
   end
 end
