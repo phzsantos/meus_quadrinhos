@@ -58,11 +58,18 @@ class PublishersController < ApplicationController
 
   # DELETE /publishers/1 or /publishers/1.json
   def destroy
-    @publisher.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to(publishers_path, notice: "Editora foi deletada com sucesso.", status: :see_other) }
-      format.json { head(:no_content) }
+    if @publisher.destroy
+      redirect_to(
+        publishers_path,
+        notice: "Editora foi deletada com sucesso.",
+        status: :see_other,
+      )
+    else
+      redirect_to(
+        publishers_path,
+        alert: @publisher.errors.full_messages.to_sentence,
+        status: :see_other,
+      )
     end
   end
 
