@@ -180,6 +180,16 @@ RSpec.describe("Publishers", type: :request) do
 
         expect(response).to(redirect_to(publishers_path))
       end
+
+      it "não remove o publisher quando tem quadrinhos associados" do
+        create(:comic, publisher: publisher)
+
+        expect do
+          delete(publisher_path(publisher))
+        end.not_to(change(Publisher, :count))
+
+        expect(response).to(redirect_to(publishers_path))
+      end
     end
   end
 end
