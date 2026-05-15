@@ -58,11 +58,18 @@ class CharactersController < ApplicationController
 
   # DELETE /characters/1 or /characters/1.json
   def destroy
-    @character.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to(characters_path, notice: "Personagem foi deletado com sucesso.", status: :see_other) }
-      format.json { head(:no_content) }
+    if @character.destroy
+      redirect_to(
+        characters_path,
+        notice: "Personagem foi deletado com sucesso.",
+        status: :see_other,
+      )
+    else
+      redirect_to(
+        characters_path,
+        alert: @character.errors.full_messages.to_sentence,
+        status: :see_other,
+      )
     end
   end
 
