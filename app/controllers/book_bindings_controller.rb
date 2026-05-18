@@ -54,11 +54,18 @@ class BookBindingsController < ApplicationController
 
   # DELETE /book_bindings/1 or /book_bindings/1.json
   def destroy
-    @book_binding.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to(book_bindings_path, notice: "Encadernação foi deletada com sucesso.", status: :see_other) }
-      format.json { head(:no_content) }
+    if @book_binding.destroy
+      redirect_to(
+        book_bindings_path,
+        notice: "Encadernação foi deletada com sucesso.",
+        status: :see_other,
+      )
+    else
+      redirect_to(
+        book_bindings_path,
+        alert: @book_binding.errors.full_messages.to_sentence,
+        status: :see_other,
+      )
     end
   end
 
