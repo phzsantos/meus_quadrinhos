@@ -180,6 +180,16 @@ RSpec.describe("PaperTypes", type: :request) do
 
         expect(response).to(redirect_to(paper_types_path))
       end
+
+      it "não remove o paper type quando tem quadrinhos associados" do
+        create(:comic, paper_type: paper_type)
+
+        expect do
+          delete(paper_type_path(paper_type))
+        end.not_to(change(PaperType, :count))
+
+        expect(response).to(redirect_to(paper_types_path))
+      end
     end
   end
 end
