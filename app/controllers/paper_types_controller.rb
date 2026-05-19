@@ -54,11 +54,18 @@ class PaperTypesController < ApplicationController
 
   # DELETE /paper_types/1 or /paper_types/1.json
   def destroy
-    @paper_type.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to(paper_types_path, notice: "Tipo de papel foi deletado com sucesso.", status: :see_other) }
-      format.json { head(:no_content) }
+    if @paper_type.destroy
+      redirect_to(
+        paper_types_path,
+        notice: "Tipo de papel foi deletado com sucesso.",
+        status: :see_other,
+      )
+    else
+      redirect_to(
+        paper_types_path,
+        alert: @paper_type.errors.full_messages.to_sentence,
+        status: :see_other,
+      )
     end
   end
 
