@@ -54,11 +54,18 @@ class PublicationTypesController < ApplicationController
 
   # DELETE /publication_types/1 or /publication_types/1.json
   def destroy
-    @publication_type.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to(publication_types_path, notice: "Tipo de quadrinho foi deletado com sucesso.", status: :see_other) }
-      format.json { head(:no_content) }
+    if @publication_type.destroy
+      redirect_to(
+        publication_types_path,
+        notice: "Tipo de quadrinho foi deletado com sucesso.",
+        status: :see_other,
+      )
+    else
+      redirect_to(
+        publication_types_path,
+        alert: @publication_type.errors.full_messages.to_sentence,
+        status: :see_other,
+      )
     end
   end
 
