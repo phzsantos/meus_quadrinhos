@@ -203,6 +203,24 @@ RSpec.describe("Collections", type: :request) do
 
         expect(response).to(redirect_to(collections_path))
       end
+
+      it "remove a collection mesmo com quadrinhos associados" do
+        create(:comic, collection:)
+
+        expect do
+          delete(collection_path(collection))
+        end.to(change(Collection, :count).by(-1))
+
+        expect(response).to(redirect_to(collections_path))
+      end
+
+      it "remove a collection e retira associação dos quadrinhos" do
+        comic = create(:comic, collection: collection)
+
+        delete(collection_path(collection))
+
+        expect(comic.reload.collection).to(be_nil)
+      end
     end
   end
 end
