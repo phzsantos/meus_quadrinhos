@@ -180,6 +180,16 @@ RSpec.describe("PublicationTypes", type: :request) do
 
         expect(response).to(redirect_to(publication_types_path))
       end
+
+      it "não remove o publication type quando tem quadrinhos associados" do
+        create(:comic, publication_type: publication_type)
+
+        expect do
+          delete(publication_type_path(publication_type))
+        end.not_to(change(PublicationType, :count))
+
+        expect(response).to(redirect_to(publication_types_path))
+      end
     end
   end
 end
