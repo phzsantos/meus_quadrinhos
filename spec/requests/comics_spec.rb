@@ -149,7 +149,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "tenta criar sem title" do
+        it "não cria sem title" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(title: "") })
           end.not_to(change(Comic, :count))
@@ -157,7 +157,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "tenta criar sem page_count" do
+        it "não cria sem page_count" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(page_count: nil) })
           end.not_to(change(Comic, :count))
@@ -165,7 +165,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "tenta criar sem story_count" do
+        it "não cria sem story_count" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(story_count: nil) })
           end.not_to(change(Comic, :count))
@@ -173,7 +173,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "tenta criar sem published_year" do
+        it "não cria sem published_year" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(published_year: nil) })
           end.not_to(change(Comic, :count))
@@ -181,7 +181,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "tenta criar sem authors" do
+        it "não cria sem authors" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(author_ids: []) })
           end.not_to(change(Comic, :count))
@@ -189,7 +189,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "tenta criar sem characters" do
+        it "não cria sem characters" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(character_ids: []) })
           end.not_to(change(Comic, :count))
@@ -197,7 +197,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "tenta criar sem publisher_id" do
+        it "não cria sem publisher_id" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(publisher_id: nil) })
           end.not_to(change(Comic, :count))
@@ -205,7 +205,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "tenta criar sem publication_type_id" do
+        it "não cria sem publication_type_id" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(publication_type_id: nil) })
           end.not_to(change(Comic, :count))
@@ -213,7 +213,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "tenta criar sem book_binding_id" do
+        it "não cria sem book_binding_id" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(book_binding_id: nil) })
           end.not_to(change(Comic, :count))
@@ -221,7 +221,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "tenta criar sem paper_type_id" do
+        it "não cria sem paper_type_id" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(paper_type_id: nil) })
           end.not_to(change(Comic, :count))
@@ -229,7 +229,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "tenta criar sem issue_number" do
+        it "não cria sem issue_number" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(issue_number: nil) })
           end.not_to(change(Comic, :count))
@@ -237,7 +237,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "tenta criar sem cover_image" do
+        it "não cria sem cover_image" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(cover_image: nil) })
           end.not_to(change(Comic, :count))
