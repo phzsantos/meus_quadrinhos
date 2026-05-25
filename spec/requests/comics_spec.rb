@@ -287,6 +287,105 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
           expect(comic.reload.title).not_to(eq(""))
         end
+
+        it "não atualiza sem title" do
+          patch comic_path(comic), params: {
+            comic: { title: "" },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(comic.reload.title).not_to(eq(""))
+        end
+
+        it "não atualiza sem issue_number" do
+          patch comic_path(comic), params: {
+            comic: { issue_number: nil },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(comic.reload.issue_number).not_to(be_nil)
+        end
+
+        it "não atualiza sem page_count" do
+          patch comic_path(comic), params: {
+            comic: { page_count: nil },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(comic.reload.page_count).not_to(be_nil)
+        end
+
+        it "não atualiza sem story_count" do
+          patch comic_path(comic), params: {
+            comic: { story_count: nil },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(comic.reload.story_count).not_to(be_nil)
+        end
+
+        it "não atualiza sem published_year" do
+          patch comic_path(comic), params: {
+            comic: { published_year: nil },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(comic.reload.published_year).not_to(be_nil)
+        end
+
+        it "não atualiza sem authors" do
+          patch comic_path(comic), params: {
+            comic: { author_ids: [] },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(comic.reload.authors).not_to(be_empty)
+        end
+
+        it "não atualiza sem characters" do
+          patch comic_path(comic), params: {
+            comic: { character_ids: [] },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(comic.reload.characters).not_to(be_empty)
+        end
+
+        it "não atualiza sem publisher_id" do
+          patch comic_path(comic), params: {
+            comic: { publisher_id: nil },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(comic.reload.publisher_id).not_to(be_nil)
+        end
+
+        it "não atualiza sem publication_type_id" do
+          patch comic_path(comic), params: {
+            comic: { publication_type_id: nil },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(comic.reload.publication_type_id).not_to(be_nil)
+        end
+
+        it "não atualiza sem book_binding_id" do
+          patch comic_path(comic), params: {
+            comic: { book_binding_id: nil },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(comic.reload.book_binding_id).not_to(be_nil)
+        end
+
+        it "não atualiza sem paper_type_id" do
+          patch comic_path(comic), params: {
+            comic: { paper_type_id: nil },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(comic.reload.paper_type_id).not_to(be_nil)
+        end
       end
     end
   end
