@@ -270,7 +270,10 @@ RSpec.describe("Comics", type: :request) do
       context "com parâmetros válidos" do
         it "atualiza o comic" do
           patch comic_path(comic), params: {
-            comic: { title: "Novo título" },
+            comic: {
+              title: "Novo título",
+              cover_image: fixture_file_upload(Rails.root.join("spec/fixtures/files/test-cover.jpg"), "image/jpeg"),
+            },
           }
 
           expect(response).to(redirect_to(comic_path(comic.reload)))
@@ -385,6 +388,14 @@ RSpec.describe("Comics", type: :request) do
 
           expect(response).to(have_http_status(:unprocessable_content))
           expect(comic.reload.paper_type_id).not_to(be_nil)
+        end
+
+        it "não atualiza sem cover_image" do
+          patch comic_path(comic), params: {
+            comic: { cover_image: nil },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
         end
       end
     end

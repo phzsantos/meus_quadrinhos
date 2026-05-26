@@ -69,6 +69,12 @@ class ComicsController < ApplicationController
 
   # PATCH/PUT /comics/1 or /comics/1.json
   def update
+    if comic_params[:cover_image].blank?
+      @comic.errors.add(:cover_image, :blank)
+
+      return render(:edit, status: :unprocessable_content)
+    end
+
     respond_to do |format|
       if @comic.update(comic_params)
         format.html { redirect_to(@comic, notice: "Quadrinho atualizado com sucesso.", status: :see_other) }
