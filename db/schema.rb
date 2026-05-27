@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_08_094616) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_27_022942) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_08_094616) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.index ["name"], name: "index_authors_on_name", unique: true
     t.index ["slug"], name: "index_authors_on_slug", unique: true
   end
 

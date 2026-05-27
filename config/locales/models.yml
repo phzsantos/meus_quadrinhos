@@ -43,3 +43,4 @@ pt-BR:
         not_a_number: "não é um número"
         restrict_dependent_destroy:
           has_many: "Não pode ser removido pois possui quadrinhos associados"
+        taken: "já cadastrado"
