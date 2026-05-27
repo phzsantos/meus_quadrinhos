@@ -108,6 +108,18 @@ RSpec.describe("Authors", type: :request) do
 
           expect(response).to(have_http_status(:unprocessable_content))
         end
+
+        it "não cria author com nome duplicado" do
+          create(:author, name: "Alan Moore")
+
+          expect do
+            post(authors_path, params: {
+              author: { name: "Alan Moore" },
+            })
+          end.not_to(change(Author, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
       end
     end
   end
@@ -146,6 +158,17 @@ RSpec.describe("Authors", type: :request) do
         it "não atualiza e renderiza edit" do
           patch author_path(author), params: {
             author: { name: "" },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(author.reload.name).to(eq("Old Name"))
+        end
+
+        it "não atualiza com nome duplicado" do
+          create(:author, name: "Existing Name")
+
+          patch author_path(author), params: {
+            author: { name: "Existing Name" },
           }
 
           expect(response).to(have_http_status(:unprocessable_content))
