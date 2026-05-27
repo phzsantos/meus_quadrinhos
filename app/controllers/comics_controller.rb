@@ -69,7 +69,7 @@ class ComicsController < ApplicationController
 
   # PATCH/PUT /comics/1 or /comics/1.json
   def update
-    if comic_params[:cover_image].blank?
+    if comic_params[:cover_image].blank? && !@comic.cover_image.attached?
       @comic.errors.add(:cover_image, :blank)
 
       return render(:edit, status: :unprocessable_content)
