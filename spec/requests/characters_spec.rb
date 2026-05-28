@@ -108,6 +108,18 @@ RSpec.describe("Characters", type: :request) do
 
           expect(response).to(have_http_status(:unprocessable_content))
         end
+
+        it "não cria character com nome duplicado" do
+          create(:character, name: "Bruce Wayne")
+
+          expect do
+            post(characters_path, params: {
+              character: { name: "Bruce Wayne" },
+            })
+          end.not_to(change(Character, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
       end
     end
   end
@@ -146,6 +158,17 @@ RSpec.describe("Characters", type: :request) do
         it "não atualiza e renderiza edit" do
           patch character_path(character), params: {
             character: { name: "" },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(character.reload.name).to(eq("Old Name"))
+        end
+
+        it "não atualiza com nome duplicado" do
+          create(:character, name: "Existing Name")
+
+          patch character_path(character), params: {
+            character: { name: "Existing Name" },
           }
 
           expect(response).to(have_http_status(:unprocessable_content))
