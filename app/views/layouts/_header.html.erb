@@ -15,9 +15,9 @@
         <div data-controller="dropdown" class="relative">
           <button
             data-action="click->dropdown#toggle"
-            class="bg-bada cursor-pointer w-38 px-3 py-2 rounded-md shadow-md hover:opacity-90">
-            <%= image_tag 'icons/user-solid-full.svg', class: "w-7 h-7 inline-block" %>
-            <%= current_user.username %>
+            class="bg-bada cursor-pointer w-38 py-2 px-2 rounded-md shadow-md hover:opacity-90 flex items-center">
+            <%= image_tag 'icons/user-solid-full.svg', class: "w-7 h-7 shrink-0" %>
+            <span class="flex-1 text-center truncate"><%= current_user.username %></span>
           </button>
 
           <div
