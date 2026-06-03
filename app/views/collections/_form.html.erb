@@ -34,7 +34,7 @@
       class: "patrick-hand-regular text-xl text-shadow-md px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition cursor-pointer" %>
 
     <%= link_to "Cancelar",
-      collection.persisted? ? collection : collections_path,
+      collection.persisted? ? collection_path(collection.slug_in_database) : collections_path,
       class: "patrick-hand-regular text-xl text-shadow-md px-6 py-2 bg-black/30 text-white rounded-md hover:bg-black/40 transition" %>
   </div>
 <% end %>
