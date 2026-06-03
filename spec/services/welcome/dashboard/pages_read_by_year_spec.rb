@@ -31,8 +31,11 @@ RSpec.describe(Welcome::Dashboard::PagesReadByYear) do
     end
 
     context "quando não existem leituras" do
-      it "retorna listas vazias" do
+      it "retorna lista de anos em que houve leitura vazia" do
         expect(context.pages_read_years).to(eq([]))
+      end
+
+      it "retorna lista de páginas lidas por ano vazia" do
         expect(context.pages_read_count_by_year).to(eq([]))
       end
     end
