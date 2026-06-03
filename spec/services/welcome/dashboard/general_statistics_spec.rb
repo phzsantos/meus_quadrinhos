@@ -46,10 +46,19 @@ RSpec.describe(Welcome::Dashboard::GeneralStatistics) do
     end
 
     context "quando não existem leituras" do
-      it "retorna todos os contadores como zero" do
+      it "retorna total de quadrinhos lidos 0" do
         expect(context.total_comics_read).to(eq(0))
+      end
+
+      it "retorna total de histórias lidas 0" do
         expect(context.total_story_count).to(eq(0))
+      end
+
+      it "retorna total de páginas lidas 0" do
         expect(context.total_pages_read).to(eq(0))
+      end
+
+      it "retorna quantidade de quadrinhos lidos esse mês 0" do
         expect(context.comics_read_this_month).to(eq(0))
       end
     end
