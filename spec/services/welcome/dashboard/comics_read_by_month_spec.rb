@@ -84,8 +84,11 @@ RSpec.describe(Welcome::Dashboard::ComicsReadByMonth) do
     end
 
     context "quando não existem leituras" do
-      it "retorna listas vazias" do
+      it "retorna lista de meses em que houve leitura vazia" do
         expect(context.read_comics_months).to(eq([]))
+      end
+
+      it "retorna lista de quantidade de leituras por mês vazia" do
         expect(context.read_comics_count_by_month).to(eq([]))
       end
     end
