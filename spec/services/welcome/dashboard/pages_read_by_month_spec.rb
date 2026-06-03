@@ -89,8 +89,11 @@ RSpec.describe(Welcome::Dashboard::PagesReadByMonth) do
     end
 
     context "quando não existem leituras" do
-      it "retorna listas vazias" do
+      it "retorna lista de meses em que houve leitura vazia" do
         expect(context.pages_read_months).to(eq([]))
+      end
+
+      it "retorna lista de páginas lidas por mês vazia" do
         expect(context.pages_read_count_by_month).to(eq([]))
       end
     end
