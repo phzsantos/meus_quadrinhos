@@ -117,6 +117,18 @@ RSpec.describe("Collections", type: :request) do
 
           expect(response).to(have_http_status(:unprocessable_content))
         end
+
+        it "não cria collection com nome duplicado" do
+          create(:collection, name: "Justiceiro: Deluxe")
+
+          expect do
+            post(collections_path, params: {
+              collection: { name: "Justiceiro: Deluxe" },
+            })
+          end.not_to(change(Collection, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
       end
     end
   end
@@ -169,6 +181,17 @@ RSpec.describe("Collections", type: :request) do
             collection: {
               name: "",
             },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(collection.reload.name).to(eq("Old Collection"))
+        end
+
+        it "não atualiza com nome duplicado" do
+          create(:collection, name: "Justiceiro: Deluxe")
+
+          patch collection_path(collection), params: {
+            collection: { name: "Justiceiro: Deluxe" },
           }
 
           expect(response).to(have_http_status(:unprocessable_content))
