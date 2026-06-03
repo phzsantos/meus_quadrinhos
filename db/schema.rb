@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_28_120000) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_02_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -75,6 +75,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_28_120000) do
     t.datetime "updated_at", null: false
     t.string "slug"
     t.string "link_guia_dos_quadrinhos"
+    t.index ["name"], name: "index_collections_on_name", unique: true
     t.index ["slug"], name: "index_collections_on_slug", unique: true
   end
 
