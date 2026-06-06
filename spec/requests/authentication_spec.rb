@@ -6,8 +6,8 @@ RSpec.describe("Authentication", type: :request) do
   let(:user) { create(:user, password: "123456") }
 
   describe "POST /users/sign_in" do
-    context "com credenciais válidas" do
-      it "loga o usuário e redireciona" do
+    context "with valid credentials" do
+      it "logs in the user and redirects" do
         post user_session_path, params: {
           user: {
             email: user.email,
@@ -19,22 +19,24 @@ RSpec.describe("Authentication", type: :request) do
       end
     end
 
-    context "com credenciais inválidas" do
-      it "não loga o usuário" do
-        post user_session_path, params: {
-          user: {
-            email: user.email,
-            password: "errada",
-          },
-        }
+    context "with invalid credentials" do
+      it "does not log in the user" do
+        I18n.with_locale(:en) do
+          post user_session_path, params: {
+            user: {
+              email: user.email,
+              password: "wrong",
+            },
+          }
 
-        expect(response.body).to(include("inválidos").or(include("Invalid")))
+          expect(response.body).to(include("Invalid"))
+        end
       end
     end
   end
 
   describe "DELETE /users/sign_out" do
-    it "faz logout com sucesso" do
+    it "logs out successfully" do
       sign_in user
 
       delete destroy_user_session_path
@@ -43,8 +45,8 @@ RSpec.describe("Authentication", type: :request) do
     end
   end
 
-  describe "POST /users (registro)" do
-    it "cria um usuário com dados válidos" do
+  describe "POST /users (registration)" do
+    it "creates a user with valid data" do
       expect do
         post(user_registration_path, params: {
           user: {
@@ -57,7 +59,7 @@ RSpec.describe("Authentication", type: :request) do
       end.to(change(User, :count).by(1))
     end
 
-    it "não cria usuário com dados inválidos" do
+    it "does not create a user with invalid data" do
       expect do
         post(user_registration_path, params: {
           user: {
@@ -71,14 +73,14 @@ RSpec.describe("Authentication", type: :request) do
     end
   end
 
-  describe "proteção de rotas" do
-    it "redireciona para login se não estiver autenticado" do
+  describe "route protection" do
+    it "redirects to login when not authenticated" do
       get authors_path
 
       expect(response).to(redirect_to(new_user_session_path))
     end
 
-    it "permite acesso se estiver autenticado" do
+    it "allows access when authenticated" do
       sign_in user
 
       get authors_path
