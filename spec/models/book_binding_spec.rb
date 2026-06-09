@@ -14,13 +14,13 @@ RSpec.describe(BookBinding, type: :model) do
   end
 
   describe "friendly_id" do
-    it "gera slug a partir do nome" do
+    it "generates slug from name" do
       book_binding = create(:book_binding, name: "Capa cartão")
 
       expect(book_binding.slug).to(eq("capa-cartao"))
     end
 
-    it "atualiza o slug quando o nome muda" do
+    it "updates slug when name changes" do
       book_binding = create(:book_binding, name: "Capa cartão")
 
       book_binding.update!(name: "Capa dura")

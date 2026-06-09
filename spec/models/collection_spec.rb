@@ -15,13 +15,13 @@ RSpec.describe(Collection, type: :model) do
   end
 
   describe "friendly_id" do
-    it "gera slug a partir do nome" do
+    it "generates slug from name" do
       collection = create(:collection, name: "Justiceiro: Deluxe")
 
       expect(collection.slug).to(eq("justiceiro-deluxe"))
     end
 
-    it "atualiza o slug quando o nome muda" do
+    it "updates slug when name changes" do
       collection = create(:collection, name: "Justiceiro: Deluxe")
 
       collection.update!(name: "Justiceiro: Omnibus")

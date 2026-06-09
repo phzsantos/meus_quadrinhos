@@ -14,13 +14,13 @@ RSpec.describe(PaperType, type: :model) do
   end
 
   describe "friendly_id" do
-    it "gera slug a partir do nome" do
+    it "generates slug from name" do
       paper_type = create(:paper_type, name: "Couchê")
 
       expect(paper_type.slug).to(eq("couche"))
     end
 
-    it "atualiza o slug quando o nome muda" do
+    it "updates slug when name changes" do
       paper_type = create(:paper_type, name: "Offset")
 
       paper_type.update!(name: "Pólen")

@@ -16,13 +16,13 @@ RSpec.describe(Character, type: :model) do
   end
 
   describe "friendly_id" do
-    it "gera slug a partir do nome" do
+    it "generates slug from name" do
       character = create(:character, name: "Bruce Wayne")
 
       expect(character.slug).to(eq("bruce-wayne"))
     end
 
-    it "atualiza o slug quando o nome muda" do
+    it "updates slug when name changes" do
       character = create(:character, name: "Bruce Wayne")
 
       character.update!(name: "Batman")

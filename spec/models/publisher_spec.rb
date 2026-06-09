@@ -14,13 +14,13 @@ RSpec.describe(Publisher, type: :model) do
   end
 
   describe "friendly_id" do
-    it "gera slug a partir do nome" do
+    it "generates slug from name" do
       publisher = create(:publisher, name: "Panini")
 
       expect(publisher.slug).to(eq("panini"))
     end
 
-    it "atualiza o slug quando o nome muda" do
+    it "updates slug when name changes" do
       publisher = create(:publisher, name: "Panini")
 
       publisher.update!(name: "Mythos")
