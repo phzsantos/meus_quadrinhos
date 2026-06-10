@@ -69,7 +69,7 @@ RSpec.describe(Comic, type: :model) do
   end
 
   describe "callbacks" do
-    it "remove ids em branco antes da validação" do
+    it "removes blank ids before validation" do
       author = create(:author)
 
       comic = build(:comic)
@@ -82,7 +82,7 @@ RSpec.describe(Comic, type: :model) do
   end
 
   describe "readings nested attributes" do
-    it "ignora reading em branco" do
+    it "ignores blank reading" do
       comic = create(:comic)
 
       comic.update(
@@ -94,7 +94,7 @@ RSpec.describe(Comic, type: :model) do
       expect(comic.readings.count).to(eq(0))
     end
 
-    it "remove reading quando _destroy é 1" do
+    it "removes reading when _destroy is 1" do
       comic = create(:comic)
       reading = create(:reading, comic: comic)
 
