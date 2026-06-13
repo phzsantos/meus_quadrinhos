@@ -6,9 +6,9 @@ RSpec.describe(Welcome::Dashboard::LatestReadings) do
   subject(:context) { described_class.call }
 
   describe ".call" do
-    context "quando existem mais de seis leituras" do
+    context "when there are more than six readings" do
       before do
-        # leituras mais antigas
+        # older readings
         3.times do |i|
           create(
             :reading,
@@ -17,7 +17,7 @@ RSpec.describe(Welcome::Dashboard::LatestReadings) do
           )
         end
 
-        # leituras mais recentes
+        # most recent readings
         4.times do |i|
           create(
             :reading,
@@ -27,34 +27,34 @@ RSpec.describe(Welcome::Dashboard::LatestReadings) do
         end
       end
 
-      it "retorna apenas as seis leituras mais recentes" do
+      it "returns only the six most recent readings" do
         expect(context.latest_readings.size).to(eq(6))
       end
 
-      it "retorna as leituras ordenadas da mais recente para a mais antiga" do
+      it "returns readings ordered from most recent to oldest" do
         dates = context.latest_readings.map(&:read_at)
 
         expect(dates).to(eq(dates.sort.reverse))
       end
 
-      it "executa o fluxo com sucesso" do
+      it "executes the flow successfully" do
         expect(context).to(be_success)
       end
     end
 
-    context "quando existem menos de seis leituras" do
+    context "when there are fewer than six readings" do
       before do
         create(:reading, read_at: Date.new(2023, 3, 10))
         create(:reading, read_at: Date.new(2023, 3, 5))
       end
 
-      it "retorna todas as leituras existentes" do
+      it "returns all existing readings" do
         expect(context.latest_readings.size).to(eq(2))
       end
     end
 
-    context "quando não existem leituras" do
-      it "retorna uma coleção vazia" do
+    context "when there are no readings" do
+      it "returns an empty collection" do
         expect(context.latest_readings).to(be_empty)
       end
     end
