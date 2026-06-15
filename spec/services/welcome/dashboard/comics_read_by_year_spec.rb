@@ -6,32 +6,32 @@ RSpec.describe(Welcome::Dashboard::ComicsReadByYear) do
   subject(:context) { described_class.call }
 
   describe ".call" do
-    context "quando existem leituras" do
+    context "when there are readings" do
       before do
         create(:reading, read_at: Date.new(2022, 5, 10))
         create(:reading, read_at: Date.new(2022, 8, 3))
         create(:reading, read_at: Date.new(2023, 1, 20))
       end
 
-      it "retorna os anos em que houve leitura, em ordem crescente" do
+      it "returns years with readings in ascending order" do
         expect(context.read_comics_years).to(eq([2022, 2023]))
       end
 
-      it "retorna a quantidade de leituras por ano respeitando a ordem dos anos" do
+      it "returns reading counts per year respecting year order" do
         expect(context.read_comics_count_by_year).to(eq([2, 1]))
       end
 
-      it "executa o fluxo com sucesso" do
+      it "executes the flow successfully" do
         expect(context).to(be_success)
       end
     end
 
-    context "quando não existem leituras" do
-      it "retorna lista de anos em que houve leitura vazia" do
+    context "when there are no readings" do
+      it "returns an empty list of years with readings" do
         expect(context.read_comics_years).to(eq([]))
       end
 
-      it "retorna lista de quantidade de leituras por ano vazia" do
+      it "returns an empty list of reading counts per year" do
         expect(context.read_comics_count_by_year).to(eq([]))
       end
     end
