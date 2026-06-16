@@ -6,7 +6,7 @@ RSpec.describe(Welcome::Dashboard::PagesReadByMonth) do
   subject(:context) { described_class.call }
 
   describe ".call" do
-    context "quando existem leituras em diferentes meses" do
+    context "when there are readings in different months" do
       let!(:comic_jan) { create(:comic, page_count: 120) }
       let!(:comic_jan_2) { create(:comic, page_count: 80) }
       let!(:comic_feb) { create(:comic, page_count: 200) }
@@ -17,7 +17,7 @@ RSpec.describe(Welcome::Dashboard::PagesReadByMonth) do
         create(:reading, comic: comic_feb,   read_at: Date.new(2023, 2, 10))
       end
 
-      it "retorna os meses em que houve leitura, normalizados para o início do mês e em ordem cronológica" do
+      it "returns months with readings, normalized to the start of the month and in chronological order" do
         expect(context.pages_read_months).to(eq(
           [
             Date.new(2023, 1, 1),
@@ -26,16 +26,16 @@ RSpec.describe(Welcome::Dashboard::PagesReadByMonth) do
         ))
       end
 
-      it "retorna o total de páginas lidas por mês respeitando a ordem dos meses" do
+      it "returns page counts per month respecting month order" do
         expect(context.pages_read_count_by_month).to(eq([200, 200]))
       end
 
-      it "executa o fluxo com sucesso" do
+      it "executes the flow successfully" do
         expect(context).to(be_success)
       end
     end
 
-    context "quando start_date é nil" do
+    context "when start_date is nil" do
       subject(:context) do
         described_class.call(
           start_date: nil,
@@ -51,7 +51,7 @@ RSpec.describe(Welcome::Dashboard::PagesReadByMonth) do
         create(:reading, comic: comic_feb, read_at: Date.new(2023, 2, 10))
       end
 
-      it "não aplica filtro e retorna todos os meses" do
+      it "does not apply filter and returns all months" do
         expect(context.pages_read_months).to(eq(
           [
             Date.new(2023, 1, 1),
@@ -61,7 +61,7 @@ RSpec.describe(Welcome::Dashboard::PagesReadByMonth) do
       end
     end
 
-    context "quando existe filtro por período" do
+    context "when there is a date range filter" do
       subject(:context) do
         described_class.call(
           start_date: Date.new(2023, 2, 1),
@@ -77,23 +77,23 @@ RSpec.describe(Welcome::Dashboard::PagesReadByMonth) do
         create(:reading, comic: comic_feb, read_at: Date.new(2023, 2, 10))
       end
 
-      it "retorna apenas os meses dentro do período informado" do
+      it "returns only months within the given period" do
         expect(context.pages_read_months).to(eq(
           [Date.new(2023, 2, 1)],
         ))
       end
 
-      it "retorna apenas as páginas dentro do período informado" do
+      it "returns only pages within the given period" do
         expect(context.pages_read_count_by_month).to(eq([200]))
       end
     end
 
-    context "quando não existem leituras" do
-      it "retorna lista de meses em que houve leitura vazia" do
+    context "when there are no readings" do
+      it "returns an empty list of months with readings" do
         expect(context.pages_read_months).to(eq([]))
       end
 
-      it "retorna lista de páginas lidas por mês vazia" do
+      it "returns an empty list of page counts per month" do
         expect(context.pages_read_count_by_month).to(eq([]))
       end
     end
