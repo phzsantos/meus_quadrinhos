@@ -45,12 +45,12 @@ RSpec.describe("Welcome", type: :request) do
         .and_return(context_double))
     end
 
-    it "retorna sucesso" do
+    it "returns success" do
       get root_path
       expect(response).to(have_http_status(:ok))
     end
 
-    it "chama o organizer do dashboard" do
+    it "calls the dashboard organizer" do
       get root_path
       expect(Welcome::Dashboard::Organizer).to(have_received(:call))
     end
