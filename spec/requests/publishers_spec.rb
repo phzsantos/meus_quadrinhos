@@ -9,7 +9,7 @@ RSpec.describe("Publishers", type: :request) do
   describe "GET /publishers" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       get publishers_path
       expect(response).to(have_http_status(:ok))
     end
@@ -18,7 +18,7 @@ RSpec.describe("Publishers", type: :request) do
   describe "GET /publishers/:id" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       publisher = create(:publisher)
 
       get publisher_path(publisher)
@@ -27,19 +27,19 @@ RSpec.describe("Publishers", type: :request) do
   end
 
   describe "GET /publishers/new" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get new_publisher_path
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get new_publisher_path
         expect(response).to(have_http_status(:ok))
       end
@@ -49,19 +49,19 @@ RSpec.describe("Publishers", type: :request) do
   describe "GET /publishers/:id/edit" do
     let(:publisher) { create(:publisher) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get edit_publisher_path(publisher)
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get edit_publisher_path(publisher)
         expect(response).to(have_http_status(:ok))
       end
@@ -69,10 +69,10 @@ RSpec.describe("Publishers", type: :request) do
   end
 
   describe "POST /publishers" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não cria publisher" do
+      it "does not create publisher" do
         expect do
           post(publishers_path, params: {
             publisher: { name: "DC Comics" },
@@ -83,11 +83,11 @@ RSpec.describe("Publishers", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "cria um publisher" do
+      context "with valid parameters" do
+        it "creates a publisher" do
           expect do
             post(publishers_path, params: {
               publisher: { name: "DC Comics" },
@@ -98,8 +98,8 @@ RSpec.describe("Publishers", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não cria e renderiza new" do
+      context "with invalid parameters" do
+        it "does not create and renders new" do
           expect do
             post(publishers_path, params: {
               publisher: { name: "" },
@@ -115,10 +115,10 @@ RSpec.describe("Publishers", type: :request) do
   describe "PATCH /publishers/:id" do
     let(:publisher) { create(:publisher, name: "Old Publisher") }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não atualiza" do
+      it "does not update" do
         patch publisher_path(publisher), params: {
           publisher: { name: "New Publisher" },
         }
@@ -128,11 +128,11 @@ RSpec.describe("Publishers", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "atualiza o publisher" do
+      context "with valid parameters" do
+        it "updates the publisher" do
           patch publisher_path(publisher), params: {
             publisher: { name: "New Publisher" },
           }
@@ -142,8 +142,8 @@ RSpec.describe("Publishers", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não atualiza e renderiza edit" do
+      context "with invalid parameters" do
+        it "does not update and renders edit" do
           patch publisher_path(publisher), params: {
             publisher: { name: "" },
           }
@@ -158,10 +158,10 @@ RSpec.describe("Publishers", type: :request) do
   describe "DELETE /publishers/:id" do
     let!(:publisher) { create(:publisher) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não remove" do
+      it "does not remove" do
         expect do
           delete(publisher_path(publisher))
         end.not_to(change(Publisher, :count))
@@ -170,10 +170,10 @@ RSpec.describe("Publishers", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "remove o publisher" do
+      it "removes the publisher" do
         expect do
           delete(publisher_path(publisher))
         end.to(change(Publisher, :count).by(-1))
@@ -181,7 +181,7 @@ RSpec.describe("Publishers", type: :request) do
         expect(response).to(redirect_to(publishers_path))
       end
 
-      it "não remove o publisher quando tem quadrinhos associados" do
+      it "does not remove the publisher when it has associated comics" do
         create(:comic, publisher: publisher)
 
         expect do
