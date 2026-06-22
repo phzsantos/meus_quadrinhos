@@ -9,7 +9,7 @@ RSpec.describe("PublicationTypes", type: :request) do
   describe "GET /publication_types" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       get publication_types_path
       expect(response).to(have_http_status(:ok))
     end
@@ -18,7 +18,7 @@ RSpec.describe("PublicationTypes", type: :request) do
   describe "GET /publication_types/:id" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       publication_type = create(:publication_type)
 
       get publication_type_path(publication_type)
@@ -27,19 +27,19 @@ RSpec.describe("PublicationTypes", type: :request) do
   end
 
   describe "GET /publication_types/new" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get new_publication_type_path
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get new_publication_type_path
         expect(response).to(have_http_status(:ok))
       end
@@ -49,19 +49,19 @@ RSpec.describe("PublicationTypes", type: :request) do
   describe "GET /publication_types/:id/edit" do
     let(:publication_type) { create(:publication_type) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get edit_publication_type_path(publication_type)
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get edit_publication_type_path(publication_type)
         expect(response).to(have_http_status(:ok))
       end
@@ -69,10 +69,10 @@ RSpec.describe("PublicationTypes", type: :request) do
   end
 
   describe "POST /publication_types" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não cria publication type" do
+      it "does not create publication type" do
         expect do
           post(publication_types_path, params: {
             publication_type: { name: "Graphic Novel" },
@@ -83,11 +83,11 @@ RSpec.describe("PublicationTypes", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "cria um publication type" do
+      context "with valid parameters" do
+        it "creates a publication type" do
           expect do
             post(publication_types_path, params: {
               publication_type: { name: "Graphic Novel" },
@@ -98,8 +98,8 @@ RSpec.describe("PublicationTypes", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não cria e renderiza new" do
+      context "with invalid parameters" do
+        it "does not create and renders new" do
           expect do
             post(publication_types_path, params: {
               publication_type: { name: "" },
@@ -115,10 +115,10 @@ RSpec.describe("PublicationTypes", type: :request) do
   describe "PATCH /publication_types/:id" do
     let(:publication_type) { create(:publication_type, name: "Old Type") }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não atualiza" do
+      it "does not update" do
         patch publication_type_path(publication_type), params: {
           publication_type: { name: "New Type" },
         }
@@ -128,11 +128,11 @@ RSpec.describe("PublicationTypes", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "atualiza o publication type" do
+      context "with valid parameters" do
+        it "updates the publication type" do
           patch publication_type_path(publication_type), params: {
             publication_type: { name: "New Type" },
           }
@@ -142,8 +142,8 @@ RSpec.describe("PublicationTypes", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não atualiza e renderiza edit" do
+      context "with invalid parameters" do
+        it "does not update and renders edit" do
           patch publication_type_path(publication_type), params: {
             publication_type: { name: "" },
           }
@@ -158,10 +158,10 @@ RSpec.describe("PublicationTypes", type: :request) do
   describe "DELETE /publication_types/:id" do
     let!(:publication_type) { create(:publication_type) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não remove" do
+      it "does not remove" do
         expect do
           delete(publication_type_path(publication_type))
         end.not_to(change(PublicationType, :count))
@@ -170,10 +170,10 @@ RSpec.describe("PublicationTypes", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "remove o publication type" do
+      it "removes the publication type" do
         expect do
           delete(publication_type_path(publication_type))
         end.to(change(PublicationType, :count).by(-1))
@@ -181,7 +181,7 @@ RSpec.describe("PublicationTypes", type: :request) do
         expect(response).to(redirect_to(publication_types_path))
       end
 
-      it "não remove o publication type quando tem quadrinhos associados" do
+      it "does not remove the publication type when it has associated comics" do
         create(:comic, publication_type: publication_type)
 
         expect do
