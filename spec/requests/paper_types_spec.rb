@@ -9,7 +9,7 @@ RSpec.describe("PaperTypes", type: :request) do
   describe "GET /paper_types" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       get paper_types_path
       expect(response).to(have_http_status(:ok))
     end
@@ -18,7 +18,7 @@ RSpec.describe("PaperTypes", type: :request) do
   describe "GET /paper_types/:id" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       paper_type = create(:paper_type)
 
       get paper_type_path(paper_type)
@@ -27,19 +27,19 @@ RSpec.describe("PaperTypes", type: :request) do
   end
 
   describe "GET /paper_types/new" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get new_paper_type_path
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get new_paper_type_path
         expect(response).to(have_http_status(:ok))
       end
@@ -49,19 +49,19 @@ RSpec.describe("PaperTypes", type: :request) do
   describe "GET /paper_types/:id/edit" do
     let(:paper_type) { create(:paper_type) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get edit_paper_type_path(paper_type)
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get edit_paper_type_path(paper_type)
         expect(response).to(have_http_status(:ok))
       end
@@ -69,10 +69,10 @@ RSpec.describe("PaperTypes", type: :request) do
   end
 
   describe "POST /paper_types" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não cria paper type" do
+      it "does not create paper type" do
         expect do
           post(paper_types_path, params: {
             paper_type: { name: "Couché" },
@@ -83,11 +83,11 @@ RSpec.describe("PaperTypes", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "cria um paper type" do
+      context "with valid parameters" do
+        it "creates a paper type" do
           expect do
             post(paper_types_path, params: {
               paper_type: { name: "Couché" },
@@ -98,8 +98,8 @@ RSpec.describe("PaperTypes", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não cria e renderiza new" do
+      context "with invalid parameters" do
+        it "does not create and renders new" do
           expect do
             post(paper_types_path, params: {
               paper_type: { name: "" },
@@ -115,10 +115,10 @@ RSpec.describe("PaperTypes", type: :request) do
   describe "PATCH /paper_types/:id" do
     let(:paper_type) { create(:paper_type, name: "Old Paper") }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não atualiza" do
+      it "does not update" do
         patch paper_type_path(paper_type), params: {
           paper_type: { name: "New Paper" },
         }
@@ -128,11 +128,11 @@ RSpec.describe("PaperTypes", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "atualiza o paper type" do
+      context "with valid parameters" do
+        it "updates the paper type" do
           patch paper_type_path(paper_type), params: {
             paper_type: { name: "New Paper" },
           }
@@ -142,8 +142,8 @@ RSpec.describe("PaperTypes", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não atualiza e renderiza edit" do
+      context "with invalid parameters" do
+        it "does not update and renders edit" do
           patch paper_type_path(paper_type), params: {
             paper_type: { name: "" },
           }
@@ -158,10 +158,10 @@ RSpec.describe("PaperTypes", type: :request) do
   describe "DELETE /paper_types/:id" do
     let!(:paper_type) { create(:paper_type) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não remove" do
+      it "does not remove" do
         expect do
           delete(paper_type_path(paper_type))
         end.not_to(change(PaperType, :count))
@@ -170,10 +170,10 @@ RSpec.describe("PaperTypes", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "remove o paper type" do
+      it "removes the paper type" do
         expect do
           delete(paper_type_path(paper_type))
         end.to(change(PaperType, :count).by(-1))
@@ -181,7 +181,7 @@ RSpec.describe("PaperTypes", type: :request) do
         expect(response).to(redirect_to(paper_types_path))
       end
 
-      it "não remove o paper type quando tem quadrinhos associados" do
+      it "does not remove the paper type when it has associated comics" do
         create(:comic, paper_type: paper_type)
 
         expect do
