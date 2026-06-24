@@ -9,7 +9,7 @@ RSpec.describe("Collections", type: :request) do
   describe "GET /collections" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       get collections_path
       expect(response).to(have_http_status(:ok))
     end
@@ -18,7 +18,7 @@ RSpec.describe("Collections", type: :request) do
   describe "GET /collections/:id" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       collection = create(:collection)
 
       get collection_path(collection)
@@ -27,19 +27,19 @@ RSpec.describe("Collections", type: :request) do
   end
 
   describe "GET /collections/new" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get new_collection_path
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get new_collection_path
         expect(response).to(have_http_status(:ok))
       end
@@ -49,19 +49,19 @@ RSpec.describe("Collections", type: :request) do
   describe "GET /collections/:id/edit" do
     let(:collection) { create(:collection) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get edit_collection_path(collection)
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get edit_collection_path(collection)
         expect(response).to(have_http_status(:ok))
       end
@@ -69,10 +69,10 @@ RSpec.describe("Collections", type: :request) do
   end
 
   describe "POST /collections" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não cria collection" do
+      it "does not create collection" do
         expect do
           post(collections_path, params: {
             collection: {
@@ -86,11 +86,11 @@ RSpec.describe("Collections", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "cria uma collection" do
+      context "with valid parameters" do
+        it "creates a collection" do
           expect do
             post(collections_path, params: {
               collection: {
@@ -104,8 +104,8 @@ RSpec.describe("Collections", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não cria e renderiza new" do
+      context "with invalid parameters" do
+        it "does not create and renders new" do
           expect do
             post(collections_path, params: {
               collection: {
@@ -118,7 +118,7 @@ RSpec.describe("Collections", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria collection com nome duplicado" do
+        it "does not create collection with duplicate name" do
           create(:collection, name: "Justiceiro: Deluxe")
 
           expect do
@@ -142,10 +142,10 @@ RSpec.describe("Collections", type: :request) do
       )
     end
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não atualiza" do
+      it "does not update" do
         patch collection_path(collection), params: {
           collection: {
             name: "New Collection",
@@ -157,11 +157,11 @@ RSpec.describe("Collections", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "atualiza a collection" do
+      context "with valid parameters" do
+        it "updates the collection" do
           patch collection_path(collection), params: {
             collection: {
               name: "New Collection",
@@ -175,8 +175,8 @@ RSpec.describe("Collections", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não atualiza e renderiza edit" do
+      context "with invalid parameters" do
+        it "does not update and renders edit" do
           patch collection_path(collection), params: {
             collection: {
               name: "",
@@ -187,7 +187,7 @@ RSpec.describe("Collections", type: :request) do
           expect(collection.reload.name).to(eq("Old Collection"))
         end
 
-        it "não atualiza com nome duplicado" do
+        it "does not update with duplicate name" do
           create(:collection, name: "Justiceiro: Deluxe")
 
           patch collection_path(collection), params: {
@@ -204,10 +204,10 @@ RSpec.describe("Collections", type: :request) do
   describe "DELETE /collections/:id" do
     let!(:collection) { create(:collection) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não remove" do
+      it "does not remove" do
         expect do
           delete(collection_path(collection))
         end.not_to(change(Collection, :count))
@@ -216,10 +216,10 @@ RSpec.describe("Collections", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "remove a collection" do
+      it "removes the collection" do
         expect do
           delete(collection_path(collection))
         end.to(change(Collection, :count).by(-1))
@@ -227,7 +227,7 @@ RSpec.describe("Collections", type: :request) do
         expect(response).to(redirect_to(collections_path))
       end
 
-      it "remove a collection mesmo com quadrinhos associados" do
+      it "removes the collection even with associated comics" do
         create(:comic, collection:)
 
         expect do
@@ -237,7 +237,7 @@ RSpec.describe("Collections", type: :request) do
         expect(response).to(redirect_to(collections_path))
       end
 
-      it "remove a collection e retira associação dos quadrinhos" do
+      it "removes the collection and clears comics association" do
         comic = create(:comic, collection: collection)
 
         delete(collection_path(collection))
