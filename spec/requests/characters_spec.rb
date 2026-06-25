@@ -9,7 +9,7 @@ RSpec.describe("Characters", type: :request) do
   describe "GET /characters" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       get characters_path
       expect(response).to(have_http_status(:ok))
     end
@@ -18,7 +18,7 @@ RSpec.describe("Characters", type: :request) do
   describe "GET /characters/:id" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       character = create(:character)
 
       get character_path(character)
@@ -27,19 +27,19 @@ RSpec.describe("Characters", type: :request) do
   end
 
   describe "GET /characters/new" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get new_character_path
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get new_character_path
         expect(response).to(have_http_status(:ok))
       end
@@ -49,19 +49,19 @@ RSpec.describe("Characters", type: :request) do
   describe "GET /characters/:id/edit" do
     let(:character) { create(:character) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get edit_character_path(character)
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get edit_character_path(character)
         expect(response).to(have_http_status(:ok))
       end
@@ -69,10 +69,10 @@ RSpec.describe("Characters", type: :request) do
   end
 
   describe "POST /characters" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não cria character" do
+      it "does not create character" do
         expect do
           post(characters_path, params: {
             character: { name: "Bruce Wayne" },
@@ -83,11 +83,11 @@ RSpec.describe("Characters", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "cria um character" do
+      context "with valid parameters" do
+        it "creates a character" do
           expect do
             post(characters_path, params: {
               character: { name: "Bruce Wayne" },
@@ -98,8 +98,8 @@ RSpec.describe("Characters", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não cria e renderiza new" do
+      context "with invalid parameters" do
+        it "does not create and renders new" do
           expect do
             post(characters_path, params: {
               character: { name: "" },
@@ -109,7 +109,7 @@ RSpec.describe("Characters", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria character com nome duplicado" do
+        it "does not create character with duplicate name" do
           create(:character, name: "Bruce Wayne")
 
           expect do
@@ -127,10 +127,10 @@ RSpec.describe("Characters", type: :request) do
   describe "PATCH /characters/:id" do
     let(:character) { create(:character, name: "Old Name") }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não atualiza" do
+      it "does not update" do
         patch character_path(character), params: {
           character: { name: "New Name" },
         }
@@ -140,11 +140,11 @@ RSpec.describe("Characters", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "atualiza o character" do
+      context "with valid parameters" do
+        it "updates the character" do
           patch character_path(character), params: {
             character: { name: "New Name" },
           }
@@ -154,8 +154,8 @@ RSpec.describe("Characters", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não atualiza e renderiza edit" do
+      context "with invalid parameters" do
+        it "does not update and renders edit" do
           patch character_path(character), params: {
             character: { name: "" },
           }
@@ -164,7 +164,7 @@ RSpec.describe("Characters", type: :request) do
           expect(character.reload.name).to(eq("Old Name"))
         end
 
-        it "não atualiza com nome duplicado" do
+        it "does not update with duplicate name" do
           create(:character, name: "Existing Name")
 
           patch character_path(character), params: {
@@ -181,10 +181,10 @@ RSpec.describe("Characters", type: :request) do
   describe "DELETE /characters/:id" do
     let!(:character) { create(:character) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não remove" do
+      it "does not remove" do
         expect do
           delete(character_path(character))
         end.not_to(change(Character, :count))
@@ -193,10 +193,10 @@ RSpec.describe("Characters", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "remove o character" do
+      it "removes the character" do
         expect do
           delete(character_path(character))
         end.to(change(Character, :count).by(-1))
@@ -204,7 +204,7 @@ RSpec.describe("Characters", type: :request) do
         expect(response).to(redirect_to(characters_path))
       end
 
-      it "não remove o personagem quando tem quadrinhos associados" do
+      it "does not remove character when it has associated comics" do
         create(:comic, characters: [character])
 
         expect do
