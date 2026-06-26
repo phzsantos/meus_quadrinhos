@@ -9,7 +9,7 @@ RSpec.describe("BookBindings", type: :request) do
   describe "GET /book_bindings" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       get book_bindings_path
       expect(response).to(have_http_status(:ok))
     end
@@ -18,7 +18,7 @@ RSpec.describe("BookBindings", type: :request) do
   describe "GET /book_bindings/:id" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       book_binding = create(:book_binding)
 
       get book_binding_path(book_binding)
@@ -27,19 +27,19 @@ RSpec.describe("BookBindings", type: :request) do
   end
 
   describe "GET /book_bindings/new" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get new_book_binding_path
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get new_book_binding_path
         expect(response).to(have_http_status(:ok))
       end
@@ -49,19 +49,19 @@ RSpec.describe("BookBindings", type: :request) do
   describe "GET /book_bindings/:id/edit" do
     let(:book_binding) { create(:book_binding) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get edit_book_binding_path(book_binding)
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get edit_book_binding_path(book_binding)
         expect(response).to(have_http_status(:ok))
       end
@@ -69,10 +69,10 @@ RSpec.describe("BookBindings", type: :request) do
   end
 
   describe "POST /book_bindings" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não cria book binding" do
+      it "does not create book binding" do
         expect do
           post(book_bindings_path, params: {
             book_binding: { name: "Hardcover" },
@@ -83,11 +83,11 @@ RSpec.describe("BookBindings", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "cria um book binding" do
+      context "with valid parameters" do
+        it "creates a book binding" do
           expect do
             post(book_bindings_path, params: {
               book_binding: { name: "Hardcover" },
@@ -98,8 +98,8 @@ RSpec.describe("BookBindings", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não cria e renderiza new" do
+      context "with invalid parameters" do
+        it "does not create and renders new" do
           expect do
             post(book_bindings_path, params: {
               book_binding: { name: "" },
@@ -115,10 +115,10 @@ RSpec.describe("BookBindings", type: :request) do
   describe "PATCH /book_bindings/:id" do
     let(:book_binding) { create(:book_binding, name: "Old Binding") }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não atualiza" do
+      it "does not update" do
         patch book_binding_path(book_binding), params: {
           book_binding: { name: "New Binding" },
         }
@@ -128,11 +128,11 @@ RSpec.describe("BookBindings", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "atualiza o book binding" do
+      context "with valid parameters" do
+        it "updates the book binding" do
           patch book_binding_path(book_binding), params: {
             book_binding: { name: "New Binding" },
           }
@@ -142,8 +142,8 @@ RSpec.describe("BookBindings", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não atualiza e renderiza edit" do
+      context "with invalid parameters" do
+        it "does not update and renders edit" do
           patch book_binding_path(book_binding), params: {
             book_binding: { name: "" },
           }
@@ -158,10 +158,10 @@ RSpec.describe("BookBindings", type: :request) do
   describe "DELETE /book_bindings/:id" do
     let!(:book_binding) { create(:book_binding) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não remove" do
+      it "does not remove" do
         expect do
           delete(book_binding_path(book_binding))
         end.not_to(change(BookBinding, :count))
@@ -170,10 +170,10 @@ RSpec.describe("BookBindings", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "remove o book binding" do
+      it "removes the book binding" do
         expect do
           delete(book_binding_path(book_binding))
         end.to(change(BookBinding, :count).by(-1))
@@ -181,7 +181,7 @@ RSpec.describe("BookBindings", type: :request) do
         expect(response).to(redirect_to(book_bindings_path))
       end
 
-      it "não remove o publisher quando tem quadrinhos associados" do
+      it "does not remove the book binding when it has associated comics" do
         create(:comic, book_binding: book_binding)
 
         expect do
