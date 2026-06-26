@@ -55,7 +55,7 @@ RSpec.describe("Comics", type: :request) do
   describe "GET /comics" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       get comics_path
       expect(response).to(have_http_status(:ok))
     end
@@ -64,7 +64,7 @@ RSpec.describe("Comics", type: :request) do
   describe "GET /comics/:id" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       comic = create(:comic)
 
       get comic_path(comic)
@@ -73,19 +73,19 @@ RSpec.describe("Comics", type: :request) do
   end
 
   describe "GET /comics/new" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get new_comic_path
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get new_comic_path
         expect(response).to(have_http_status(:ok))
       end
@@ -95,19 +95,19 @@ RSpec.describe("Comics", type: :request) do
   describe "GET /comics/:id/edit" do
     let(:comic) { create(:comic) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get edit_comic_path(comic)
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get edit_comic_path(comic)
         expect(response).to(have_http_status(:ok))
       end
@@ -115,10 +115,10 @@ RSpec.describe("Comics", type: :request) do
   end
 
   describe "POST /comics" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não cria comic" do
+      it "does not create comic" do
         expect do
           post(comics_path, params: { comic: valid_attributes })
         end.not_to(change(Comic, :count))
@@ -127,11 +127,11 @@ RSpec.describe("Comics", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "cria um comic" do
+      context "with valid parameters" do
+        it "creates a comic" do
           expect do
             post(comics_path, params: { comic: valid_attributes })
           end.to(change(Comic, :count).by(1))
@@ -140,8 +140,8 @@ RSpec.describe("Comics", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não cria e renderiza new" do
+      context "with invalid parameters" do
+        it "does not create and renders new" do
           expect do
             post(comics_path, params: { comic: invalid_attributes })
           end.not_to(change(Comic, :count))
@@ -149,7 +149,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria sem title" do
+        it "does not create without title" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(title: "") })
           end.not_to(change(Comic, :count))
@@ -157,7 +157,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria sem page_count" do
+        it "does not create without page_count" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(page_count: nil) })
           end.not_to(change(Comic, :count))
@@ -165,7 +165,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria sem story_count" do
+        it "does not create without story_count" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(story_count: nil) })
           end.not_to(change(Comic, :count))
@@ -173,7 +173,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria sem published_year" do
+        it "does not create without published_year" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(published_year: nil) })
           end.not_to(change(Comic, :count))
@@ -181,7 +181,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria sem authors" do
+        it "does not create without authors" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(author_ids: []) })
           end.not_to(change(Comic, :count))
@@ -189,7 +189,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria sem characters" do
+        it "does not create without characters" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(character_ids: []) })
           end.not_to(change(Comic, :count))
@@ -197,7 +197,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria sem publisher_id" do
+        it "does not create without publisher_id" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(publisher_id: nil) })
           end.not_to(change(Comic, :count))
@@ -205,7 +205,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria sem publication_type_id" do
+        it "does not create without publication_type_id" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(publication_type_id: nil) })
           end.not_to(change(Comic, :count))
@@ -213,7 +213,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria sem book_binding_id" do
+        it "does not create without book_binding_id" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(book_binding_id: nil) })
           end.not_to(change(Comic, :count))
@@ -221,7 +221,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria sem paper_type_id" do
+        it "does not create without paper_type_id" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(paper_type_id: nil) })
           end.not_to(change(Comic, :count))
@@ -229,7 +229,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria sem issue_number" do
+        it "does not create without issue_number" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(issue_number: nil) })
           end.not_to(change(Comic, :count))
@@ -237,7 +237,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria sem cover_image" do
+        it "does not create without cover_image" do
           expect do
             post(comics_path, params: { comic: valid_attributes.merge(cover_image: nil) })
           end.not_to(change(Comic, :count))
@@ -251,38 +251,38 @@ RSpec.describe("Comics", type: :request) do
   describe "PATCH /comics/:id" do
     let!(:comic) { create(:comic) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não atualiza" do
+      it "does not update" do
         patch comic_path(comic), params: {
-          comic: { title: "Novo título" },
+          comic: { title: "New Title" },
         }
 
         expect(response).to(redirect_to(root_path))
-        expect(comic.reload.title).not_to(eq("Novo título"))
+        expect(comic.reload.title).not_to(eq("New Title"))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "atualiza o comic" do
+      context "with valid parameters" do
+        it "updates the comic" do
           patch comic_path(comic), params: {
             comic: {
-              title: "Novo título",
+              title: "New Title",
               cover_image: fixture_file_upload(Rails.root.join("spec/fixtures/files/test-cover.jpg"), "image/jpeg"),
             },
           }
 
           expect(response).to(redirect_to(comic_path(comic.reload)))
-          expect(comic.reload.title).to(eq("Novo título"))
+          expect(comic.reload.title).to(eq("New Title"))
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não atualiza e renderiza edit" do
+      context "with invalid parameters" do
+        it "does not update and renders edit" do
           patch comic_path(comic), params: {
             comic: { title: "" },
           }
@@ -291,7 +291,7 @@ RSpec.describe("Comics", type: :request) do
           expect(comic.reload.title).not_to(eq(""))
         end
 
-        it "não atualiza sem title" do
+        it "does not update without title" do
           patch comic_path(comic), params: {
             comic: { title: "" },
           }
@@ -300,7 +300,7 @@ RSpec.describe("Comics", type: :request) do
           expect(comic.reload.title).not_to(eq(""))
         end
 
-        it "não atualiza sem issue_number" do
+        it "does not update without issue_number" do
           patch comic_path(comic), params: {
             comic: { issue_number: nil },
           }
@@ -309,7 +309,7 @@ RSpec.describe("Comics", type: :request) do
           expect(comic.reload.issue_number).not_to(be_nil)
         end
 
-        it "não atualiza sem page_count" do
+        it "does not update without page_count" do
           patch comic_path(comic), params: {
             comic: { page_count: nil },
           }
@@ -318,7 +318,7 @@ RSpec.describe("Comics", type: :request) do
           expect(comic.reload.page_count).not_to(be_nil)
         end
 
-        it "não atualiza sem story_count" do
+        it "does not update without story_count" do
           patch comic_path(comic), params: {
             comic: { story_count: nil },
           }
@@ -327,7 +327,7 @@ RSpec.describe("Comics", type: :request) do
           expect(comic.reload.story_count).not_to(be_nil)
         end
 
-        it "não atualiza sem published_year" do
+        it "does not update without published_year" do
           patch comic_path(comic), params: {
             comic: { published_year: nil },
           }
@@ -336,7 +336,7 @@ RSpec.describe("Comics", type: :request) do
           expect(comic.reload.published_year).not_to(be_nil)
         end
 
-        it "não atualiza sem authors" do
+        it "does not update without authors" do
           patch comic_path(comic), params: {
             comic: { author_ids: [] },
           }
@@ -345,7 +345,7 @@ RSpec.describe("Comics", type: :request) do
           expect(comic.reload.authors).not_to(be_empty)
         end
 
-        it "não atualiza sem characters" do
+        it "does not update without characters" do
           patch comic_path(comic), params: {
             comic: { character_ids: [] },
           }
@@ -354,7 +354,7 @@ RSpec.describe("Comics", type: :request) do
           expect(comic.reload.characters).not_to(be_empty)
         end
 
-        it "não atualiza sem publisher_id" do
+        it "does not update without publisher_id" do
           patch comic_path(comic), params: {
             comic: { publisher_id: nil },
           }
@@ -363,7 +363,7 @@ RSpec.describe("Comics", type: :request) do
           expect(comic.reload.publisher_id).not_to(be_nil)
         end
 
-        it "não atualiza sem publication_type_id" do
+        it "does not update without publication_type_id" do
           patch comic_path(comic), params: {
             comic: { publication_type_id: nil },
           }
@@ -372,7 +372,7 @@ RSpec.describe("Comics", type: :request) do
           expect(comic.reload.publication_type_id).not_to(be_nil)
         end
 
-        it "não atualiza sem book_binding_id" do
+        it "does not update without book_binding_id" do
           patch comic_path(comic), params: {
             comic: { book_binding_id: nil },
           }
@@ -381,7 +381,7 @@ RSpec.describe("Comics", type: :request) do
           expect(comic.reload.book_binding_id).not_to(be_nil)
         end
 
-        it "não atualiza sem paper_type_id" do
+        it "does not update without paper_type_id" do
           patch comic_path(comic), params: {
             comic: { paper_type_id: nil },
           }
@@ -390,7 +390,7 @@ RSpec.describe("Comics", type: :request) do
           expect(comic.reload.paper_type_id).not_to(be_nil)
         end
 
-        it "não atualiza sem cover_image" do
+        it "does not update without cover_image" do
           patch comic_path(comic), params: {
             comic: { cover_image: nil },
           }
@@ -404,10 +404,10 @@ RSpec.describe("Comics", type: :request) do
   describe "DELETE /comics/:id" do
     let!(:comic) { create(:comic) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não remove" do
+      it "does not remove" do
         expect do
           delete(comic_path(comic))
         end.not_to(change(Comic, :count))
@@ -416,10 +416,10 @@ RSpec.describe("Comics", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "remove o comic" do
+      it "removes the comic" do
         expect do
           delete(comic_path(comic))
         end.to(change(Comic, :count).by(-1))
