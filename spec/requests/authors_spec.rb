@@ -9,7 +9,7 @@ RSpec.describe("Authors", type: :request) do
   describe "GET /authors" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       get authors_path
       expect(response).to(have_http_status(:ok))
     end
@@ -18,7 +18,7 @@ RSpec.describe("Authors", type: :request) do
   describe "GET /authors/:id" do
     before { sign_in user }
 
-    it "retorna sucesso" do
+    it "returns success" do
       author = create(:author)
 
       get author_path(author)
@@ -27,19 +27,19 @@ RSpec.describe("Authors", type: :request) do
   end
 
   describe "GET /authors/new" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get new_author_path
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get new_author_path
         expect(response).to(have_http_status(:ok))
       end
@@ -49,19 +49,19 @@ RSpec.describe("Authors", type: :request) do
   describe "GET /authors/:id/edit" do
     let(:author) { create(:author) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "bloqueia acesso" do
+      it "blocks access" do
         get edit_author_path(author)
         expect(response).to(redirect_to(root_path))
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "permite acesso" do
+      it "allows access" do
         get edit_author_path(author)
         expect(response).to(have_http_status(:ok))
       end
@@ -69,10 +69,10 @@ RSpec.describe("Authors", type: :request) do
   end
 
   describe "POST /authors" do
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não cria author" do
+      it "does not create author" do
         expect do
           post(authors_path, params: {
             author: { name: "Alan Moore" },
@@ -83,11 +83,11 @@ RSpec.describe("Authors", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "cria um author" do
+      context "with valid parameters" do
+        it "creates an author" do
           expect do
             post(authors_path, params: {
               author: { name: "Alan Moore" },
@@ -98,8 +98,8 @@ RSpec.describe("Authors", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não cria author e renderiza new" do
+      context "with invalid parameters" do
+        it "does not create author and renders new" do
           expect do
             post(authors_path, params: {
               author: { name: "" },
@@ -109,7 +109,7 @@ RSpec.describe("Authors", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "não cria author com nome duplicado" do
+        it "does not create author with duplicate name" do
           create(:author, name: "Alan Moore")
 
           expect do
@@ -127,10 +127,10 @@ RSpec.describe("Authors", type: :request) do
   describe "PATCH /authors/:id" do
     let(:author) { create(:author, name: "Old Name") }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não atualiza" do
+      it "does not update" do
         patch author_path(author), params: {
           author: { name: "New Name" },
         }
@@ -140,11 +140,11 @@ RSpec.describe("Authors", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      context "com parâmetros válidos" do
-        it "atualiza o author" do
+      context "with valid parameters" do
+        it "updates the author" do
           patch author_path(author), params: {
             author: { name: "New Name" },
           }
@@ -154,8 +154,8 @@ RSpec.describe("Authors", type: :request) do
         end
       end
 
-      context "com parâmetros inválidos" do
-        it "não atualiza e renderiza edit" do
+      context "with invalid parameters" do
+        it "does not update and renders edit" do
           patch author_path(author), params: {
             author: { name: "" },
           }
@@ -164,7 +164,7 @@ RSpec.describe("Authors", type: :request) do
           expect(author.reload.name).to(eq("Old Name"))
         end
 
-        it "não atualiza com nome duplicado" do
+        it "does not update with duplicate name" do
           create(:author, name: "Existing Name")
 
           patch author_path(author), params: {
@@ -181,10 +181,10 @@ RSpec.describe("Authors", type: :request) do
   describe "DELETE /authors/:id" do
     let!(:author) { create(:author) }
 
-    context "como usuário comum" do
+    context "as regular user" do
       before { sign_in user }
 
-      it "não remove o author" do
+      it "does not remove the author" do
         expect do
           delete(author_path(author))
         end.not_to(change(Author, :count))
@@ -193,10 +193,10 @@ RSpec.describe("Authors", type: :request) do
       end
     end
 
-    context "como admin" do
+    context "as admin" do
       before { sign_in admin }
 
-      it "remove o author" do
+      it "removes the author" do
         expect do
           delete(author_path(author))
         end.to(change(Author, :count).by(-1))
@@ -204,7 +204,7 @@ RSpec.describe("Authors", type: :request) do
         expect(response).to(redirect_to(authors_path))
       end
 
-      it "não remove o author quando tem quadrinhos associados" do
+      it "does not remove the author when it has associated comics" do
         create(:comic, authors: [author])
 
         expect do
