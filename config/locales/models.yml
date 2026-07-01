@@ -44,3 +44,8 @@ pt-BR:
         restrict_dependent_destroy:
           has_many: "Não pode ser removido pois possui quadrinhos associados"
         taken: "já cadastrado"
+      models:
+        comic:
+          attributes:
+            title:
+              duplicated_comic: "Já existe um quadrinho com o mesmo título e volume."

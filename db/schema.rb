@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_02_120000) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_30_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -120,6 +120,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_02_120000) do
     t.index ["publication_type_id"], name: "index_comics_on_publication_type_id"
     t.index ["publisher_id"], name: "index_comics_on_publisher_id"
     t.index ["slug"], name: "index_comics_on_slug", unique: true
+    t.index ["title", "issue_number"], name: "index_comics_on_title_and_issue_number", unique: true
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
