@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :collection do
-    name { Faker::Book.unique.title }
+    sequence(:name) { |n| "Collection #{n}" }
   end
 end

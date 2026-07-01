@@ -244,6 +244,16 @@ RSpec.describe("Comics", type: :request) do
 
           expect(response).to(have_http_status(:unprocessable_content))
         end
+
+        it "does not create with duplicated title and issue_number" do
+          post(comics_path, params: { comic: valid_attributes })
+
+          expect do
+            post(comics_path, params: { comic: valid_attributes })
+          end.not_to(change(Comic, :count))
+
+          expect(response).to(have_http_status(:unprocessable_content))
+        end
       end
     end
   end
@@ -396,6 +406,15 @@ RSpec.describe("Comics", type: :request) do
           }
 
           expect(response).to(have_http_status(:unprocessable_content))
+        end
+
+        it "does not update with duplicated title and issue_number" do
+          patch comic_path(comic), params: {
+            comic: { title: "Tex Willer #1", issue_number: 1 },
+          }
+
+          expect(response).to(have_http_status(:unprocessable_content))
+          expect(comic.reload.title).not_to(eq("Tex Willer #1"))
         end
       end
     end
