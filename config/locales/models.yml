@@ -48,4 +48,4 @@ pt-BR:
         comic:
           attributes:
             title:
-              duplicated_comic: "Já existe um quadrinho com o mesmo título e volume."
+              duplicated_comic: "já existe um quadrinho com o mesmo título e volume."
