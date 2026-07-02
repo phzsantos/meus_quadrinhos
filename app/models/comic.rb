@@ -44,7 +44,7 @@ class Comic < ApplicationRecord
 
   has_one_attached :cover_image
 
-  validates :title, presence: true, uniqueness: { scope: :issue_number, case_sensitive: false, message: :duplicated_comic }
+  validates :title, presence: true, uniqueness: { scope: :issue_number, case_sensitive: false }
   validates :page_count, numericality: { greater_than: 0 }, presence: true
   validates :published_year, numericality: { only_integer: true }, presence: true
   validates :story_count, numericality: { only_integer: true, greater_than: 0 }, presence: true

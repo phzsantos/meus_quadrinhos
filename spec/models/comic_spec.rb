@@ -17,8 +17,7 @@ RSpec.describe(Comic, type: :model) do
     it do
       is_expected.to(validate_uniqueness_of(:title)
         .scoped_to(:issue_number)
-        .case_insensitive
-        .with_message(:duplicated_comic))
+        .case_insensitive)
     end
 
     it do
