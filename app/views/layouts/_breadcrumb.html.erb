@@ -1,8 +1,4 @@
 <nav class="flex items-center gap-2 w-full text-black patrick-hand-regular text-xl">
-  <%= link_to "Dashboard", root_path, class: "underline hover:text-blue-700" %>
-
-  <span>/</span>
-
   <% if action_name != "index" %>
     <%= link_to t("controllers.#{controller_name}"),
       url_for(controller: controller_name, action: :index),
