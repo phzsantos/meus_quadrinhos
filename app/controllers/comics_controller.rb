@@ -9,7 +9,7 @@ class ComicsController < ApplicationController
   def index
     comics = Comic.includes(:readings)
       .order(created_at: :asc)
-      .sort_by { |comic| comic.readings.maximum(:read_at) || Date.new(1970, 1, 1) }
+      .sort_by { |comic| comic.readings.maximum(:read_at) || Date.new(1970, 1, 1) }.reverse
 
     @comics = Kaminari.paginate_array(comics).page(params[:page]).per(20)
   end
