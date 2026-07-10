@@ -16,7 +16,7 @@
                 <%= sprintf("%03d | %s", (@comics.total_count - @comics.offset_value - index), comic.display_title) %>
               </span>
               <span class="ml-auto">
-                <%= comic.readings.order(read_at: :asc).map { |r| l(r.read_at, format: "%d/%m/%Y") }.join(", ") %> 
+                <%= comic.readings.sort_by(&:read_at).map { |r| l(r.read_at, format: "%d/%m/%Y") }.join(", ") %>
               </span>
             </div>
           <% end %>
