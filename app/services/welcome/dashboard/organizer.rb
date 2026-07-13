@@ -10,6 +10,7 @@ module Welcome
         PagesReadByYear,
         ComicsReadByMonth,
         PagesReadByMonth,
+        StoriesReadByMonth,
         LatestReadings,
         GeneralStatistics,
       )

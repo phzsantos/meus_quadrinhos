@@ -24,6 +24,9 @@ class WelcomeController < ApplicationController
     @pages_read_months = context.pages_read_months
     @pages_read_count_by_month = context.pages_read_count_by_month
 
+    @read_stories_months = context.read_stories_months
+    @read_stories_count_by_month = context.read_stories_count_by_month
+
     @latest_readings = context.latest_readings
 
     @total_comics_read = context.total_comics_read

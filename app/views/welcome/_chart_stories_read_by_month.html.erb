@@ -1,0 +1,9 @@
+<canvas
+  class="w-full h-full"
+  data-controller="chart"
+  data-chart-type-value="bar"
+  data-chart-labels-value="<%= @read_stories_months.map { |m| m.strftime('%m/%Y') }.to_json %>"
+  data-chart-data-value="<%= @read_stories_count_by_month.to_json %>"
+  data-chart-x-title-value="Mês / Ano"
+  data-chart-y-title-value="Quantidade de histórias">
+</canvas>
