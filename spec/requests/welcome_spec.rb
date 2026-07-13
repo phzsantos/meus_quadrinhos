@@ -31,6 +31,12 @@ RSpec.describe("Welcome", type: :request) do
         ],
         pages_read_count_by_month: [50, 80],
 
+        read_stories_months: [
+          Date.new(2024, 1, 1),
+          Date.new(2024, 2, 1),
+        ],
+        read_stories_count_by_month: [10, 20],
+
         latest_readings: [],
         total_comics_read: 30,
         total_story_count: 120,
