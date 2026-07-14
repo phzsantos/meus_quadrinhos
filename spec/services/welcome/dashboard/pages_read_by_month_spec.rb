@@ -59,6 +59,10 @@ RSpec.describe(Welcome::Dashboard::PagesReadByMonth) do
           ],
         ))
       end
+
+      it "returns all page counts" do
+        expect(context.pages_read_count_by_month).to(eq([120, 200]))
+      end
     end
 
     context "when there is a date range filter" do
