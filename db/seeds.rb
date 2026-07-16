@@ -87,3 +87,10 @@ load_seed("comics.json").each do |attrs|
     content_type: "image/jpeg",
   )
 end
+
+User.find_or_create_by!(email: "admin@admin.com") do |user|
+  user.username = "admin"
+  user.password = "123456"
+  user.password_confirmation = "123456"
+  user.admin = true
+end
