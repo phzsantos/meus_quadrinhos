@@ -37,6 +37,12 @@ RSpec.describe("Welcome", type: :request) do
         ],
         read_stories_count_by_month: [10, 20],
 
+        read_comics_comparison_days: (1..31).to_a,
+        read_comics_count_by_day_current: (1..31).to_a,
+        read_comics_count_by_day_previous: (1..31).to_a,
+        read_comics_comparison_current_label: "02/2023",
+        read_comics_comparison_previous_label: "01/2023",
+
         latest_readings: [],
         total_comics_read: 30,
         total_story_count: 120,
