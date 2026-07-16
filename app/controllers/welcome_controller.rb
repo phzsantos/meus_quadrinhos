@@ -27,6 +27,12 @@ class WelcomeController < ApplicationController
     @read_stories_months = context.read_stories_months
     @read_stories_count_by_month = context.read_stories_count_by_month
 
+    @read_comics_comparison_days = context.read_comics_comparison_days
+    @read_comics_count_by_day_current = context.read_comics_count_by_day_current
+    @read_comics_count_by_day_previous = context.read_comics_count_by_day_previous
+    @read_comics_comparison_current_label = context.read_comics_comparison_current_label
+    @read_comics_comparison_previous_label = context.read_comics_comparison_previous_label
+
     @latest_readings = context.latest_readings
 
     @total_comics_read = context.total_comics_read

@@ -1,0 +1,12 @@
+<canvas
+  class="w-full h-full"
+  data-controller="chart"
+  data-chart-type-value="bar"
+  data-chart-labels-value="<%= @read_comics_comparison_days.to_json %>"
+  data-chart-data-value="<%= @read_comics_count_by_day_current.to_json %>"
+  data-chart-data-secondary-value="<%= @read_comics_count_by_day_previous.to_json %>"
+  data-chart-label-primary-value="Mês atual (<%= @read_comics_comparison_current_label %>)"
+  data-chart-label-secondary-value="Mês passado (<%= @read_comics_comparison_previous_label %>)"
+  data-chart-x-title-value="Dia do mês"
+  data-chart-y-title-value="Quantidade de quadrinhos">
+</canvas>

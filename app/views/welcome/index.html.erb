@@ -82,6 +82,22 @@
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
+  <div class="w-full lg:col-span-2 bg-bada rounded-xl p-4 shadow-lg flex flex-col">
+
+    <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
+      Leituras dia a dia: <%= @read_comics_comparison_current_label %> × <%= @read_comics_comparison_previous_label %>
+    </h2>
+
+    <div class="flex-1 relative min-h-[350px]">
+      <div class="absolute inset-0"></div>
+
+      <div data-turbo-cache="false" class="absolute inset-0">
+        <%= render "chart_comics_read_by_day_comparison" %>
+      </div>
+    </div>
+
+  </div>
+
   <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col">
 
     <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">

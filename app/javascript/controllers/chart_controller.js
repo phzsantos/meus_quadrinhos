@@ -5,6 +5,9 @@ export default class extends Controller {
     type: String,
     labels: Array,
     data: Array,
+    dataSecondary: Array,
+    labelPrimary: String,
+    labelSecondary: String,
     xTitle: String,
     yTitle: String
   }
@@ -19,11 +22,13 @@ export default class extends Controller {
       window.Chart.register(window.ChartDataLabels)
     }
 
+    const hasComparison = this.hasDataSecondaryValue && this.dataSecondaryValue.length > 0
+
     this.chart = new window.Chart(this.element, {
       type: this.typeValue,
       data: {
         labels: this.labelsValue,
-        datasets: [{
+        datasets: hasComparison ? this.comparisonDatasets() : [{
           data: this.dataValue,
           backgroundColor: "#000000",
           borderColor: "#000000",
@@ -34,11 +39,25 @@ export default class extends Controller {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { display: false },
+          legend: {
+            display: hasComparison,
+            onClick: null,
+            labels: {
+              color: "#000000",
+              font: {
+                family: "'Patrick Hand', cursive",
+                size: 18
+              }
+            }
+          },
           tooltip: {
             callbacks: {
               label: function(context) {
-                return context.parsed.y
+                const value = context.parsed.y
+                if (context.dataset.label) {
+                  return `${context.dataset.label}: ${value}`
+                }
+                return value
               }
             }
           },
@@ -46,7 +65,7 @@ export default class extends Controller {
             color: "#FFFE01",
             anchor: "center",
             align: "center",
-            formatter: (value) => value,
+            formatter: (value) => value || null,
             font: {
               family: "'Bangers'"
             }
@@ -79,6 +98,29 @@ export default class extends Controller {
         }
       }
     })
+  }
+
+  comparisonDatasets() {
+    return [
+      {
+        label: this.labelPrimaryValue,
+        data: this.dataValue,
+        backgroundColor: "#000000",
+        borderColor: "#000000",
+        borderWidth: 1,
+        categoryPercentage: 1,
+        barPercentage: 0.98
+      },
+      {
+        label: this.labelSecondaryValue,
+        data: this.dataSecondaryValue,
+        backgroundColor: "#555555",
+        borderColor: "#555555",
+        borderWidth: 1,
+        categoryPercentage: 1,
+        barPercentage: 0.98
+      }
+    ]
   }
 
   disconnect() {
