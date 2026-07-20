@@ -1,23 +1,24 @@
-<header class="bg-black h-32 w-full flex items-center">
-  <div class="container mx-auto px-4 grid grid-cols-3 items-center">
-    <div></div>
+<header class="bg-black min-h-20 md:min-h-32 w-full flex items-center py-3 md:py-0">
+  <div class="container mx-auto px-4 flex items-center justify-between gap-2">
+    <div class="w-10 sm:w-38 shrink-0" aria-hidden="true"></div>
 
-    <div class="text-center">
+    <div class="flex-1 min-w-0 text-center">
       <h1>
         <%= link_to 'Meus Quadrinhos',
           user_signed_in? ? root_path : new_user_session_path,
-          class: "text-bada text-7xl bangers-regular text-shadow-md" %>
+          class: "text-bada text-[clamp(1.5rem,6vw,4.5rem)] bangers-regular text-shadow-md whitespace-nowrap inline-block max-w-full" %>
       </h1>
     </div>
 
-    <div class="flex text-black text-2xl bangers-regular justify-end self-end">
+    <div class="flex text-black text-xl md:text-2xl bangers-regular justify-end shrink-0">
       <% if user_signed_in? %>
         <div data-controller="dropdown" class="relative">
           <button
+            type="button"
             data-action="click->dropdown#toggle"
-            class="bg-bada cursor-pointer w-38 py-2 px-2 rounded-md shadow-md hover:opacity-90 flex items-center">
+            class="bg-bada cursor-pointer w-10 h-10 sm:w-38 sm:h-auto py-2 px-2 rounded-md shadow-md hover:opacity-90 flex items-center justify-center sm:justify-start gap-1">
             <%= image_tag "icons/#{current_user.admin? ? 'user-gear-solid-full' : 'user-solid-full'}.svg", class: "w-7 h-7 shrink-0" %>
-            <span class="flex-1 text-center truncate"><%= current_user.username %></span>
+            <span class="hidden sm:block flex-1 text-center truncate"><%= current_user.username %></span>
           </button>
 
           <div
@@ -41,7 +42,7 @@
 
 <nav class="bg-bada shadow-md">
   <div class="container mx-auto px-4">
-    <ul class="flex justify-center space-x-4 text-2xl bangers-regular">
+    <ul class="flex flex-wrap justify-center gap-x-1 gap-y-0 text-xl md:text-2xl bangers-regular">
       <% if user_signed_in? %>
         <li><%= nav_link_to 'Dashboard', root_path, controllers: %w[welcome] %></li>
         <li><%= nav_link_to 'Quadrinhos', comics_path, controllers: %w[comics] %></li>
@@ -51,10 +52,8 @@
         <li><%= nav_link_to 'Editoras', publishers_path, controllers: %w[publishers] %></li>
         <li><%= nav_link_to 'Encadernações', book_bindings_path, controllers: %w[book_bindings] %></li>
         <li><%= nav_link_to 'Papel', paper_types_path, controllers: %w[paper_types] %></li>
-        <li><%= nav_link_to 'Tipo de HQ', publication_types_path, controllers: %w[publication_types] %></li>
+        <li><%= nav_link_to 'Tipo', publication_types_path, controllers: %w[publication_types] %></li>
       <% end %>
     </ul>
   </div>
 </nav>
-
-
