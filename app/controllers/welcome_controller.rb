@@ -4,7 +4,10 @@ class WelcomeController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    context = Welcome::Dashboard::Organizer.call
+    context = Welcome::Dashboard::Organizer.call(
+      start_date: 11.months.ago.beginning_of_month,
+      end_date: Time.current.end_of_month,
+    )
 
     load_dashboard_data(context)
   end
