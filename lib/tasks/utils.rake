@@ -6,6 +6,7 @@ namespace :utils do
     show_spinner("Dropping database...") { quiet_system("rails db:drop") }
     show_spinner("Creating database...") { quiet_system("rails db:create") }
     show_spinner("Migrating database...") { quiet_system("rails db:migrate") }
+    system("rails import:authors")
     show_spinner("Seeding database...") { quiet_system("rails db:seed") }
   end
 end

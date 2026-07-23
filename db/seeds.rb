@@ -23,7 +23,6 @@ end
   "publishers.json" => Publisher,
   "book_bindings.json" => BookBinding,
   "paper_types.json" => PaperType,
-  "authors.json" => Author,
   "characters.json" => Character,
   "publication_types.json" => PublicationType,
 }.each do |file, model|
