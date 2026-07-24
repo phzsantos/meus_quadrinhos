@@ -21,7 +21,6 @@ end
 
 {
   "publishers.json" => Publisher,
-  "book_bindings.json" => BookBinding,
   "paper_types.json" => PaperType,
   "characters.json" => Character,
   "publication_types.json" => PublicationType,

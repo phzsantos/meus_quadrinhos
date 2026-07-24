@@ -7,6 +7,7 @@ namespace :utils do
     show_spinner("Creating database...") { quiet_system("rails db:create") }
     show_spinner("Migrating database...") { quiet_system("rails db:migrate") }
     system("rails import:authors")
+    system("rails import:book_bindings")
     show_spinner("Seeding database...") { quiet_system("rails db:seed") }
   end
 end
