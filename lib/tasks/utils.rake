@@ -9,6 +9,7 @@ namespace :utils do
     system("rails import:authors")
     system("rails import:book_bindings")
     system("rails import:characters")
+    system("rails import:collections")
     show_spinner("Seeding database...") { quiet_system("rails db:seed") }
   end
 end

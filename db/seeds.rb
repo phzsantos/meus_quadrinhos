@@ -29,14 +29,6 @@ end
   end
 end
 
-load_seed("collections.json").each do |collection|
-  Collection.find_or_create_by!(
-    name: collection[:name],
-  ) do |c|
-    c.link_guia_dos_quadrinhos = collection[:link_guia_dos_quadrinhos]
-  end
-end
-
 load_seed("comics.json").each do |attrs|
   comic = Comic.find_or_initialize_by(title: attrs[:title], issue_number: attrs[:issue_number])
 
