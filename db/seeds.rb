@@ -21,7 +21,6 @@ end
 
 {
   "publishers.json" => Publisher,
-  "paper_types.json" => PaperType,
   "publication_types.json" => PublicationType,
 }.each do |file, model|
   load_seed(file).each do |name|
