@@ -11,6 +11,7 @@ namespace :utils do
     system("rails import:characters")
     system("rails import:collections")
     system("rails import:paper_types")
+    system("rails import:publication_types")
     show_spinner("Seeding database...") { quiet_system("rails db:seed") }
   end
 end

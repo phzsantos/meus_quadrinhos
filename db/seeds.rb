@@ -21,7 +21,6 @@ end
 
 {
   "publishers.json" => Publisher,
-  "publication_types.json" => PublicationType,
 }.each do |file, model|
   load_seed(file).each do |name|
     model.find_or_create_by!(name: name)
