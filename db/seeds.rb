@@ -19,14 +19,6 @@ def load_seed(file)
   JSON.parse(File.read(path), symbolize_names: true)
 end
 
-{
-  "publishers.json" => Publisher,
-}.each do |file, model|
-  load_seed(file).each do |name|
-    model.find_or_create_by!(name: name)
-  end
-end
-
 load_seed("comics.json").each do |attrs|
   comic = Comic.find_or_initialize_by(title: attrs[:title], issue_number: attrs[:issue_number])
 
