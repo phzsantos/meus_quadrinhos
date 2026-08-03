@@ -13,6 +13,7 @@ namespace :utils do
     system("rails import:paper_types")
     system("rails import:publication_types")
     system("rails import:publishers")
+    system("rails import:comics")
     show_spinner("Seeding database...") { quiet_system("rails db:seed") }
   end
 end
