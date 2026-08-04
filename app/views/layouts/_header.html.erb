@@ -1,6 +1,8 @@
 <header class="bg-black min-h-20 md:min-h-32 w-full flex items-center py-3 md:py-0">
   <div class="container mx-auto px-4 flex items-center justify-between gap-2">
-    <div class="w-10 sm:w-38 shrink-0" aria-hidden="true"></div>
+    <% if user_signed_in? %>
+      <div class="w-10 sm:w-38 shrink-0" aria-hidden="true"></div>
+    <% end %>
 
     <div class="flex-1 min-w-0 text-center">
       <h1>
@@ -10,8 +12,8 @@
       </h1>
     </div>
 
-    <div class="flex text-black text-xl md:text-2xl bangers-regular justify-end shrink-0">
-      <% if user_signed_in? %>
+    <% if user_signed_in? %>
+      <div class="flex text-black text-xl md:text-2xl bangers-regular justify-end shrink-0">
         <div data-controller="dropdown" class="relative">
           <button
             type="button"
@@ -35,8 +37,8 @@
               class: "block px-4 py-2 hover:bg-black/20" %>
           </div>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </header>
 
