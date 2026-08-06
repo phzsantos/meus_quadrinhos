@@ -3,7 +3,11 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :characters, path: "personagens"
-  resources :collections, path: "colecoes"
+  resources :collections, path: "colecoes" do
+    collection do
+      get :export
+    end
+  end
   resources :publication_types, path: "tipos_de_hq"
   resources :authors, path: "autores"
   resources :paper_types, path: "papel"

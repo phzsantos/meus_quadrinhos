@@ -28,6 +28,12 @@ class CollectionsController < ApplicationController
   def edit
   end
 
+  def export
+    collections = Collection.order(:created_at)
+
+    render(json: collections.map { |collection| export_collection(collection) })
+  end
+
   # POST /collections or /collections.json
   def create
     @collection = Collection.new(collection_params)
@@ -67,6 +73,13 @@ class CollectionsController < ApplicationController
   end
 
   private
+
+  def export_collection(collection)
+    {
+      name: collection.name,
+      link_guia_dos_quadrinhos: collection.link_guia_dos_quadrinhos,
+    }
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_collection
