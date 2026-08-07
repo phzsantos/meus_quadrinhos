@@ -9,7 +9,11 @@ Rails.application.routes.draw do
     end
   end
   resources :publication_types, path: "tipos_de_hq"
-  resources :authors, path: "autores"
+  resources :authors, path: "autores" do
+    collection do
+      get :export
+    end
+  end
   resources :paper_types, path: "papel"
   resources :book_bindings, path: "encadernacoes"
   resources :publishers, path: "editoras"

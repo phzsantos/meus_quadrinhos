@@ -28,6 +28,12 @@ class AuthorsController < ApplicationController
   def edit
   end
 
+  def export
+    authors = Author.order(:created_at)
+
+    render(json: authors.map { |author| export_author(author) })
+  end
+
   # POST /authors or /authors.json
   def create
     @author = Author.new(author_params)
@@ -74,6 +80,10 @@ class AuthorsController < ApplicationController
   end
 
   private
+
+  def export_author(author)
+    author.name
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_author
