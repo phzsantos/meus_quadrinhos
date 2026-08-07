@@ -28,6 +28,12 @@ class CharactersController < ApplicationController
   def edit
   end
 
+  def export
+    characters = Character.order(:created_at)
+
+    render(json: characters.map { |character| export_character(character) })
+  end
+
   # POST /characters or /characters.json
   def create
     @character = Character.new(character_params)
@@ -74,6 +80,10 @@ class CharactersController < ApplicationController
   end
 
   private
+
+  def export_character(character)
+    character.name
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_character
