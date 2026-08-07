@@ -28,6 +28,12 @@ class PublishersController < ApplicationController
   def edit
   end
 
+  def export
+    publishers = Publisher.order(:created_at)
+
+    render(json: publishers.map { |publisher| export_publisher(publisher) })
+  end
+
   # POST /publishers or /publishers.json
   def create
     @publisher = Publisher.new(publisher_params)
@@ -74,6 +80,10 @@ class PublishersController < ApplicationController
   end
 
   private
+
+  def export_publisher(publisher)
+    publisher.name
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_publisher
