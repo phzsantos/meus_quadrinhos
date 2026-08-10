@@ -24,6 +24,12 @@ class PublicationTypesController < ApplicationController
   def edit
   end
 
+  def export
+    publication_types = PublicationType.order(:created_at)
+
+    render(json: publication_types.map { |publication_type| export_publication_type(publication_type) })
+  end
+
   # POST /publication_types or /publication_types.json
   def create
     @publication_type = PublicationType.new(publication_type_params)
@@ -70,6 +76,10 @@ class PublicationTypesController < ApplicationController
   end
 
   private
+
+  def export_publication_type(publication_type)
+    publication_type.name
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_publication_type

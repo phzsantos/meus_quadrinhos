@@ -12,7 +12,11 @@ Rails.application.routes.draw do
       get :export
     end
   end
-  resources :publication_types, path: "tipos_de_hq"
+  resources :publication_types, path: "tipos_de_hq" do
+    collection do
+      get :export
+    end
+  end
   resources :authors, path: "autores" do
     collection do
       get :export
