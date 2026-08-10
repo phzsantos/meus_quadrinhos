@@ -24,6 +24,12 @@ class PaperTypesController < ApplicationController
   def edit
   end
 
+  def export
+    paper_types = PaperType.order(:created_at)
+
+    render(json: paper_types.map { |paper_type| export_paper_type(paper_type) })
+  end
+
   # POST /paper_types or /paper_types.json
   def create
     @paper_type = PaperType.new(paper_type_params)
@@ -70,6 +76,10 @@ class PaperTypesController < ApplicationController
   end
 
   private
+
+  def export_paper_type(paper_type)
+    paper_type.name
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_paper_type

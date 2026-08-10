@@ -18,7 +18,11 @@ Rails.application.routes.draw do
       get :export
     end
   end
-  resources :paper_types, path: "papel"
+  resources :paper_types, path: "papel" do
+    collection do
+      get :export
+    end
+  end
   resources :book_bindings, path: "encadernacoes" do
     collection do
       get :export
