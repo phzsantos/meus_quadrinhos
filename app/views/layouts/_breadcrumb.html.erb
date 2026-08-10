@@ -20,7 +20,7 @@
     <% when "index" %>
       <% if current_user.admin? %>
         <div class="ml-auto">
-          <% if %w[comics collections authors characters publishers].include?(controller_name) %>
+          <% if %w[comics collections authors characters publishers book_bindings].include?(controller_name) %>
             <%= link_to "Exportar",
               url_for(controller: controller_name, action: :export),
               target: "_blank",

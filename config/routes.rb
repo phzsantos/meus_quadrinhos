@@ -19,7 +19,11 @@ Rails.application.routes.draw do
     end
   end
   resources :paper_types, path: "papel"
-  resources :book_bindings, path: "encadernacoes"
+  resources :book_bindings, path: "encadernacoes" do
+    collection do
+      get :export
+    end
+  end
   resources :publishers, path: "editoras" do
     collection do
       get :export

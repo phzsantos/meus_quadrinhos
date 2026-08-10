@@ -24,6 +24,12 @@ class BookBindingsController < ApplicationController
   def edit
   end
 
+  def export
+    book_bindings = BookBinding.order(:created_at)
+
+    render(json: book_bindings.map { |book_binding| export_book_binding(book_binding) })
+  end
+
   # POST /book_bindings or /book_bindings.json
   def create
     @book_binding = BookBinding.new(book_binding_params)
@@ -70,6 +76,10 @@ class BookBindingsController < ApplicationController
   end
 
   private
+
+  def export_book_binding(book_binding)
+    book_binding.name
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_book_binding
