@@ -192,4 +192,29 @@ RSpec.describe("PaperTypes", type: :request) do
       end
     end
   end
+
+  describe "GET /paper_types/export" do
+    context "as regular user" do
+      before { sign_in user }
+
+      it "blocks access" do
+        get export_paper_types_path
+        expect(response).to(redirect_to(root_path))
+      end
+    end
+
+    context "as admin" do
+      before { sign_in admin }
+
+      it "exports paper types as JSON array of names" do
+        create(:paper_type, name: "Offset")
+        create(:paper_type, name: "Couché")
+
+        get export_paper_types_path
+
+        expect(response).to(have_http_status(:ok))
+        expect(response.parsed_body).to(eq(["Offset", "Couché"]))
+      end
+    end
+  end
 end
