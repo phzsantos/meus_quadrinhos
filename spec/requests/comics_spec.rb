@@ -466,4 +466,63 @@ RSpec.describe("Comics", type: :request) do
       end
     end
   end
+
+  describe "GET /comics/export" do
+    context "as regular user" do
+      before { sign_in user }
+
+      it "blocks access" do
+        get export_comics_path
+        expect(response).to(redirect_to(root_path))
+      end
+    end
+
+    context "as admin" do
+      before { sign_in admin }
+
+      it "exports comics as JSON in seed format" do
+        comic = create(
+          :comic,
+          title: "Tex Willer Export",
+          page_count: 124,
+          published_year: 2019,
+          issue_number: 99,
+          issue_title: "Tex contra o mundo",
+          story_count: 5,
+          link_guia_dos_quadrinhos: "http://example.com/edicao",
+          authors: [author],
+          characters: [character],
+          publisher: publisher,
+          publication_type: publication_type,
+          book_binding: book_binding,
+          paper_type: paper_type,
+          collection: collection,
+        )
+        create(:reading, comic: comic, read_at: Date.new(2025, 10, 8))
+
+        get export_comics_path
+
+        expect(response).to(have_http_status(:ok))
+        expect(response.parsed_body).to(eq([
+          {
+            "title" => "Tex Willer Export",
+            "page_count" => 124,
+            "collection_name" => collection.name,
+            "published_year" => 2019,
+            "author_names" => [author.name],
+            "character_names" => [character.name],
+            "publisher_name" => publisher.name,
+            "publication_type_name" => publication_type.name,
+            "book_binding_name" => book_binding.name,
+            "paper_type_name" => paper_type.name,
+            "link_guia_dos_quadrinhos" => "http://example.com/edicao",
+            "story_count" => 5,
+            "read_dates" => ["2025-10-08"],
+            "issue_number" => 99,
+            "issue_title" => "Tex contra o mundo",
+          },
+        ]))
+      end
+    end
+  end
 end
