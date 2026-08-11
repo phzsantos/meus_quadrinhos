@@ -215,4 +215,29 @@ RSpec.describe("Authors", type: :request) do
       end
     end
   end
+
+  describe "GET /authors/export" do
+    context "as regular user" do
+      before { sign_in user }
+
+      it "blocks access" do
+        get export_authors_path
+        expect(response).to(redirect_to(root_path))
+      end
+    end
+
+    context "as admin" do
+      before { sign_in admin }
+
+      it "exports authors as JSON array of names" do
+        create(:author, name: "Frank Miller")
+        create(:author, name: "Alan Moore")
+
+        get export_authors_path
+
+        expect(response).to(have_http_status(:ok))
+        expect(response.parsed_body).to(eq(["Frank Miller", "Alan Moore"]))
+      end
+    end
+  end
 end
