@@ -246,4 +246,46 @@ RSpec.describe("Collections", type: :request) do
       end
     end
   end
+
+  describe "GET /collections/export" do
+    context "as regular user" do
+      before { sign_in user }
+
+      it "blocks access" do
+        get export_collections_path
+        expect(response).to(redirect_to(root_path))
+      end
+    end
+
+    context "as admin" do
+      before { sign_in admin }
+
+      it "exports collections as JSON in seed format" do
+        create(
+          :collection,
+          name: "Justiceiro 3ª Série",
+          link_guia_dos_quadrinhos: "http://www.guiadosquadrinhos.com/capas/justiceiro-3-serie/ju011300",
+        )
+        create(
+          :collection,
+          name: "Absolute Batman",
+          link_guia_dos_quadrinhos: "http://www.guiadosquadrinhos.com/capas/absolute-batman/ab011101",
+        )
+
+        get export_collections_path
+
+        expect(response).to(have_http_status(:ok))
+        expect(response.parsed_body).to(eq([
+          {
+            "name" => "Justiceiro 3ª Série",
+            "link_guia_dos_quadrinhos" => "http://www.guiadosquadrinhos.com/capas/justiceiro-3-serie/ju011300",
+          },
+          {
+            "name" => "Absolute Batman",
+            "link_guia_dos_quadrinhos" => "http://www.guiadosquadrinhos.com/capas/absolute-batman/ab011101",
+          },
+        ]))
+      end
+    end
+  end
 end
