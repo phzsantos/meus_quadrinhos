@@ -215,4 +215,29 @@ RSpec.describe("Characters", type: :request) do
       end
     end
   end
+
+  describe "GET /characters/export" do
+    context "as regular user" do
+      before { sign_in user }
+
+      it "blocks access" do
+        get export_characters_path
+        expect(response).to(redirect_to(root_path))
+      end
+    end
+
+    context "as admin" do
+      before { sign_in admin }
+
+      it "exports characters as JSON array of names" do
+        create(:character, name: "Wolverine")
+        create(:character, name: "Batman")
+
+        get export_characters_path
+
+        expect(response).to(have_http_status(:ok))
+        expect(response.parsed_body).to(eq(["Wolverine", "Batman"]))
+      end
+    end
+  end
 end
