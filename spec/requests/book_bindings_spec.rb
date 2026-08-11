@@ -192,4 +192,29 @@ RSpec.describe("BookBindings", type: :request) do
       end
     end
   end
+
+  describe "GET /book_bindings/export" do
+    context "as regular user" do
+      before { sign_in user }
+
+      it "blocks access" do
+        get export_book_bindings_path
+        expect(response).to(redirect_to(root_path))
+      end
+    end
+
+    context "as admin" do
+      before { sign_in admin }
+
+      it "exports book bindings as JSON array of names" do
+        create(:book_binding, name: "Omnibus")
+        create(:book_binding, name: "Capa dura")
+
+        get export_book_bindings_path
+
+        expect(response).to(have_http_status(:ok))
+        expect(response.parsed_body).to(eq(["Omnibus", "Capa dura"]))
+      end
+    end
+  end
 end
