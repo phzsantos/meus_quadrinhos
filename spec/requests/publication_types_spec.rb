@@ -192,4 +192,29 @@ RSpec.describe("PublicationTypes", type: :request) do
       end
     end
   end
+
+  describe "GET /publication_types/export" do
+    context "as regular user" do
+      before { sign_in user }
+
+      it "blocks access" do
+        get export_publication_types_path
+        expect(response).to(redirect_to(root_path))
+      end
+    end
+
+    context "as admin" do
+      before { sign_in admin }
+
+      it "exports publication types as JSON array of names" do
+        create(:publication_type, name: "Mangá")
+        create(:publication_type, name: "HQ")
+
+        get export_publication_types_path
+
+        expect(response).to(have_http_status(:ok))
+        expect(response.parsed_body).to(eq(["Mangá", "HQ"]))
+      end
+    end
+  end
 end
