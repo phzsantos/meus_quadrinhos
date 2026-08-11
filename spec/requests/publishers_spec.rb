@@ -192,4 +192,29 @@ RSpec.describe("Publishers", type: :request) do
       end
     end
   end
+
+  describe "GET /publishers/export" do
+    context "as regular user" do
+      before { sign_in user }
+
+      it "blocks access" do
+        get export_publishers_path
+        expect(response).to(redirect_to(root_path))
+      end
+    end
+
+    context "as admin" do
+      before { sign_in admin }
+
+      it "exports publishers as JSON array of names" do
+        create(:publisher, name: "Panini")
+        create(:publisher, name: "Abril")
+
+        get export_publishers_path
+
+        expect(response).to(have_http_status(:ok))
+        expect(response.parsed_body).to(eq(["Panini", "Abril"]))
+      end
+    end
+  end
 end
