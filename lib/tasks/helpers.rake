@@ -11,3 +11,23 @@ def quiet_system(cmd)
   success = system(cmd, out: File::NULL, err: File::NULL)
   abort("Failed: #{cmd}") unless success
 end
+
+def export_via_controller(controller_class, filename)
+  controller_class.skip_before_action(:authenticate_user!, raise: false)
+  controller_class.skip_before_action(:require_admin!, raise: false)
+
+  request = ActionController::TestRequest.create(controller_class)
+  response = ActionDispatch::TestResponse.create
+  controller = controller_class.new
+  controller.dispatch(:export, request, response)
+
+  unless response.successful?
+    abort("Export failed for #{controller_class}: HTTP #{response.status}")
+  end
+
+  data = JSON.parse(response.body)
+  File.write(
+    Rails.root.join("db/seeds", filename),
+    "#{JSON.pretty_generate(data)}\n",
+  )
+end
