@@ -1,6 +1,7 @@
 pt-BR:
   controllers:
     welcome: "Dashboard"
+    engine_rooms: "Sala de máquinas"
     comics: "Quadrinhos"
     collections: "Coleções"
     authors: "Autores"

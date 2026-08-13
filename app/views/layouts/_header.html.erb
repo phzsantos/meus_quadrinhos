@@ -1,7 +1,7 @@
 <header class="bg-black min-h-20 md:min-h-32 w-full flex items-center py-3 md:py-0">
   <div class="container mx-auto px-4 flex items-center justify-between gap-2">
     <% if user_signed_in? %>
-      <div class="w-10 sm:w-38 shrink-0" aria-hidden="true"></div>
+      <div class="w-10 sm:w-48 shrink-0" aria-hidden="true"></div>
     <% end %>
 
     <div class="flex-1 min-w-0 text-center">
@@ -14,18 +14,24 @@
 
     <% if user_signed_in? %>
       <div class="flex text-black text-xl md:text-2xl bangers-regular justify-end shrink-0">
-        <div data-controller="dropdown" class="relative">
+        <div data-controller="dropdown" class="relative w-10 sm:w-48">
           <button
             type="button"
             data-action="click->dropdown#toggle"
-            class="bg-bada cursor-pointer w-10 h-10 sm:w-38 sm:h-auto py-2 px-2 rounded-md shadow-md hover:opacity-90 flex items-center justify-center sm:justify-start gap-1">
+            class="bg-bada cursor-pointer w-10 h-10 sm:w-full sm:h-auto py-2 px-2 rounded-md shadow-md hover:opacity-90 flex items-center justify-center sm:justify-start gap-1">
             <%= image_tag "icons/#{current_user.admin? ? 'user-gear-solid-full' : 'user-solid-full'}.svg", class: "w-7 h-7 shrink-0" %>
             <span class="hidden sm:block flex-1 text-center truncate"><%= current_user.username %></span>
           </button>
 
           <div
             data-dropdown-target="menu"
-            class="absolute right-0 mt-2 w-38 bg-bada rounded-md shadow-lg hidden z-50">
+            class="absolute right-0 mt-2 w-max min-w-full bg-bada rounded-md shadow-lg hidden z-50 whitespace-nowrap">
+
+            <% if current_user.admin? %>
+              <%= link_to "Sala de máquinas",
+                engine_room_path,
+                class: "block px-4 py-2 hover:bg-black/20" %>
+            <% end %>
 
             <%= link_to "Editar perfil",
               edit_user_registration_path,
