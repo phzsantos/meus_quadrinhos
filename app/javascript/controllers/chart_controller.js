@@ -9,7 +9,8 @@ export default class extends Controller {
     labelPrimary: String,
     labelSecondary: String,
     xTitle: String,
-    yTitle: String
+    yTitle: String,
+    indexAxis: { type: String, default: "x" }
   }
 
   connect() {
@@ -23,6 +24,9 @@ export default class extends Controller {
     }
 
     const hasComparison = this.hasDataSecondaryValue && this.dataSecondaryValue.length > 0
+    const horizontal = this.indexAxisValue === "y"
+    const valueAxis = horizontal ? "x" : "y"
+    const categoryAxis = horizontal ? "y" : "x"
 
     this.chart = new window.Chart(this.element, {
       type: this.typeValue,
@@ -36,6 +40,7 @@ export default class extends Controller {
         }]
       },
       options: {
+        indexAxis: this.indexAxisValue,
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
@@ -52,8 +57,8 @@ export default class extends Controller {
           },
           tooltip: {
             callbacks: {
-              label: function(context) {
-                const value = context.parsed.y
+              label: (context) => {
+                const value = context.raw
                 if (context.dataset.label) {
                   return `${context.dataset.label}: ${value}`
                 }
@@ -72,16 +77,16 @@ export default class extends Controller {
           }
         },
         scales: {
-          x: {
+          [categoryAxis]: {
             title: {
               display: true,
-              text: this.xTitleValue,
+              text: horizontal ? this.yTitleValue : this.xTitleValue,
               color: "#000000"
             },
             ticks: { color: "#000000" },
             grid: { color: "#000000" }
           },
-          y: {
+          [valueAxis]: {
             beginAtZero: true,
             ticks: {
               stepSize: 1,
@@ -90,7 +95,7 @@ export default class extends Controller {
             },
             title: {
               display: true,
-              text: this.yTitleValue,
+              text: horizontal ? this.xTitleValue : this.yTitleValue,
               color: "#000000"
             },
             grid: { color: "#000000" }

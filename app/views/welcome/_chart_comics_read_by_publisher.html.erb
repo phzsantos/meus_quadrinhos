@@ -1,0 +1,10 @@
+<canvas
+  class="w-full h-full"
+  data-controller="chart"
+  data-chart-type-value="bar"
+  data-chart-index-axis-value="y"
+  data-chart-labels-value="<%= @read_comics_publishers.to_json %>"
+  data-chart-data-value="<%= @read_comics_count_by_publisher.to_json %>"
+  data-chart-x-title-value="Quantidade de quadrinhos"
+  data-chart-y-title-value="Editora">
+</canvas>

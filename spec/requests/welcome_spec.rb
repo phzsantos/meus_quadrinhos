@@ -19,6 +19,9 @@ RSpec.describe("Welcome", type: :request) do
         pages_read_years: [2023, 2024],
         pages_read_count_by_year: [300, 600],
 
+        read_comics_publishers: ["Abril", "Panini"],
+        read_comics_count_by_publisher: [5, 15],
+
         read_comics_months: [
           Date.new(2024, 1, 1),
           Date.new(2024, 2, 1),
