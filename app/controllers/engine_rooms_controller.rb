@@ -14,7 +14,6 @@ class EngineRoomsController < ApplicationController
       { label: "Encadernações", count: BookBinding.count, path: book_bindings_path },
       { label: "Tipos de papel", count: PaperType.count, path: paper_types_path },
       { label: "Tipos de HQ", count: PublicationType.count, path: publication_types_path },
-      { label: "Usuários", count: User.count, path: root_path },
     ]
   end
 end
