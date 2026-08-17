@@ -15,5 +15,6 @@ class EngineRoomsController < ApplicationController
       { label: "Tipos de papel", count: PaperType.count, path: paper_types_path },
       { label: "Tipos de HQ", count: PublicationType.count, path: publication_types_path },
     ]
+    @users = User.order(admin: :desc, username: :asc).page(params[:page]).per(20)
   end
 end

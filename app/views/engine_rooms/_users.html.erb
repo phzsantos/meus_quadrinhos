@@ -1,0 +1,38 @@
+<div class="bg-bada p-3 text-shadow-md rounded-md shadow-md">
+  <div class="text-black">
+    <div class="py-2 text-shadow-md flex flex-wrap items-center bangers-regular text-4xl">
+      <span>
+        <%= image_tag "icons/user-solid-full.svg", class: "w-8 h-8 inline-block" %>
+        Usuários (<%= @users.total_count %>)
+      </span>
+    </div>
+
+    <hr>
+
+    <div class="text-3xl patrick-hand-regular">
+      <% @users.each_with_index do |user, index| %>
+        <div class="flex flex-wrap py-2 items-center gap-2">
+          <div class="min-w-0">
+            <span><%= user.username %></span>
+            <% if user == current_user %>
+              <span class="text-xl opacity-70">(você)</span>
+            <% end %>
+            <p class="text-xl opacity-70 truncate"><%= user.email %></p>
+          </div>
+
+          <% if user.admin? %>
+            <span class="ml-auto text-xl bangers-regular">Admin</span>
+          <% end %>
+        </div>
+
+        <% unless index == @users.size - 1 %>
+          <hr>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="mt-6 flex justify-center">
+  <%= paginate @users %>
+</div>
