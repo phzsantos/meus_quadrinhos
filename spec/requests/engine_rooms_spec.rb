@@ -23,6 +23,15 @@ RSpec.describe("EngineRooms", type: :request) do
         get engine_room_path
         expect(response).to(have_http_status(:ok))
       end
+
+      it "lists users" do
+        other = create(:user, username: "leitor")
+
+        get engine_room_path
+
+        expect(response.body).to(include(admin.username))
+        expect(response.body).to(include(other.username))
+      end
     end
   end
 end
