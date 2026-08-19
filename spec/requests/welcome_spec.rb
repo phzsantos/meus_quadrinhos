@@ -22,6 +22,9 @@ RSpec.describe("Welcome", type: :request) do
         read_comics_publishers: ["Abril", "Panini"],
         read_comics_count_by_publisher: [5, 15],
 
+        read_comics_characters: ["Wolverine", "Cyclops"],
+        read_comics_count_by_character: [10, 4],
+
         read_comics_months: [
           Date.new(2024, 1, 1),
           Date.new(2024, 2, 1),

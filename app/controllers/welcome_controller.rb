@@ -24,6 +24,9 @@ class WelcomeController < ApplicationController
     @read_comics_publishers = context.read_comics_publishers
     @read_comics_count_by_publisher = context.read_comics_count_by_publisher
 
+    @read_comics_characters = context.read_comics_characters
+    @read_comics_count_by_character = context.read_comics_count_by_character
+
     @read_comics_months = context.read_comics_months
     @read_comics_count_by_month = context.read_comics_count_by_month
 
