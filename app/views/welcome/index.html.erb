@@ -47,6 +47,20 @@
   
   <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col mb-6">
     <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
+      Tipos de papel mais lidos
+    </h2>
+
+    <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_paper_types.size * 40].max %>px">
+      <div class="absolute inset-0"></div>
+
+      <div data-turbo-cache="false" class="absolute inset-0">
+        <%= render "chart_comics_read_by_paper_type" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col mb-6">
+    <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
       Quadrinhos lidos por editora
     </h2>
 

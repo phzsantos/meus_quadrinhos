@@ -25,6 +25,9 @@ RSpec.describe("Welcome", type: :request) do
         read_comics_characters: ["Wolverine", "Cyclops"],
         read_comics_count_by_character: [10, 4],
 
+        read_comics_paper_types: ["Offset", "Couchê"],
+        read_comics_count_by_paper_type: [12, 8],
+
         read_comics_months: [
           Date.new(2024, 1, 1),
           Date.new(2024, 2, 1),
