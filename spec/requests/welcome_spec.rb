@@ -25,6 +25,9 @@ RSpec.describe("Welcome", type: :request) do
         read_comics_characters: ["Wolverine", "Cyclops"],
         read_comics_count_by_character: [10, 4],
 
+        read_comics_authors: ["Frank Miller", "Alan Moore"],
+        read_comics_count_by_author: [8, 3],
+
         read_comics_paper_types: ["Offset", "Couchê"],
         read_comics_count_by_paper_type: [12, 8],
 
