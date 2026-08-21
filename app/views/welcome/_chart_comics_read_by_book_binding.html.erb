@@ -1,0 +1,10 @@
+<canvas
+  class="w-full h-full"
+  data-controller="chart"
+  data-chart-type-value="bar"
+  data-chart-index-axis-value="y"
+  data-chart-labels-value="<%= @read_comics_book_bindings.to_json %>"
+  data-chart-data-value="<%= @read_comics_count_by_book_binding.to_json %>"
+  data-chart-x-title-value="Quantidade de leituras"
+  data-chart-y-title-value="Encadernação">
+</canvas>

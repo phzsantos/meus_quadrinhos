@@ -28,6 +28,9 @@ RSpec.describe("Welcome", type: :request) do
         read_comics_paper_types: ["Offset", "Couchê"],
         read_comics_count_by_paper_type: [12, 8],
 
+        read_comics_book_bindings: ["Capa dura", "Brochura"],
+        read_comics_count_by_book_binding: [9, 6],
+
         read_comics_months: [
           Date.new(2024, 1, 1),
           Date.new(2024, 2, 1),
