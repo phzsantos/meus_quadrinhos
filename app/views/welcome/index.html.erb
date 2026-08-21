@@ -31,58 +31,60 @@
     </div>
   </div>
 
-  <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col mb-6">
-    <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
-      Personagens mais lidos
-    </h2>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col">
+      <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
+        Personagens mais lidos
+      </h2>
 
-    <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_characters.size * 40].max %>px">
-      <div class="absolute inset-0"></div>
+      <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_characters.size * 40].max %>px">
+        <div class="absolute inset-0"></div>
 
-      <div data-turbo-cache="false" class="absolute inset-0">
-        <%= render "chart_comics_read_by_character" %>
+        <div data-turbo-cache="false" class="absolute inset-0">
+          <%= render "chart_comics_read_by_character" %>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col mb-6">
-    <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
-      Autores mais lidos
-    </h2>
+    <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col">
+      <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
+        Autores mais lidos
+      </h2>
 
-    <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_authors.size * 40].max %>px">
-      <div class="absolute inset-0"></div>
+      <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_authors.size * 40].max %>px">
+        <div class="absolute inset-0"></div>
 
-      <div data-turbo-cache="false" class="absolute inset-0">
-        <%= render "chart_comics_read_by_author" %>
+        <div data-turbo-cache="false" class="absolute inset-0">
+          <%= render "chart_comics_read_by_author" %>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col mb-6">
-    <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
-      Tipos de papel mais lidos
-    </h2>
+    <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col">
+      <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
+        Tipos de papel mais lidos
+      </h2>
 
-    <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_paper_types.size * 40].max %>px">
-      <div class="absolute inset-0"></div>
+      <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_paper_types.size * 40].max %>px">
+        <div class="absolute inset-0"></div>
 
-      <div data-turbo-cache="false" class="absolute inset-0">
-        <%= render "chart_comics_read_by_paper_type" %>
+        <div data-turbo-cache="false" class="absolute inset-0">
+          <%= render "chart_comics_read_by_paper_type" %>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col mb-6">
-    <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
-      Encadernações mais lidas
-    </h2>
+    <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col">
+      <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
+        Encadernações mais lidas
+      </h2>
 
-    <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_book_bindings.size * 40].max %>px">
-      <div class="absolute inset-0"></div>
+      <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_book_bindings.size * 40].max %>px">
+        <div class="absolute inset-0"></div>
 
-      <div data-turbo-cache="false" class="absolute inset-0">
-        <%= render "chart_comics_read_by_book_binding" %>
+        <div data-turbo-cache="false" class="absolute inset-0">
+          <%= render "chart_comics_read_by_book_binding" %>
+        </div>
       </div>
     </div>
   </div>
