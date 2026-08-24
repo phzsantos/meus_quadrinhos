@@ -36,6 +36,9 @@ class WelcomeController < ApplicationController
     @read_comics_book_bindings = context.read_comics_book_bindings
     @read_comics_count_by_book_binding = context.read_comics_count_by_book_binding
 
+    @read_comics_publication_types = context.read_comics_publication_types
+    @read_comics_count_by_publication_type = context.read_comics_count_by_publication_type
+
     @read_comics_months = context.read_comics_months
     @read_comics_count_by_month = context.read_comics_count_by_month
 

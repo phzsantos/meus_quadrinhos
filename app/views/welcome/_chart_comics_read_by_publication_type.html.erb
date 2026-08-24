@@ -1,0 +1,10 @@
+<canvas
+  class="w-full h-full"
+  data-controller="chart"
+  data-chart-type-value="bar"
+  data-chart-index-axis-value="y"
+  data-chart-labels-value="<%= @read_comics_publication_types.to_json %>"
+  data-chart-data-value="<%= @read_comics_count_by_publication_type.to_json %>"
+  data-chart-x-title-value="Quantidade de leituras"
+  data-chart-y-title-value="Tipo de publicação">
+</canvas>
