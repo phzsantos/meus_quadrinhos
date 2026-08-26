@@ -8,11 +8,11 @@ class Comic < ApplicationRecord
   def slug_candidates
     if collection.present?
       [
-        [:title, :issue_number],
+        [:title, :issue_number, :published_year],
       ]
     else
       [
-        :title,
+        [:title, :published_year],
       ]
     end
   end
@@ -44,7 +44,7 @@ class Comic < ApplicationRecord
 
   has_one_attached :cover_image
 
-  validates :title, presence: true, uniqueness: { scope: :issue_number, case_sensitive: false }
+  validates :title, presence: true, uniqueness: { scope: [:issue_number, :published_year], case_sensitive: false }
   validates :page_count, numericality: { greater_than: 0 }, presence: true
   validates :published_year, numericality: { only_integer: true }, presence: true
   validates :story_count, numericality: { only_integer: true, greater_than: 0 }, presence: true
@@ -53,7 +53,7 @@ class Comic < ApplicationRecord
   validates :issue_number, numericality: { only_integer: true }, presence: true
 
   def should_generate_new_friendly_id?
-    title_changed? || issue_number_changed?
+    title_changed? || issue_number_changed? || published_year_changed?
   end
 
   before_validation :remove_blank_author_ids
