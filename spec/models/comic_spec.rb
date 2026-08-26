@@ -16,7 +16,7 @@ RSpec.describe(Comic, type: :model) do
 
     it do
       is_expected.to(validate_uniqueness_of(:title)
-        .scoped_to(:issue_number)
+        .scoped_to(:issue_number, :published_year)
         .case_insensitive)
     end
 
@@ -59,10 +59,10 @@ RSpec.describe(Comic, type: :model) do
   end
 
   describe "friendly_id" do
-    it "generates slug from title" do
+    it "generates slug from title and published_year" do
       comic = create(:comic, title: "Watchmen", collection: nil)
 
-      expect(comic.slug).to(eq("watchmen"))
+      expect(comic.slug).to(eq("watchmen-2020"))
     end
 
     it "updates slug when title changes" do
@@ -70,7 +70,7 @@ RSpec.describe(Comic, type: :model) do
 
       comic.update!(title: "V for Vendetta")
 
-      expect(comic.slug).to(eq("v-for-vendetta"))
+      expect(comic.slug).to(eq("v-for-vendetta-2020"))
     end
   end
 

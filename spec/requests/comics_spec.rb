@@ -245,7 +245,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "does not create with duplicated title and issue_number" do
+        it "does not create with duplicated title, issue_number and published_year" do
           post(comics_path, params: { comic: valid_attributes })
 
           expect do
@@ -255,7 +255,7 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "does not create with duplicated title and issue_number case insensitive" do
+        it "does not create with duplicated title, issue_number and published_year case insensitive" do
           post(comics_path, params: { comic: valid_attributes })
 
           expect do
@@ -263,6 +263,16 @@ RSpec.describe("Comics", type: :request) do
           end.not_to(change(Comic, :count))
 
           expect(response).to(have_http_status(:unprocessable_content))
+        end
+
+        it "creates comic with same title and issue_number but different published_year" do
+          post(comics_path, params: { comic: valid_attributes })
+
+          expect do
+            post(comics_path, params: { comic: valid_attributes.merge(published_year: 2021) })
+          end.to(change(Comic, :count).by(1))
+
+          expect(response).to(redirect_to(comic_path(Comic.find_by!(published_year: 2021))))
         end
       end
     end
@@ -418,18 +428,22 @@ RSpec.describe("Comics", type: :request) do
           expect(response).to(have_http_status(:unprocessable_content))
         end
 
-        it "does not update with duplicated title and issue_number" do
+        it "does not update with duplicated title, issue_number and published_year" do
+          create(:comic, title: "Tex Willer #1", issue_number: 1, published_year: 2020)
+
           patch comic_path(comic), params: {
-            comic: { title: "Tex Willer #1", issue_number: 1 },
+            comic: { title: "Tex Willer #1", issue_number: 1, published_year: 2020 },
           }
 
           expect(response).to(have_http_status(:unprocessable_content))
           expect(comic.reload.title).not_to(eq("Tex Willer #1"))
         end
 
-        it "does not update with duplicated title and issue_number case insensitive" do
+        it "does not update with duplicated title, issue_number and published_year case insensitive" do
+          create(:comic, title: "Tex Willer #1", issue_number: 1, published_year: 2020)
+
           patch comic_path(comic), params: {
-            comic: { title: "tex willer #1", issue_number: 1 },
+            comic: { title: "tex willer #1", issue_number: 1, published_year: 2020 },
           }
 
           expect(response).to(have_http_status(:unprocessable_content))
