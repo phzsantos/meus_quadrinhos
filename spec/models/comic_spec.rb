@@ -59,18 +59,36 @@ RSpec.describe(Comic, type: :model) do
   end
 
   describe "friendly_id" do
-    it "generates slug from title and published_year" do
-      comic = create(:comic, title: "Watchmen", collection: nil)
+    context "when comic has no collection" do
+      it "generates slug from title and published_year" do
+        comic = create(:comic, title: "Watchmen", collection: nil)
 
-      expect(comic.slug).to(eq("watchmen-2020"))
+        expect(comic.slug).to(eq("watchmen-2020"))
+      end
+
+      it "updates slug when title changes" do
+        comic = create(:comic, title: "Watchmen", collection: nil)
+
+        comic.update!(title: "V for Vendetta")
+
+        expect(comic.slug).to(eq("v-for-vendetta-2020"))
+      end
     end
 
-    it "updates slug when title changes" do
-      comic = create(:comic, title: "Watchmen", collection: nil)
+    context "when comic belongs to a collection" do
+      it "generates slug from title, issue_number and published_year" do
+        comic = create(:comic, title: "Tex Willer", issue_number: 1, published_year: 2020)
 
-      comic.update!(title: "V for Vendetta")
+        expect(comic.slug).to(eq("tex-willer-1-2020"))
+      end
 
-      expect(comic.slug).to(eq("v-for-vendetta-2020"))
+      it "updates slug when title changes" do
+        comic = create(:comic, title: "Tex Willer", issue_number: 1, published_year: 2020)
+
+        comic.update!(title: "Zagor")
+
+        expect(comic.slug).to(eq("zagor-1-2020"))
+      end
     end
   end
 
