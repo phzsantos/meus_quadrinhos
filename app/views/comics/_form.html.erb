@@ -60,15 +60,14 @@
 
     <div class="text-2xl patrick-hand-regular">
       <strong>Autores</strong>
-      <%= form.collection_select :author_ids,
-        Author.order(:name),
-        :id,
-        :name,
-        {},
-        {
-          multiple: true,
-          class: "w-full mt-1 rounded-md border border-black/30 px-3 py-2 h-40"
-        } %>
+      <div class="mt-1 max-h-60 overflow-y-auto rounded-md border border-black/30 bg-white/60 p-2 columns-1 sm:columns-2 gap-x-4">
+        <%= form.collection_check_boxes :author_ids, Author.order(:name), :id, :name do |b| %>
+          <label class="flex items-center gap-2 break-inside-avoid py-0.5 cursor-pointer hover:bg-black/5 rounded px-1">
+            <%= b.check_box class: "size-4 accent-green-700 shrink-0" %>
+            <span class="text-xl leading-tight"><%= b.text %></span>
+          </label>
+        <% end %>
+      </div>
     </div>
 
     <div class="text-2xl patrick-hand-regular">
