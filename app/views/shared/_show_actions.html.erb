@@ -16,7 +16,7 @@
       <%= button_to "Excluir",
         resource,
         method: :delete,
-        data: { confirm: "Tem certeza?" },
+        data: { turbo_confirm: "Tem certeza?" },
         class: "px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition cursor-pointer" %>
     </div>
   <% end %>
