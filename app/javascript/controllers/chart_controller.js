@@ -14,7 +14,19 @@ export default class extends Controller {
   }
 
   connect() {
-    if (this.chart) return
+    this.renderChart()
+
+    this.beforeCacheHandler = () => this.destroyChart()
+    this.pageShowHandler = (event) => {
+      if (event.persisted) this.renderChart()
+    }
+
+    document.addEventListener("turbo:before-cache", this.beforeCacheHandler)
+    window.addEventListener("pageshow", this.pageShowHandler)
+  }
+
+  renderChart() {
+    this.destroyChart()
 
     window.Chart.defaults.font.family = "'Patrick Hand', cursive"
     window.Chart.defaults.font.size = 20
@@ -129,6 +141,12 @@ export default class extends Controller {
   }
 
   disconnect() {
+    document.removeEventListener("turbo:before-cache", this.beforeCacheHandler)
+    window.removeEventListener("pageshow", this.pageShowHandler)
+    this.destroyChart()
+  }
+
+  destroyChart() {
     if (this.chart) {
       this.chart.destroy()
       this.chart = null
