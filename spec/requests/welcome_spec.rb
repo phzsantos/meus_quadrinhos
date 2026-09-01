@@ -37,6 +37,9 @@ RSpec.describe("Welcome", type: :request) do
         read_comics_publication_types: ["Série", "Graphic Novel"],
         read_comics_count_by_publication_type: [11, 7],
 
+        best_month: Date.new(2024, 1, 1),
+        best_month_comics_count: 2,
+
         read_comics_months: [
           Date.new(2024, 1, 1),
           Date.new(2024, 2, 1),

@@ -60,5 +60,8 @@ class WelcomeController < ApplicationController
     @total_story_count = context.total_story_count
     @total_pages_read = context.total_pages_read
     @comics_read_this_month = context.comics_read_this_month
+
+    @best_month = context.best_month
+    @best_month_comics_count = context.best_month_comics_count
   end
 end
