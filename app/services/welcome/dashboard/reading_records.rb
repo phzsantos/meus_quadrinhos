@@ -26,6 +26,17 @@ module Welcome
 
         context.best_stories_month = best_stories_month
         context.best_month_stories_count = best_stories_count || 0
+
+        pages_by_month = Reading
+          .includes(:comic)
+          .where.not(read_at: nil)
+          .group_by { |r| r.read_at.beginning_of_month }
+          .transform_values { |readings| readings.sum { |r| r.comic.page_count.to_i } }
+
+        best_pages_month, best_pages_count = pages_by_month.max_by { |month, count| [count, month] }
+
+        context.best_pages_month = best_pages_month
+        context.best_month_pages_count = best_pages_count || 0
       end
     end
   end

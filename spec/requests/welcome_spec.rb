@@ -43,6 +43,9 @@ RSpec.describe("Welcome", type: :request) do
         best_stories_month: Date.new(2023, 1, 1),
         best_month_stories_count: 20,
 
+        best_pages_month: Date.new(2023, 1, 1),
+        best_month_pages_count: 30,
+
         read_comics_months: [
           Date.new(2024, 1, 1),
           Date.new(2024, 2, 1),

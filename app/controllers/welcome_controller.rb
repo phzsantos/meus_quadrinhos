@@ -65,5 +65,7 @@ class WelcomeController < ApplicationController
     @best_month_comics_count = context.best_month_comics_count
     @best_stories_month = context.best_stories_month
     @best_month_stories_count = context.best_month_stories_count
+    @best_pages_month = context.best_pages_month
+    @best_month_pages_count = context.best_month_pages_count
   end
 end
