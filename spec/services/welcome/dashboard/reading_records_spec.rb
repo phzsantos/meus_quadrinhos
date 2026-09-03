@@ -7,10 +7,14 @@ RSpec.describe(Welcome::Dashboard::ReadingRecords) do
 
   describe ".call" do
     context "when there are readings in different months" do
+      let!(:comic_jan) { create(:comic, story_count: 2) }
+      let!(:comic_jan_2) { create(:comic, story_count: 1) }
+      let!(:comic_feb) { create(:comic, story_count: 5) }
+
       before do
-        create(:reading, read_at: Date.new(2023, 1, 5))
-        create(:reading, read_at: Date.new(2023, 1, 20))
-        create(:reading, read_at: Date.new(2023, 2, 10))
+        create(:reading, comic: comic_jan,   read_at: Date.new(2023, 1, 5))
+        create(:reading, comic: comic_jan_2, read_at: Date.new(2023, 1, 20))
+        create(:reading, comic: comic_feb,   read_at: Date.new(2023, 2, 10))
       end
 
       it "returns the month with the most comics read" do
@@ -19,6 +23,14 @@ RSpec.describe(Welcome::Dashboard::ReadingRecords) do
 
       it "returns the count of comics read in the best month" do
         expect(context.best_month_comics_count).to(eq(2))
+      end
+
+      it "returns the month with the most stories read" do
+        expect(context.best_stories_month).to(eq(Date.new(2023, 2, 1)))
+      end
+
+      it "returns the count of stories read in the best stories month" do
+        expect(context.best_month_stories_count).to(eq(5))
       end
 
       it "executes the flow successfully" do
@@ -32,8 +44,12 @@ RSpec.describe(Welcome::Dashboard::ReadingRecords) do
         create(:reading, read_at: Date.new(2023, 2, 10))
       end
 
-      it "returns the most recent month as the record" do
+      it "returns the most recent month as the comics record" do
         expect(context.best_month).to(eq(Date.new(2023, 2, 1)))
+      end
+
+      it "returns the most recent month as the stories record" do
+        expect(context.best_stories_month).to(eq(Date.new(2023, 2, 1)))
       end
     end
 
@@ -42,8 +58,16 @@ RSpec.describe(Welcome::Dashboard::ReadingRecords) do
         expect(context.best_month_comics_count).to(eq(0))
       end
 
-      it "returns no best month" do
+      it "returns no best comics month" do
         expect(context.best_month).to(be_nil)
+      end
+
+      it "returns zero stories count" do
+        expect(context.best_month_stories_count).to(eq(0))
+      end
+
+      it "returns no best stories month" do
+        expect(context.best_stories_month).to(be_nil)
       end
     end
   end
