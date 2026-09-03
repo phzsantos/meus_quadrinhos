@@ -11,3 +11,17 @@
     <p class="text-2xl patrick-hand-regular mt-2"><%= @best_month.strftime("%m/%Y") %></p>
   <% end %>
 </div>
+
+<div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md">
+  <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Mês com mais histórias lidas:</h3>
+  <p
+    data-controller="counter"
+    data-counter-value-value="<%= @best_month_stories_count %>"
+    class="text-5xl bangers-regular"
+  >
+  0
+  </p>
+  <% if @best_stories_month.present? %>
+    <p class="text-2xl patrick-hand-regular mt-2"><%= @best_stories_month.strftime("%m/%Y") %></p>
+  <% end %>
+</div>
