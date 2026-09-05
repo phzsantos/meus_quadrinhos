@@ -46,6 +46,54 @@ RSpec.describe(Welcome::Dashboard::ReadingRecords) do
       end
     end
 
+    context "when there is a reading streak" do
+      before do
+        create(:reading, read_at: Date.new(2023, 1, 1))
+        create(:reading, read_at: Date.new(2023, 1, 2))
+        create(:reading, read_at: Date.new(2023, 1, 3))
+        create(:reading, read_at: Date.new(2023, 1, 10))
+        create(:reading, read_at: Date.new(2023, 1, 11))
+      end
+
+      it "returns the longest streak in days" do
+        expect(context.longest_reading_streak_days).to(eq(3))
+      end
+
+      it "returns the start date of the longest streak" do
+        expect(context.longest_reading_streak_start).to(eq(Date.new(2023, 1, 1)))
+      end
+
+      it "returns the end date of the longest streak" do
+        expect(context.longest_reading_streak_end).to(eq(Date.new(2023, 1, 3)))
+      end
+    end
+
+    context "when two streaks have the same length" do
+      before do
+        create(:reading, read_at: Date.new(2023, 1, 1))
+        create(:reading, read_at: Date.new(2023, 1, 2))
+        create(:reading, read_at: Date.new(2023, 2, 10))
+        create(:reading, read_at: Date.new(2023, 2, 11))
+      end
+
+      it "returns the most recent streak" do
+        expect(context.longest_reading_streak_start).to(eq(Date.new(2023, 2, 10)))
+        expect(context.longest_reading_streak_end).to(eq(Date.new(2023, 2, 11)))
+      end
+    end
+
+    context "when multiple readings happen on the same day" do
+      before do
+        create(:reading, read_at: Date.new(2023, 1, 1))
+        create(:reading, read_at: Date.new(2023, 1, 1))
+        create(:reading, read_at: Date.new(2023, 1, 2))
+      end
+
+      it "counts each day only once in the streak" do
+        expect(context.longest_reading_streak_days).to(eq(2))
+      end
+    end
+
     context "when two months have the same count" do
       before do
         create(:reading, read_at: Date.new(2023, 1, 5))
@@ -88,6 +136,18 @@ RSpec.describe(Welcome::Dashboard::ReadingRecords) do
 
       it "returns no best pages month" do
         expect(context.best_pages_month).to(be_nil)
+      end
+
+      it "returns zero streak days" do
+        expect(context.longest_reading_streak_days).to(eq(0))
+      end
+
+      it "returns no streak start date" do
+        expect(context.longest_reading_streak_start).to(be_nil)
+      end
+
+      it "returns no streak end date" do
+        expect(context.longest_reading_streak_end).to(be_nil)
       end
     end
   end
