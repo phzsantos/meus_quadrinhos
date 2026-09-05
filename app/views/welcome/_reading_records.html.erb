@@ -39,3 +39,21 @@
     <p class="text-2xl patrick-hand-regular mt-2"><%= @best_pages_month.strftime("%m/%Y") %></p>
   <% end %>
 </div>
+
+<div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md">
+  <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Maior sequência de leitura:</h3>
+  <p
+    data-controller="counter"
+    data-counter-value-value="<%= @longest_reading_streak_days %>"
+    class="text-5xl bangers-regular"
+  >
+  0
+  </p>
+  <% if @longest_reading_streak_start.present? && @longest_reading_streak_end.present? %>
+    <p class="text-2xl patrick-hand-regular mt-2">
+      <%= @longest_reading_streak_start.strftime("%d/%m/%Y") %>
+      -
+      <%= @longest_reading_streak_end.strftime("%d/%m/%Y") %>
+    </p>
+  <% end %>
+</div>

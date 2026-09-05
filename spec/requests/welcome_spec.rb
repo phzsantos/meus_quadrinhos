@@ -46,6 +46,10 @@ RSpec.describe("Welcome", type: :request) do
         best_pages_month: Date.new(2023, 1, 1),
         best_month_pages_count: 30,
 
+        longest_reading_streak_days: 5,
+        longest_reading_streak_start: Date.new(2024, 1, 10),
+        longest_reading_streak_end: Date.new(2024, 1, 14),
+
         read_comics_months: [
           Date.new(2024, 1, 1),
           Date.new(2024, 2, 1),

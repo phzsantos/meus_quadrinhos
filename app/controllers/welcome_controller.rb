@@ -67,5 +67,8 @@ class WelcomeController < ApplicationController
     @best_month_stories_count = context.best_month_stories_count
     @best_pages_month = context.best_pages_month
     @best_month_pages_count = context.best_month_pages_count
+    @longest_reading_streak_days = context.longest_reading_streak_days
+    @longest_reading_streak_start = context.longest_reading_streak_start
+    @longest_reading_streak_end = context.longest_reading_streak_end
   end
 end
