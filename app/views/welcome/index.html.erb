@@ -1,5 +1,20 @@
 <div class="bg-bada text-shadow-md p-2 rounded-md shadow-md flex justify-center flex-wrap gap-3 mb-6">
   <h2 class="text-3xl text-black bangers-regular">
+    <%= image_tag 'icons/trophy-solid-full.svg', class: "w-7 h-7 inline-block" %>
+    Recordes
+  </h2>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+  <div class="md:col-span-2 space-y-3 text-black">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <%= render "reading_records" %>
+    </div>
+  </div>
+</div>
+
+<div class="bg-bada text-shadow-md p-2 rounded-md shadow-md flex justify-center flex-wrap gap-3 mb-6">
+  <h2 class="text-3xl text-black bangers-regular">
     <%= image_tag 'icons/clock-solid-full.svg', class: "w-7 h-7 inline-block" %>
     Últimas leituras
   </h2>
@@ -130,21 +145,6 @@
           <%= render "chart_comics_read_by_publication_type" %>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<div class="bg-bada text-shadow-md p-2 rounded-md shadow-md flex justify-center flex-wrap gap-3 mb-6">
-  <h2 class="text-3xl text-black bangers-regular">
-    <%= image_tag 'icons/trophy-solid-full.svg', class: "w-7 h-7 inline-block" %>
-    Recordes
-  </h2>
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-  <div class="md:col-span-2 space-y-3 text-black">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <%= render "reading_records" %>
     </div>
   </div>
 </div>
