@@ -40,8 +40,47 @@ RSpec.describe(Welcome::Dashboard::GeneralStatistics) do
         expect(context.comics_read_this_month).to(eq(1))
       end
 
+      it "returns zero for the current reading streak when the last reading is older than yesterday" do
+        expect(context.current_reading_streak_days).to(eq(0))
+      end
+
       it "executes the flow successfully" do
         expect(context).to(be_success)
+      end
+    end
+
+    context "when there is a current reading streak including today" do
+      before do
+        create(:reading, read_at: Date.new(2024, 3, 13))
+        create(:reading, read_at: Date.new(2024, 3, 14))
+        create(:reading, read_at: Date.new(2024, 3, 15))
+        create(:reading, read_at: Date.new(2024, 3, 10))
+      end
+
+      it "returns the consecutive days ending today" do
+        expect(context.current_reading_streak_days).to(eq(3))
+      end
+    end
+
+    context "when the last reading was yesterday" do
+      before do
+        create(:reading, read_at: Date.new(2024, 3, 13))
+        create(:reading, read_at: Date.new(2024, 3, 14))
+      end
+
+      it "keeps the streak alive" do
+        expect(context.current_reading_streak_days).to(eq(2))
+      end
+    end
+
+    context "when the last reading was two days ago" do
+      before do
+        create(:reading, read_at: Date.new(2024, 3, 12))
+        create(:reading, read_at: Date.new(2024, 3, 13))
+      end
+
+      it "returns zero for the current reading streak" do
+        expect(context.current_reading_streak_days).to(eq(0))
       end
     end
 
@@ -60,6 +99,10 @@ RSpec.describe(Welcome::Dashboard::GeneralStatistics) do
 
       it "returns 0 for comics read this month" do
         expect(context.comics_read_this_month).to(eq(0))
+      end
+
+      it "returns 0 for the current reading streak" do
+        expect(context.current_reading_streak_days).to(eq(0))
       end
     end
   end
