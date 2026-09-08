@@ -79,6 +79,7 @@ RSpec.describe("Welcome", type: :request) do
         total_story_count: 120,
         total_pages_read: 900,
         comics_read_this_month: 3,
+        current_reading_streak_days: 4,
       )
     end
 
