@@ -40,7 +40,7 @@ RSpec.describe(Welcome::Dashboard::GeneralStatistics) do
         expect(context.comics_read_this_month).to(eq(1))
       end
 
-      it "returns zero for the current reading streak when the last reading is older than yesterday" do
+      it "returns zero for the current streak when there is no reading today" do
         expect(context.current_reading_streak_days).to(eq(0))
       end
 
@@ -49,7 +49,28 @@ RSpec.describe(Welcome::Dashboard::GeneralStatistics) do
       end
     end
 
-    context "when there is a current reading streak including today" do
+    context "when only today has a reading" do
+      before do
+        create(:reading, read_at: Date.new(2024, 3, 15))
+      end
+
+      it "returns one day" do
+        expect(context.current_reading_streak_days).to(eq(1))
+      end
+    end
+
+    context "when yesterday and today have readings" do
+      before do
+        create(:reading, read_at: Date.new(2024, 3, 14))
+        create(:reading, read_at: Date.new(2024, 3, 15))
+      end
+
+      it "returns two consecutive days" do
+        expect(context.current_reading_streak_days).to(eq(2))
+      end
+    end
+
+    context "when there is a longer streak ending today" do
       before do
         create(:reading, read_at: Date.new(2024, 3, 13))
         create(:reading, read_at: Date.new(2024, 3, 14))
@@ -62,25 +83,24 @@ RSpec.describe(Welcome::Dashboard::GeneralStatistics) do
       end
     end
 
-    context "when the last reading was yesterday" do
+    context "when only yesterday has a reading" do
       before do
-        create(:reading, read_at: Date.new(2024, 3, 13))
         create(:reading, read_at: Date.new(2024, 3, 14))
       end
 
-      it "keeps the streak alive" do
-        expect(context.current_reading_streak_days).to(eq(2))
+      it "returns zero because today has no reading" do
+        expect(context.current_reading_streak_days).to(eq(0))
       end
     end
 
-    context "when the last reading was two days ago" do
+    context "when today and an older day have readings with a gap" do
       before do
         create(:reading, read_at: Date.new(2024, 3, 12))
-        create(:reading, read_at: Date.new(2024, 3, 13))
+        create(:reading, read_at: Date.new(2024, 3, 15))
       end
 
-      it "returns zero for the current reading streak" do
-        expect(context.current_reading_streak_days).to(eq(0))
+      it "returns only today" do
+        expect(context.current_reading_streak_days).to(eq(1))
       end
     end
 

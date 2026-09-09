@@ -25,21 +25,20 @@ module Welcome
 
         reading_days = Reading
           .where.not(read_at: nil)
-          .distinct
-          .order(:read_at)
           .pluck(:read_at)
+          .map(&:to_date)
+          .to_set
 
-        current_streak = reading_days
-          .slice_when { |previous_day, current_day| current_day != previous_day + 1 }
-          .to_a
-          .last
+        today = Time.zone.today
+        streak_days = 0
+        day = today
 
-        context.current_reading_streak_days =
-          if current_streak.present? && current_streak.last >= Time.zone.today - 1.day
-            current_streak.size
-          else
-            0
-          end
+        while reading_days.include?(day)
+          streak_days += 1
+          day -= 1.day
+        end
+
+        context.current_reading_streak_days = streak_days
       end
     end
   end
