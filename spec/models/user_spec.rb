@@ -5,6 +5,12 @@ require "rails_helper"
 RSpec.describe(User, type: :model) do
   subject { build(:user) }
 
+  describe "associations" do
+    it { is_expected.to(have_many(:user_comics).dependent(:destroy)) }
+    it { is_expected.to(have_many(:owned_comics).through(:user_comics).source(:comic)) }
+    it { is_expected.to(have_many(:readings).dependent(:destroy)) }
+  end
+
   describe "validations" do
     it { is_expected.to(validate_presence_of(:username)) }
 

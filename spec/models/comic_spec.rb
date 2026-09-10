@@ -56,6 +56,33 @@ RSpec.describe(Comic, type: :model) do
     it { is_expected.to(have_many(:characters).through(:comic_characters)) }
 
     it { is_expected.to(have_many(:readings).dependent(:destroy)) }
+    it { is_expected.to(have_many(:user_comics).dependent(:destroy)) }
+    it { is_expected.to(have_many(:owners).through(:user_comics).source(:user)) }
+  end
+
+  describe "#owned_by? and #read_by?" do
+    let(:user) { create(:user) }
+    let(:other_user) { create(:user) }
+    let(:comic) { create(:comic) }
+
+    it "returns false when the user does not own or read the comic" do
+      expect(comic.owned_by?(user)).to(be(false))
+      expect(comic.read_by?(user)).to(be(false))
+    end
+
+    it "returns true when the user owns the comic" do
+      create(:user_comic, user: user, comic: comic)
+
+      expect(comic.owned_by?(user)).to(be(true))
+      expect(comic.owned_by?(other_user)).to(be(false))
+    end
+
+    it "returns true when the user has a reading" do
+      create(:reading, user: user, comic: comic)
+
+      expect(comic.read_by?(user)).to(be(true))
+      expect(comic.read_by?(other_user)).to(be(false))
+    end
   end
 
   describe "friendly_id" do
