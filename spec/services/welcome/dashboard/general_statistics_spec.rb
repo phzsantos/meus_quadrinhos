@@ -5,7 +5,9 @@ require "rails_helper"
 RSpec.describe(Welcome::Dashboard::GeneralStatistics) do
   include ActiveSupport::Testing::TimeHelpers
 
-  subject(:context) { described_class.call }
+  let(:user) { create(:user) }
+
+  subject(:context) { described_class.call(user: user) }
 
   describe ".call" do
     around do |example|
@@ -18,10 +20,10 @@ RSpec.describe(Welcome::Dashboard::GeneralStatistics) do
 
       before do
         # reading in the current month
-        create(:reading, comic: comic_a, read_at: Time.current.beginning_of_month + 1.day)
+        create(:reading, user: user, comic: comic_a, read_at: Time.current.beginning_of_month + 1.day)
 
         # reading outside the current month
-        create(:reading, comic: comic_b, read_at: 2.months.ago)
+        create(:reading, user: user, comic: comic_b, read_at: 2.months.ago)
       end
 
       it "returns the total number of comics read" do
@@ -51,7 +53,7 @@ RSpec.describe(Welcome::Dashboard::GeneralStatistics) do
 
     context "when only today has a reading" do
       before do
-        create(:reading, read_at: Date.new(2024, 3, 15))
+        create(:reading, user: user, read_at: Date.new(2024, 3, 15))
       end
 
       it "returns one day" do
@@ -61,8 +63,8 @@ RSpec.describe(Welcome::Dashboard::GeneralStatistics) do
 
     context "when yesterday and today have readings" do
       before do
-        create(:reading, read_at: Date.new(2024, 3, 14))
-        create(:reading, read_at: Date.new(2024, 3, 15))
+        create(:reading, user: user, read_at: Date.new(2024, 3, 14))
+        create(:reading, user: user, read_at: Date.new(2024, 3, 15))
       end
 
       it "returns two consecutive days" do
@@ -72,10 +74,10 @@ RSpec.describe(Welcome::Dashboard::GeneralStatistics) do
 
     context "when there is a longer streak ending today" do
       before do
-        create(:reading, read_at: Date.new(2024, 3, 13))
-        create(:reading, read_at: Date.new(2024, 3, 14))
-        create(:reading, read_at: Date.new(2024, 3, 15))
-        create(:reading, read_at: Date.new(2024, 3, 10))
+        create(:reading, user: user, read_at: Date.new(2024, 3, 13))
+        create(:reading, user: user, read_at: Date.new(2024, 3, 14))
+        create(:reading, user: user, read_at: Date.new(2024, 3, 15))
+        create(:reading, user: user, read_at: Date.new(2024, 3, 10))
       end
 
       it "returns the consecutive days ending today" do
@@ -85,7 +87,7 @@ RSpec.describe(Welcome::Dashboard::GeneralStatistics) do
 
     context "when only yesterday has a reading" do
       before do
-        create(:reading, read_at: Date.new(2024, 3, 14))
+        create(:reading, user: user, read_at: Date.new(2024, 3, 14))
       end
 
       it "returns zero because today has no reading" do
@@ -95,11 +97,26 @@ RSpec.describe(Welcome::Dashboard::GeneralStatistics) do
 
     context "when today and an older day have readings with a gap" do
       before do
-        create(:reading, read_at: Date.new(2024, 3, 12))
-        create(:reading, read_at: Date.new(2024, 3, 15))
+        create(:reading, user: user, read_at: Date.new(2024, 3, 12))
+        create(:reading, user: user, read_at: Date.new(2024, 3, 15))
       end
 
       it "returns only today" do
+        expect(context.current_reading_streak_days).to(eq(1))
+      end
+    end
+
+    context "when another user has readings" do
+      let(:other_user) { create(:user) }
+
+      before do
+        create(:reading, user: user, read_at: Date.new(2024, 3, 15))
+        create(:reading, user: other_user, read_at: Date.new(2024, 3, 15))
+        create(:reading, user: other_user, read_at: Date.new(2024, 3, 14))
+      end
+
+      it "counts only the current user's readings" do
+        expect(context.total_comics_read).to(eq(1))
         expect(context.current_reading_streak_days).to(eq(1))
       end
     end

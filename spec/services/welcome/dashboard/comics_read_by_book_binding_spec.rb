@@ -3,7 +3,9 @@
 require "rails_helper"
 
 RSpec.describe(Welcome::Dashboard::ComicsReadByBookBinding) do
-  subject(:context) { described_class.call }
+  let(:user) { create(:user) }
+
+  subject(:context) { described_class.call(user: user) }
 
   describe ".call" do
     context "when there are readings" do
@@ -14,9 +16,9 @@ RSpec.describe(Welcome::Dashboard::ComicsReadByBookBinding) do
       let!(:comic_capa_cartao) { create(:comic, book_binding: capa_cartao) }
 
       before do
-        create(:reading, comic: comic_capa_dura_a, read_at: Date.new(2022, 5, 10))
-        create(:reading, comic: comic_capa_dura_b, read_at: Date.new(2023, 8, 3))
-        create(:reading, comic: comic_capa_cartao, read_at: Date.new(2023, 1, 20))
+        create(:reading, user: user, comic: comic_capa_dura_a, read_at: Date.new(2022, 5, 10))
+        create(:reading, user: user, comic: comic_capa_dura_b, read_at: Date.new(2023, 8, 3))
+        create(:reading, user: user, comic: comic_capa_cartao, read_at: Date.new(2023, 1, 20))
       end
 
       it "returns book bindings with readings ordered by count descending" do

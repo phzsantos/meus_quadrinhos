@@ -3,14 +3,16 @@
 require "rails_helper"
 
 RSpec.describe(Welcome::Dashboard::ComicsReadByMonth) do
-  subject(:context) { described_class.call }
+  let(:user) { create(:user) }
+
+  subject(:context) { described_class.call(user: user) }
 
   describe ".call" do
     context "when there are readings in different months" do
       before do
-        create(:reading, read_at: Date.new(2023, 1, 5))
-        create(:reading, read_at: Date.new(2023, 1, 20))
-        create(:reading, read_at: Date.new(2023, 2, 10))
+        create(:reading, user: user, read_at: Date.new(2023, 1, 5))
+        create(:reading, user: user, read_at: Date.new(2023, 1, 20))
+        create(:reading, user: user, read_at: Date.new(2023, 2, 10))
       end
 
       it "returns months with readings, normalized to the start of the month and in chronological order" do
@@ -34,14 +36,15 @@ RSpec.describe(Welcome::Dashboard::ComicsReadByMonth) do
     context "when start_date is nil" do
       subject(:context) do
         described_class.call(
+          user: user,
           start_date: nil,
           end_date: nil,
         )
       end
 
       before do
-        create(:reading, read_at: Date.new(2023, 1, 5))
-        create(:reading, read_at: Date.new(2023, 2, 10))
+        create(:reading, user: user, read_at: Date.new(2023, 1, 5))
+        create(:reading, user: user, read_at: Date.new(2023, 2, 10))
       end
 
       it "does not apply filter and returns all months" do
@@ -61,15 +64,16 @@ RSpec.describe(Welcome::Dashboard::ComicsReadByMonth) do
     context "when there is a date range filter" do
       subject(:context) do
         described_class.call(
+          user: user,
           start_date: Date.new(2023, 2, 1),
           end_date: Date.new(2023, 2, 28),
         )
       end
 
       before do
-        create(:reading, read_at: Date.new(2023, 1, 5))
-        create(:reading, read_at: Date.new(2023, 2, 10))
-        create(:reading, read_at: Date.new(2023, 2, 15))
+        create(:reading, user: user, read_at: Date.new(2023, 1, 5))
+        create(:reading, user: user, read_at: Date.new(2023, 2, 10))
+        create(:reading, user: user, read_at: Date.new(2023, 2, 15))
       end
 
       it "returns only months within the given period" do

@@ -3,7 +3,9 @@
 require "rails_helper"
 
 RSpec.describe(Welcome::Dashboard::ComicsReadByCharacter) do
-  subject(:context) { described_class.call }
+  let(:user) { create(:user) }
+
+  subject(:context) { described_class.call(user: user) }
 
   describe ".call" do
     context "when there are readings" do
@@ -17,9 +19,9 @@ RSpec.describe(Welcome::Dashboard::ComicsReadByCharacter) do
       end
 
       before do
-        create(:reading, comic: comic_wolverine, read_at: Date.new(2022, 5, 10))
-        create(:reading, comic: comic_team, read_at: Date.new(2023, 8, 3))
-        create(:reading, comic: comic_wolverine, read_at: Date.new(2023, 1, 20))
+        create(:reading, user: user, comic: comic_wolverine, read_at: Date.new(2022, 5, 10))
+        create(:reading, user: user, comic: comic_team, read_at: Date.new(2023, 8, 3))
+        create(:reading, user: user, comic: comic_wolverine, read_at: Date.new(2023, 1, 20))
       end
 
       it "returns characters with readings ordered by count descending" do
@@ -42,7 +44,7 @@ RSpec.describe(Welcome::Dashboard::ComicsReadByCharacter) do
           comic = create(:comic, characters: [character])
 
           (8 - index).times do
-            create(:reading, comic: comic, read_at: Date.new(2023, 1, index + 1))
+            create(:reading, user: user, comic: comic, read_at: Date.new(2023, 1, index + 1))
           end
         end
       end

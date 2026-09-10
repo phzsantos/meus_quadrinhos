@@ -3,7 +3,9 @@
 require "rails_helper"
 
 RSpec.describe(Welcome::Dashboard::Organizer) do
-  subject(:call_organizer) { described_class.call }
+  let(:user) { create(:user) }
+
+  subject(:call_organizer) { described_class.call(user: user) }
 
   describe ".call" do
     it "runs the full dashboard flow without errors" do

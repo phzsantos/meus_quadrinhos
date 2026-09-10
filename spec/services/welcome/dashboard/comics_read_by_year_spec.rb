@@ -3,14 +3,16 @@
 require "rails_helper"
 
 RSpec.describe(Welcome::Dashboard::ComicsReadByYear) do
-  subject(:context) { described_class.call }
+  let(:user) { create(:user) }
+
+  subject(:context) { described_class.call(user: user) }
 
   describe ".call" do
     context "when there are readings" do
       before do
-        create(:reading, read_at: Date.new(2022, 5, 10))
-        create(:reading, read_at: Date.new(2022, 8, 3))
-        create(:reading, read_at: Date.new(2023, 1, 20))
+        create(:reading, user: user, read_at: Date.new(2022, 5, 10))
+        create(:reading, user: user, read_at: Date.new(2022, 8, 3))
+        create(:reading, user: user, read_at: Date.new(2023, 1, 20))
       end
 
       it "returns years with readings in ascending order" do

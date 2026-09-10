@@ -3,7 +3,9 @@
 require "rails_helper"
 
 RSpec.describe(Welcome::Dashboard::ComicsReadByPublicationType) do
-  subject(:context) { described_class.call }
+  let(:user) { create(:user) }
+
+  subject(:context) { described_class.call(user: user) }
 
   describe ".call" do
     context "when there are readings" do
@@ -14,9 +16,9 @@ RSpec.describe(Welcome::Dashboard::ComicsReadByPublicationType) do
       let!(:comic_manga) { create(:comic, publication_type: manga) }
 
       before do
-        create(:reading, comic: comic_hq_a, read_at: Date.new(2022, 5, 10))
-        create(:reading, comic: comic_hq_b, read_at: Date.new(2023, 8, 3))
-        create(:reading, comic: comic_manga, read_at: Date.new(2023, 1, 20))
+        create(:reading, user: user, comic: comic_hq_a, read_at: Date.new(2022, 5, 10))
+        create(:reading, user: user, comic: comic_hq_b, read_at: Date.new(2023, 8, 3))
+        create(:reading, user: user, comic: comic_manga, read_at: Date.new(2023, 1, 20))
       end
 
       it "returns publication types with readings ordered by count descending" do

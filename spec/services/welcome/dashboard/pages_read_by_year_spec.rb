@@ -3,7 +3,9 @@
 require "rails_helper"
 
 RSpec.describe(Welcome::Dashboard::PagesReadByYear) do
-  subject(:context) { described_class.call }
+  let(:user) { create(:user) }
+
+  subject(:context) { described_class.call(user: user) }
 
   describe ".call" do
     context "when there are readings in different years" do
@@ -12,9 +14,9 @@ RSpec.describe(Welcome::Dashboard::PagesReadByYear) do
       let!(:comic_2023)   { create(:comic, page_count: 200) }
 
       before do
-        create(:reading, comic: comic_2022_a, read_at: Date.new(2022, 3, 10))
-        create(:reading, comic: comic_2022_b, read_at: Date.new(2022, 7, 5))
-        create(:reading, comic: comic_2023,   read_at: Date.new(2023, 1, 20))
+        create(:reading, user: user, comic: comic_2022_a, read_at: Date.new(2022, 3, 10))
+        create(:reading, user: user, comic: comic_2022_b, read_at: Date.new(2022, 7, 5))
+        create(:reading, user: user, comic: comic_2023,   read_at: Date.new(2023, 1, 20))
       end
 
       it "returns years with readings in ascending order" do

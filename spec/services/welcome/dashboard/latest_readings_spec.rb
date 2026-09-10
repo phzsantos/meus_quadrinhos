@@ -3,7 +3,9 @@
 require "rails_helper"
 
 RSpec.describe(Welcome::Dashboard::LatestReadings) do
-  subject(:context) { described_class.call }
+  let(:user) { create(:user) }
+
+  subject(:context) { described_class.call(user: user) }
 
   describe ".call" do
     context "when there are more than six readings" do
@@ -12,6 +14,7 @@ RSpec.describe(Welcome::Dashboard::LatestReadings) do
         3.times do |i|
           create(
             :reading,
+            user: user,
             read_at: Date.new(2023, 1, i + 1),
             created_at: Time.zone.parse("2023-01-01 10:00:00"),
           )
@@ -21,6 +24,7 @@ RSpec.describe(Welcome::Dashboard::LatestReadings) do
         4.times do |i|
           create(
             :reading,
+            user: user,
             read_at: Date.new(2023, 2, i + 1),
             created_at: Time.zone.parse("2023-02-01 #{10 + i}:00:00"),
           )
@@ -44,8 +48,8 @@ RSpec.describe(Welcome::Dashboard::LatestReadings) do
 
     context "when there are fewer than six readings" do
       before do
-        create(:reading, read_at: Date.new(2023, 3, 10))
-        create(:reading, read_at: Date.new(2023, 3, 5))
+        create(:reading, user: user, read_at: Date.new(2023, 3, 10))
+        create(:reading, user: user, read_at: Date.new(2023, 3, 5))
       end
 
       it "returns all existing readings" do

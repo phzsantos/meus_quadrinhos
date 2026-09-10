@@ -3,7 +3,9 @@
 require "rails_helper"
 
 RSpec.describe(Welcome::Dashboard::PagesReadByMonth) do
-  subject(:context) { described_class.call }
+  let(:user) { create(:user) }
+
+  subject(:context) { described_class.call(user: user) }
 
   describe ".call" do
     context "when there are readings in different months" do
@@ -12,9 +14,9 @@ RSpec.describe(Welcome::Dashboard::PagesReadByMonth) do
       let!(:comic_feb) { create(:comic, page_count: 200) }
 
       before do
-        create(:reading, comic: comic_jan,   read_at: Date.new(2023, 1, 5))
-        create(:reading, comic: comic_jan_2, read_at: Date.new(2023, 1, 25))
-        create(:reading, comic: comic_feb,   read_at: Date.new(2023, 2, 10))
+        create(:reading, user: user, comic: comic_jan,   read_at: Date.new(2023, 1, 5))
+        create(:reading, user: user, comic: comic_jan_2, read_at: Date.new(2023, 1, 25))
+        create(:reading, user: user, comic: comic_feb,   read_at: Date.new(2023, 2, 10))
       end
 
       it "returns months with readings, normalized to the start of the month and in chronological order" do
@@ -38,6 +40,7 @@ RSpec.describe(Welcome::Dashboard::PagesReadByMonth) do
     context "when start_date is nil" do
       subject(:context) do
         described_class.call(
+          user: user,
           start_date: nil,
           end_date: nil,
         )
@@ -47,8 +50,8 @@ RSpec.describe(Welcome::Dashboard::PagesReadByMonth) do
       let!(:comic_feb) { create(:comic, page_count: 200) }
 
       before do
-        create(:reading, comic: comic_jan, read_at: Date.new(2023, 1, 10))
-        create(:reading, comic: comic_feb, read_at: Date.new(2023, 2, 10))
+        create(:reading, user: user, comic: comic_jan, read_at: Date.new(2023, 1, 10))
+        create(:reading, user: user, comic: comic_feb, read_at: Date.new(2023, 2, 10))
       end
 
       it "does not apply filter and returns all months" do
@@ -68,6 +71,7 @@ RSpec.describe(Welcome::Dashboard::PagesReadByMonth) do
     context "when there is a date range filter" do
       subject(:context) do
         described_class.call(
+          user: user,
           start_date: Date.new(2023, 2, 1),
           end_date: Date.new(2023, 2, 28),
         )
@@ -77,8 +81,8 @@ RSpec.describe(Welcome::Dashboard::PagesReadByMonth) do
       let!(:comic_feb) { create(:comic, page_count: 200) }
 
       before do
-        create(:reading, comic: comic_jan, read_at: Date.new(2023, 1, 10))
-        create(:reading, comic: comic_feb, read_at: Date.new(2023, 2, 10))
+        create(:reading, user: user, comic: comic_jan, read_at: Date.new(2023, 1, 10))
+        create(:reading, user: user, comic: comic_feb, read_at: Date.new(2023, 2, 10))
       end
 
       it "returns only months within the given period" do

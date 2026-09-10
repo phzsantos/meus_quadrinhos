@@ -3,17 +3,19 @@
 require "rails_helper"
 
 RSpec.describe(Welcome::Dashboard::ComicsReadByDayComparison) do
-  subject(:context) { described_class.call(reference_date: Date.new(2023, 2, 15)) }
+  let(:user) { create(:user) }
+
+  subject(:context) { described_class.call(user: user, reference_date: Date.new(2023, 2, 15)) }
 
   describe ".call" do
     context "when there are readings in the current and previous months" do
       before do
-        create(:reading, read_at: Date.new(2023, 2, 5))
-        create(:reading, read_at: Date.new(2023, 2, 5))
-        create(:reading, read_at: Date.new(2023, 2, 10))
-        create(:reading, read_at: Date.new(2023, 1, 5))
-        create(:reading, read_at: Date.new(2023, 1, 20))
-        create(:reading, read_at: Date.new(2022, 12, 15))
+        create(:reading, user: user, read_at: Date.new(2023, 2, 5))
+        create(:reading, user: user, read_at: Date.new(2023, 2, 5))
+        create(:reading, user: user, read_at: Date.new(2023, 2, 10))
+        create(:reading, user: user, read_at: Date.new(2023, 1, 5))
+        create(:reading, user: user, read_at: Date.new(2023, 1, 20))
+        create(:reading, user: user, read_at: Date.new(2022, 12, 15))
       end
 
       it "returns days covering the longer of the two months" do
@@ -47,11 +49,11 @@ RSpec.describe(Welcome::Dashboard::ComicsReadByDayComparison) do
     end
 
     context "when comparing months with different lengths" do
-      subject(:context) { described_class.call(reference_date: Date.new(2023, 3, 10)) }
+      subject(:context) { described_class.call(user: user, reference_date: Date.new(2023, 3, 10)) }
 
       before do
-        create(:reading, read_at: Date.new(2023, 2, 28))
-        create(:reading, read_at: Date.new(2023, 3, 31))
+        create(:reading, user: user, read_at: Date.new(2023, 2, 28))
+        create(:reading, user: user, read_at: Date.new(2023, 3, 31))
       end
 
       it "zero-fills days that do not exist in February" do
@@ -74,14 +76,14 @@ RSpec.describe(Welcome::Dashboard::ComicsReadByDayComparison) do
     end
 
     context "when reference_date is not provided" do
-      subject(:context) { described_class.call }
+      subject(:context) { described_class.call(user: user) }
 
       let(:reference_date) { Time.current.to_date }
       let(:previous_month_start) { (reference_date - 1.month).beginning_of_month }
 
       before do
-        create(:reading, read_at: reference_date.beginning_of_month + 2.days)
-        create(:reading, read_at: previous_month_start + 4.days)
+        create(:reading, user: user, read_at: reference_date.beginning_of_month + 2.days)
+        create(:reading, user: user, read_at: previous_month_start + 4.days)
       end
 
       it "uses the current and previous calendar months" do
