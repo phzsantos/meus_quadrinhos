@@ -1,26 +1,35 @@
 <div class="bg-bada p-3 text-shadow-md rounded-md shadow-md">
   <div class="text-black">
     <div class="text-3xl patrick-hand-regular">
-      <div class="py-2 text-shadow-md flex flex-wrap bangers-regular text-4xl">
-        <span>Quadrinho (<%= @comics.total_count %>)</span>
-        <span class="ml-auto">Data de leitura</span>
+      <div class="py-2 text-shadow-md flex items-center gap-4 bangers-regular text-4xl">
+        <span class="flex-1 min-w-0">Quadrinho (<%= @comics.total_count %>)</span>
+        <div class="flex items-center shrink-0">
+          <span class="w-24 text-center">Lido</span>
+          <span class="w-24 text-center">Tenho</span>
+          <span class="w-48 text-right">Lido em:</span>
+        </div>
       </div>
 
       <hr>
 
       <div class="text-3xl patrick-hand-regular">
         <% @comics.each_with_index do |comic, index| %>
+          <% user_readings = comic.readings.select { |r| r.user_id == current_user.id && r.read_at.present? } %>
           <%= link_to comic, class: "block transition-colors duration-200 hover:bg-black/20" do %>
-            <div class="flex flex-wrap py-2 items-center">
-              <span>
+            <div class="flex items-center gap-4 py-2">
+              <span class="flex-1 min-w-0">
                 <%= sprintf("%03d | %s", (@comics.total_count - @comics.offset_value - index), comic.display_title) %>
               </span>
-              <span class="ml-auto">
-                <%= comic.readings.sort_by(&:read_at).map { |r| l(r.read_at, format: "%d/%m/%Y") }.join(", ") %>
-              </span>
+              <div class="flex items-center shrink-0">
+                <span class="w-24 text-center"><%= comic.read_by?(current_user) ? "Sim" : "Não" %></span>
+                <span class="w-24 text-center"><%= comic.owned_by?(current_user) ? "Sim" : "Não" %></span>
+                <span class="w-48 text-right">
+                  <%= user_readings.sort_by(&:read_at).map { |r| l(r.read_at, format: "%d/%m/%Y") }.join(", ") %>
+                </span>
+              </div>
             </div>
           <% end %>
-          
+
           <% unless index == @comics.size - 1 %>
             <hr>
           <% end %>

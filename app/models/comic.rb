@@ -42,6 +42,9 @@ class Comic < ApplicationRecord
     allow_destroy: true,
     reject_if: :reading_blank?
 
+  has_many :user_comics, dependent: :destroy
+  has_many :owners, through: :user_comics, source: :user
+
   has_one_attached :cover_image
 
   validates :title, presence: true, uniqueness: { scope: [:issue_number, :published_year], case_sensitive: false }
@@ -54,6 +57,30 @@ class Comic < ApplicationRecord
 
   def should_generate_new_friendly_id?
     title_changed? || issue_number_changed? || published_year_changed?
+  end
+
+  def owned_by?(user)
+    return false if user.blank?
+
+    if user_comics.loaded?
+      user_comics.any? { |uc| uc.user_id == user.id }
+    else
+      user_comics.exists?(user_id: user.id)
+    end
+  end
+
+  def read_by?(user)
+    return false if user.blank?
+
+    if readings.loaded?
+      readings.any? { |r| r.user_id == user.id && r.read_at.present? }
+    else
+      readings.where(user_id: user.id).where.not(read_at: nil).exists?
+    end
+  end
+
+  def readings_for(user)
+    readings.where(user_id: user.id)
   end
 
   before_validation :remove_blank_author_ids

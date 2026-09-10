@@ -9,6 +9,10 @@ class User < ApplicationRecord
     :rememberable,
     :validatable
 
+  has_many :user_comics, dependent: :destroy
+  has_many :owned_comics, through: :user_comics, source: :comic
+  has_many :readings, dependent: :destroy
+
   validates :username, presence: true, uniqueness: true
   attribute :admin, :boolean, default: false
 end

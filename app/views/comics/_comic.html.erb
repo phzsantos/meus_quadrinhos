@@ -55,10 +55,16 @@
           <% end %>
         </p>
       <% end %>
-      <% if @comic.readings.any? %>
+      <% if @comic.owned_by?(current_user) %>
+        <p><strong>Tenho:</strong> Sim</p>
+      <% else %>
+        <p><strong>Tenho:</strong> Não</p>
+      <% end %>
+      <% user_readings = @comic.readings_for(current_user).order(read_at: :asc) %>
+      <% if user_readings.any? %>
         <p>
           <strong>Lido em:</strong>
-          <%= @comic.readings.order(read_at: :asc).map { |r| l(r.read_at, format: "%d/%m/%Y") }.join(", ") %>
+          <%= user_readings.map { |r| l(r.read_at, format: "%d/%m/%Y") }.join(", ") %>
         </p>
       <% end %>
       <% if @comic.link_guia_dos_quadrinhos.present? %>

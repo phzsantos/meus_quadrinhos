@@ -127,8 +127,9 @@
     <div class="text-2xl patrick-hand-regular">
       <strong>Leituras</strong>
 
+      <% user_readings = comic.persisted? ? comic.readings_for(current_user).order(:read_at) : comic.readings.select { |r| r.user_id.nil? || r.user_id == current_user.id } %>
       <div class="space-y-2 mt-2">
-        <%= form.fields_for :readings do |reading_form| %>
+        <%= form.fields_for :readings, user_readings do |reading_form| %>
           <div
             data-controller="nested-reading"
             class="flex items-center gap-3"
@@ -151,7 +152,7 @@
       </div>
 
       <div class="mt-3">
-        <%= form.fields_for :readings, comic.readings.build do |new_form| %>
+        <%= form.fields_for :readings, comic.readings.build(user: current_user) do |new_form| %>
           <%= new_form.date_field :read_at,
             class: "rounded-md border border-black/30 px-3 py-2" %>
         <% end %>

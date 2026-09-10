@@ -7,9 +7,16 @@ class ComicsController < ApplicationController
 
   # GET /comics or /comics.json
   def index
-    comics = Comic.includes(:readings)
+    comics = current_user.owned_comics
+      .includes(:readings, :user_comics)
       .order(created_at: :asc)
-      .sort_by { |comic| comic.readings.maximum(:read_at) || Date.new(1970, 1, 1) }.reverse
+      .sort_by do |comic|
+        comic.readings
+          .select { |r| r.user_id == current_user.id && r.read_at.present? }
+          .map(&:read_at)
+          .max || Date.new(1970, 1, 1)
+      end
+      .reverse
 
     @comics = Kaminari.paginate_array(comics).page(params[:page]).per(20)
   end
@@ -47,6 +54,7 @@ class ComicsController < ApplicationController
   # POST /comics or /comics.json
   def create
     @comic = Comic.new(comic_params)
+    assign_current_user_to_readings(@comic)
 
     if comic_params[:cover_image].blank?
       @comic.errors.add(:cover_image, :blank)
@@ -58,6 +66,7 @@ class ComicsController < ApplicationController
 
     respond_to do |format|
       if @comic.save
+        current_user.user_comics.find_or_create_by!(comic: @comic)
         format.html { redirect_to(@comic, notice: "Quadrinho criado com sucesso.") }
         format.json { render(:show, status: :created, location: @comic) }
       else
@@ -75,8 +84,16 @@ class ComicsController < ApplicationController
       return render(:edit, status: :unprocessable_content)
     end
 
+    saved = false
+    ActiveRecord::Base.transaction do
+      @comic.assign_attributes(comic_params)
+      assign_current_user_to_readings(@comic)
+      saved = @comic.save
+      raise ActiveRecord::Rollback unless saved
+    end
+
     respond_to do |format|
-      if @comic.update(comic_params)
+      if saved
         format.html { redirect_to(@comic, notice: "Quadrinho atualizado com sucesso.", status: :see_other) }
         format.json { render(:show, status: :ok, location: @comic) }
       else
@@ -127,9 +144,15 @@ class ComicsController < ApplicationController
     @comic = Comic.friendly.find(params[:id])
   end
 
+  def assign_current_user_to_readings(comic)
+    comic.readings.each do |reading|
+      reading.user_id ||= current_user.id
+    end
+  end
+
   # Only allow a list of trusted parameters through.
   def comic_params
-    params.require(:comic).permit(
+    permitted = params.require(:comic).permit(
       :title,
       :page_count,
       :published_year,
@@ -147,5 +170,31 @@ class ComicsController < ApplicationController
       author_ids: [],
       character_ids: [],
     )
+    filter_readings_attributes!(permitted)
+    permitted
+  end
+
+  def filter_readings_attributes!(permitted)
+    attrs = permitted[:readings_attributes]
+    return if attrs.blank?
+
+    allowed_ids = if @comic&.persisted?
+      current_user.readings.where(comic_id: @comic.id).pluck(:id).map(&:to_s)
+    else
+      []
+    end
+
+    keep = lambda do |reading_attrs|
+      return false if reading_attrs.blank?
+
+      reading_attrs[:id].blank? || allowed_ids.include?(reading_attrs[:id].to_s)
+    end
+
+    permitted[:readings_attributes] =
+      if attrs.respond_to?(:each_pair)
+        attrs.select { |_key, reading_attrs| keep.call(reading_attrs) }
+      else
+        Array(attrs).select { |reading_attrs| keep.call(reading_attrs) }
+      end
   end
 end
