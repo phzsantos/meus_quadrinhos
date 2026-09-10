@@ -4,13 +4,14 @@ module Welcome
   module Dashboard
     class ComicsReadByAuthor
       include Interactor
+      include UserScopedReadings
 
       LIMIT = 7
 
       def call
         counts = Hash.new(0)
 
-        Reading
+        readings_scope
           .includes(comic: :authors)
           .where.not(read_at: nil)
           .find_each do |reading|

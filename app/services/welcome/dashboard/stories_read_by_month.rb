@@ -4,9 +4,10 @@ module Welcome
   module Dashboard
     class StoriesReadByMonth
       include Interactor
+      include UserScopedReadings
 
       def call
-        scope = Reading.includes(:comic).where.not(read_at: nil)
+        scope = readings_scope.includes(:comic).where.not(read_at: nil)
 
         if context.start_date.present?
           scope = scope.where(read_at: context.start_date..context.end_date)

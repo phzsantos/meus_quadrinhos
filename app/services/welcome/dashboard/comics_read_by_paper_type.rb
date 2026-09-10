@@ -4,9 +4,10 @@ module Welcome
   module Dashboard
     class ComicsReadByPaperType
       include Interactor
+      include UserScopedReadings
 
       def call
-        grouped = Reading
+        grouped = readings_scope
           .includes(comic: :paper_type)
           .where.not(read_at: nil)
           .group_by { |r| r.comic.paper_type.name }

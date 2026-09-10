@@ -4,9 +4,10 @@ module Welcome
   module Dashboard
     class ComicsReadByYear
       include Interactor
+      include UserScopedReadings
 
       def call
-        grouped = Reading
+        grouped = readings_scope
           .where.not(read_at: nil)
           .group_by { |r| r.read_at.year }
 

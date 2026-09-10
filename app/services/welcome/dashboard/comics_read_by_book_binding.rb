@@ -4,9 +4,10 @@ module Welcome
   module Dashboard
     class ComicsReadByBookBinding
       include Interactor
+      include UserScopedReadings
 
       def call
-        grouped = Reading
+        grouped = readings_scope
           .includes(comic: :book_binding)
           .where.not(read_at: nil)
           .group_by { |r| r.comic.book_binding.name }

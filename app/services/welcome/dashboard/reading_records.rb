@@ -4,9 +4,10 @@ module Welcome
   module Dashboard
     class ReadingRecords
       include Interactor
+      include UserScopedReadings
 
       def call
-        comics_by_month = Reading
+        comics_by_month = readings_scope
           .where.not(read_at: nil)
           .group_by { |r| r.read_at.beginning_of_month }
           .transform_values(&:count)
@@ -16,7 +17,7 @@ module Welcome
         context.best_month = best_comics_month
         context.best_month_comics_count = best_comics_count || 0
 
-        stories_by_month = Reading
+        stories_by_month = readings_scope
           .includes(:comic)
           .where.not(read_at: nil)
           .group_by { |r| r.read_at.beginning_of_month }
@@ -27,7 +28,7 @@ module Welcome
         context.best_stories_month = best_stories_month
         context.best_month_stories_count = best_stories_count || 0
 
-        pages_by_month = Reading
+        pages_by_month = readings_scope
           .includes(:comic)
           .where.not(read_at: nil)
           .group_by { |r| r.read_at.beginning_of_month }
@@ -38,7 +39,7 @@ module Welcome
         context.best_pages_month = best_pages_month
         context.best_month_pages_count = best_pages_count || 0
 
-        reading_days = Reading
+        reading_days = readings_scope
           .where.not(read_at: nil)
           .distinct
           .order(:read_at)

@@ -4,6 +4,7 @@ module Welcome
   module Dashboard
     class ComicsReadByDayComparison
       include Interactor
+      include UserScopedReadings
 
       def call
         reference_date = context.reference_date || Time.current.to_date
@@ -30,7 +31,7 @@ module Welcome
       private
 
       def readings_by_day(start_date, end_date)
-        Reading
+        readings_scope
           .where.not(read_at: nil)
           .where(read_at: start_date..end_date)
           .group_by { |r| r.read_at.day }
