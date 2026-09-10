@@ -59,6 +59,28 @@ RSpec.describe("Comics", type: :request) do
       get comics_path
       expect(response).to(have_http_status(:ok))
     end
+
+    it "shows an empty list when the user owns no comics" do
+      create(:comic)
+
+      get comics_path
+
+      expect(response).to(have_http_status(:ok))
+      expect(response.body).to(include("Quadrinho (0)"))
+    end
+
+    it "shows Lido and Tenho columns for owned comics" do
+      comic = create(:comic, title: "Batman Owned")
+      create(:reading, user: user, comic: comic, read_at: Date.new(2025, 1, 10))
+      create(:user_comic, user: user, comic: comic)
+
+      get comics_path
+
+      expect(response.body).to(include("Lido"))
+      expect(response.body).to(include("Tenho"))
+      expect(response.body).to(include("Batman Owned"))
+      expect(response.body).to(include("10/01/2025"))
+    end
   end
 
   describe "GET /comics/:id" do
@@ -137,6 +159,14 @@ RSpec.describe("Comics", type: :request) do
           end.to(change(Comic, :count).by(1))
 
           expect(response).to(redirect_to(comic_path(Comic.last)))
+        end
+
+        it "adds the comic to the admin's collection" do
+          expect do
+            post(comics_path, params: { comic: valid_attributes })
+          end.to(change { admin.owned_comics.count }.by(1))
+
+          expect(admin.owned_comics).to(include(Comic.last))
         end
       end
 
