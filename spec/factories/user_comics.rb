@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :reading do
-    read_at { Time.zone.today }
-    comic
+  factory :user_comic do
     user
+    comic
   end
 end
