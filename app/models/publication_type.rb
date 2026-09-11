@@ -2,6 +2,7 @@
 
 class PublicationType < ApplicationRecord
   extend FriendlyId
+  include CatalogVisibility
 
   friendly_id :name, use: :slugged
 

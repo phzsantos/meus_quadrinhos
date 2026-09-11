@@ -7,12 +7,15 @@ class PublicationTypesController < ApplicationController
 
   # GET /publication_types or /publication_types.json
   def index
-    @publication_types = PublicationType.all.order(:name)
+    @publication_types = PublicationType.with_comics_visible_to(current_user).order(:name)
   end
 
   # GET /publication_types/1 or /publication_types/1.json
   def show
-    @comics = @publication_type.comics.order(:title, :issue_number).page(params[:page]).per(18)
+    @comics = @publication_type.comics.visible_to(current_user)
+      .order(:title, :issue_number)
+      .page(params[:page])
+      .per(18)
   end
 
   # GET /publication_types/new

@@ -7,12 +7,15 @@ class BookBindingsController < ApplicationController
 
   # GET /book_bindings or /book_bindings.json
   def index
-    @book_bindings = BookBinding.all.order(:name)
+    @book_bindings = BookBinding.with_comics_visible_to(current_user).order(:name)
   end
 
   # GET /book_bindings/1 or /book_bindings/1.json
   def show
-    @comics = @book_binding.comics.order(:title, :issue_number).page(params[:page]).per(18)
+    @comics = @book_binding.comics.visible_to(current_user)
+      .order(:title, :issue_number)
+      .page(params[:page])
+      .per(18)
   end
 
   # GET /book_bindings/new

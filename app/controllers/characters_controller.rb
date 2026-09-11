@@ -7,8 +7,7 @@ class CharactersController < ApplicationController
 
   # GET /characters or /characters.json
   def index
-    @characters = Character
-      .includes(:comics)
+    @characters = Character.with_comics_visible_to(current_user)
       .order(:name)
       .page(params[:page])
       .per(20)
@@ -16,7 +15,10 @@ class CharactersController < ApplicationController
 
   # GET /characters/1 or /characters/1.json
   def show
-    @comics = @character.comics.order(:title, :issue_number).page(params[:page]).per(18)
+    @comics = @character.comics.visible_to(current_user)
+      .order(:title, :issue_number)
+      .page(params[:page])
+      .per(18)
   end
 
   # GET /characters/new

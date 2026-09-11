@@ -7,8 +7,7 @@ class AuthorsController < ApplicationController
 
   # GET /authors or /authors.json
   def index
-    @authors = Author
-      .includes(:comics)
+    @authors = Author.with_comics_visible_to(current_user)
       .order(:name)
       .page(params[:page])
       .per(20)
@@ -16,7 +15,10 @@ class AuthorsController < ApplicationController
 
   # GET /authors/1 or /authors/1.json
   def show
-    @comics = @author.comics.order(:title, :issue_number).page(params[:page]).per(18)
+    @comics = @author.comics.visible_to(current_user)
+      .order(:title, :issue_number)
+      .page(params[:page])
+      .per(18)
   end
 
   # GET /authors/new

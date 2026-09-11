@@ -7,12 +7,15 @@ class PaperTypesController < ApplicationController
 
   # GET /paper_types or /paper_types.json
   def index
-    @paper_types = PaperType.all.order(:name)
+    @paper_types = PaperType.with_comics_visible_to(current_user).order(:name)
   end
 
   # GET /paper_types/1 or /paper_types/1.json
   def show
-    @comics = @paper_type.comics.order(:title, :issue_number).page(params[:page]).per(18)
+    @comics = @paper_type.comics.visible_to(current_user)
+      .order(:title, :issue_number)
+      .page(params[:page])
+      .per(18)
   end
 
   # GET /paper_types/new

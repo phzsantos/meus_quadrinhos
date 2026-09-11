@@ -7,8 +7,7 @@ class PublishersController < ApplicationController
 
   # GET /publishers or /publishers.json
   def index
-    @publishers = Publisher
-      .includes(:comics)
+    @publishers = Publisher.with_comics_visible_to(current_user)
       .order(:name)
       .page(params[:page])
       .per(20)
@@ -16,7 +15,10 @@ class PublishersController < ApplicationController
 
   # GET /publishers/1 or /publishers/1.json
   def show
-    @comics = @publisher.comics.order(:title, :issue_number).page(params[:page]).per(18)
+    @comics = @publisher.comics.visible_to(current_user)
+      .order(:title, :issue_number)
+      .page(params[:page])
+      .per(18)
   end
 
   # GET /publishers/new

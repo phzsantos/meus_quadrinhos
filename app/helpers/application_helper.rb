@@ -20,4 +20,8 @@ module ApplicationHelper
 
     [title, base].compact.join(" | ")
   end
+
+  def visible_comics_count(resource)
+    resource.comics.visible_to(current_user).count
+  end
 end

@@ -47,6 +47,15 @@ class Comic < ApplicationRecord
 
   has_one_attached :cover_image
 
+  scope :visible_to, lambda { |user|
+    return none if user.blank?
+
+    owned_ids = UserComic.where(user_id: user.id).select(:comic_id)
+    read_ids = Reading.where(user_id: user.id).where.not(read_at: nil).select(:comic_id)
+
+    where(id: owned_ids).or(where(id: read_ids))
+  }
+
   validates :title, presence: true, uniqueness: { scope: [:issue_number, :published_year], case_sensitive: false }
   validates :page_count, numericality: { greater_than: 0 }, presence: true
   validates :published_year, numericality: { only_integer: true }, presence: true

@@ -7,7 +7,7 @@
     <hr>
 
     <div class="text-3xl patrick-hand-regular">
-      <p><strong>Total de volumes da coleção:</strong> <%= @collection.comics.count %></p>
+      <p><strong>Total de volumes da coleção:</strong> <%= @comics.total_count %></p>
       <% if @collection.link_guia_dos_quadrinhos.present? %>
         <p>
           <strong>Guia dos Quadrinhos:</strong>

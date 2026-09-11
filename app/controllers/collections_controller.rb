@@ -7,8 +7,7 @@ class CollectionsController < ApplicationController
 
   # GET /collections or /collections.json
   def index
-    @collections = Collection
-      .includes(:comics)
+    @collections = Collection.with_comics_visible_to(current_user)
       .order(:name)
       .page(params[:page])
       .per(20)
@@ -16,7 +15,10 @@ class CollectionsController < ApplicationController
 
   # GET /collections/1 or /collections/1.json
   def show
-    @comics = @collection.comics.order(:issue_number).page(params[:page]).per(18)
+    @comics = @collection.comics.visible_to(current_user)
+      .order(:issue_number)
+      .page(params[:page])
+      .per(18)
   end
 
   # GET /collections/new
