@@ -13,6 +13,19 @@ RSpec.describe("Characters", type: :request) do
       get characters_path
       expect(response).to(have_http_status(:ok))
     end
+
+    it "lists only characters with comics visible to the user" do
+      visible_character = create(:character, name: "Visible Character")
+      hidden_character = create(:character, name: "Hidden Character")
+      visible_comic = create(:comic, characters: [visible_character], title: "Character Owned")
+      create(:comic, characters: [hidden_character], title: "Character Hidden")
+      create(:user_comic, user: user, comic: visible_comic)
+
+      get characters_path
+
+      expect(response.body).to(include("Visible Character"))
+      expect(response.body).not_to(include("Hidden Character"))
+    end
   end
 
   describe "GET /characters/:id" do
@@ -23,6 +36,21 @@ RSpec.describe("Characters", type: :request) do
 
       get character_path(character)
       expect(response).to(have_http_status(:ok))
+    end
+
+    it "shows only comics the user owns or has read" do
+      character = create(:character, name: "Wolverine")
+      owned_comic = create(:comic, characters: [character], title: "Owned By Character")
+      read_comic = create(:comic, characters: [character], title: "Read By Character")
+      hidden_comic = create(:comic, characters: [character], title: "Hidden By Character")
+      create(:user_comic, user: user, comic: owned_comic)
+      create(:reading, user: user, comic: read_comic)
+
+      get character_path(character)
+
+      expect(response.body).to(include(owned_comic.display_title))
+      expect(response.body).to(include(read_comic.display_title))
+      expect(response.body).not_to(include(hidden_comic.display_title))
     end
   end
 

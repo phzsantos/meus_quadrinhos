@@ -13,6 +13,19 @@ RSpec.describe("Publishers", type: :request) do
       get publishers_path
       expect(response).to(have_http_status(:ok))
     end
+
+    it "lists only publishers with comics visible to the user" do
+      visible_publisher = create(:publisher, name: "Visible Publisher")
+      hidden_publisher = create(:publisher, name: "Hidden Publisher")
+      visible_comic = create(:comic, publisher: visible_publisher, title: "Publisher Owned")
+      create(:comic, publisher: hidden_publisher, title: "Publisher Hidden")
+      create(:user_comic, user: user, comic: visible_comic)
+
+      get publishers_path
+
+      expect(response.body).to(include("Visible Publisher"))
+      expect(response.body).not_to(include("Hidden Publisher"))
+    end
   end
 
   describe "GET /publishers/:id" do
@@ -23,6 +36,21 @@ RSpec.describe("Publishers", type: :request) do
 
       get publisher_path(publisher)
       expect(response).to(have_http_status(:ok))
+    end
+
+    it "shows only comics the user owns or has read" do
+      publisher = create(:publisher, name: "Panini")
+      owned_comic = create(:comic, publisher: publisher, title: "Owned By Publisher")
+      read_comic = create(:comic, publisher: publisher, title: "Read By Publisher")
+      hidden_comic = create(:comic, publisher: publisher, title: "Hidden By Publisher")
+      create(:user_comic, user: user, comic: owned_comic)
+      create(:reading, user: user, comic: read_comic)
+
+      get publisher_path(publisher)
+
+      expect(response.body).to(include(owned_comic.display_title))
+      expect(response.body).to(include(read_comic.display_title))
+      expect(response.body).not_to(include(hidden_comic.display_title))
     end
   end
 

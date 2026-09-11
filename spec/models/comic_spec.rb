@@ -85,6 +85,32 @@ RSpec.describe(Comic, type: :model) do
     end
   end
 
+  describe ".visible_to" do
+    let(:user) { create(:user) }
+    let(:other_user) { create(:user) }
+    let!(:owned_comic) { create(:comic, title: "Owned Comic") }
+    let!(:read_comic) { create(:comic, title: "Read Comic") }
+    let!(:both_comic) { create(:comic, title: "Both Comic") }
+    let!(:hidden_comic) { create(:comic, title: "Hidden Comic") }
+
+    before do
+      create(:user_comic, user: user, comic: owned_comic)
+      create(:reading, user: user, comic: read_comic)
+      create(:user_comic, user: user, comic: both_comic)
+      create(:reading, user: user, comic: both_comic)
+      create(:user_comic, user: other_user, comic: hidden_comic)
+      create(:reading, user: other_user, comic: hidden_comic)
+    end
+
+    it "includes comics the user owns or has read" do
+      expect(described_class.visible_to(user)).to(contain_exactly(owned_comic, read_comic, both_comic))
+    end
+
+    it "returns none when user is blank" do
+      expect(described_class.visible_to(nil)).to(be_empty)
+    end
+  end
+
   describe "friendly_id" do
     context "when comic has no collection" do
       it "generates slug from title and published_year" do

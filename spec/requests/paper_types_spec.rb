@@ -13,6 +13,19 @@ RSpec.describe("PaperTypes", type: :request) do
       get paper_types_path
       expect(response).to(have_http_status(:ok))
     end
+
+    it "lists only paper types with comics visible to the user" do
+      visible_paper = create(:paper_type, name: "Visible Paper")
+      hidden_paper = create(:paper_type, name: "Hidden Paper")
+      visible_comic = create(:comic, paper_type: visible_paper, title: "Paper Owned")
+      create(:comic, paper_type: hidden_paper, title: "Paper Hidden")
+      create(:user_comic, user: user, comic: visible_comic)
+
+      get paper_types_path
+
+      expect(response.body).to(include("Visible Paper"))
+      expect(response.body).not_to(include("Hidden Paper"))
+    end
   end
 
   describe "GET /paper_types/:id" do
@@ -23,6 +36,21 @@ RSpec.describe("PaperTypes", type: :request) do
 
       get paper_type_path(paper_type)
       expect(response).to(have_http_status(:ok))
+    end
+
+    it "shows only comics the user owns or has read" do
+      paper_type = create(:paper_type, name: "Offset")
+      owned_comic = create(:comic, paper_type: paper_type, title: "Owned By Paper")
+      read_comic = create(:comic, paper_type: paper_type, title: "Read By Paper")
+      hidden_comic = create(:comic, paper_type: paper_type, title: "Hidden By Paper")
+      create(:user_comic, user: user, comic: owned_comic)
+      create(:reading, user: user, comic: read_comic)
+
+      get paper_type_path(paper_type)
+
+      expect(response.body).to(include(owned_comic.display_title))
+      expect(response.body).to(include(read_comic.display_title))
+      expect(response.body).not_to(include(hidden_comic.display_title))
     end
   end
 

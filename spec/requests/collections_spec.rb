@@ -13,6 +13,19 @@ RSpec.describe("Collections", type: :request) do
       get collections_path
       expect(response).to(have_http_status(:ok))
     end
+
+    it "lists only collections with comics visible to the user" do
+      visible_collection = create(:collection, name: "Visible Collection")
+      hidden_collection = create(:collection, name: "Hidden Collection")
+      visible_comic = create(:comic, collection: visible_collection, title: "Visible Title")
+      create(:comic, collection: hidden_collection, title: "Hidden Title")
+      create(:user_comic, user: user, comic: visible_comic)
+
+      get collections_path
+
+      expect(response.body).to(include("Visible Collection"))
+      expect(response.body).not_to(include("Hidden Collection"))
+    end
   end
 
   describe "GET /collections/:id" do
@@ -23,6 +36,22 @@ RSpec.describe("Collections", type: :request) do
 
       get collection_path(collection)
       expect(response).to(have_http_status(:ok))
+    end
+
+    it "shows only comics the user owns or has read" do
+      collection = create(:collection, name: "Batman")
+      owned_comic = create(:comic, collection: collection, title: "Owned Volume", issue_number: 1)
+      read_comic = create(:comic, collection: collection, title: "Read Volume", issue_number: 2)
+      hidden_comic = create(:comic, collection: collection, title: "Hidden Volume", issue_number: 3)
+      create(:user_comic, user: user, comic: owned_comic)
+      create(:reading, user: user, comic: read_comic)
+
+      get collection_path(collection)
+
+      expect(response.body).to(include(owned_comic.display_title))
+      expect(response.body).to(include(read_comic.display_title))
+      expect(response.body).not_to(include(hidden_comic.display_title))
+      expect(response.body).to(include("Total de volumes da coleção:</strong> 2"))
     end
   end
 

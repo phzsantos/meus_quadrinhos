@@ -13,6 +13,19 @@ RSpec.describe("BookBindings", type: :request) do
       get book_bindings_path
       expect(response).to(have_http_status(:ok))
     end
+
+    it "lists only book bindings with comics visible to the user" do
+      visible_binding = create(:book_binding, name: "Visible Binding")
+      hidden_binding = create(:book_binding, name: "Hidden Binding")
+      visible_comic = create(:comic, book_binding: visible_binding, title: "Binding Owned")
+      create(:comic, book_binding: hidden_binding, title: "Binding Hidden")
+      create(:user_comic, user: user, comic: visible_comic)
+
+      get book_bindings_path
+
+      expect(response.body).to(include("Visible Binding"))
+      expect(response.body).not_to(include("Hidden Binding"))
+    end
   end
 
   describe "GET /book_bindings/:id" do
@@ -23,6 +36,21 @@ RSpec.describe("BookBindings", type: :request) do
 
       get book_binding_path(book_binding)
       expect(response).to(have_http_status(:ok))
+    end
+
+    it "shows only comics the user owns or has read" do
+      book_binding = create(:book_binding, name: "Capa Dura")
+      owned_comic = create(:comic, book_binding: book_binding, title: "Owned By Binding")
+      read_comic = create(:comic, book_binding: book_binding, title: "Read By Binding")
+      hidden_comic = create(:comic, book_binding: book_binding, title: "Hidden By Binding")
+      create(:user_comic, user: user, comic: owned_comic)
+      create(:reading, user: user, comic: read_comic)
+
+      get book_binding_path(book_binding)
+
+      expect(response.body).to(include(owned_comic.display_title))
+      expect(response.body).to(include(read_comic.display_title))
+      expect(response.body).not_to(include(hidden_comic.display_title))
     end
   end
 
