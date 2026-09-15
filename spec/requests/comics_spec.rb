@@ -60,7 +60,7 @@ RSpec.describe("Comics", type: :request) do
       expect(response).to(have_http_status(:ok))
     end
 
-    it "shows an empty list when the user owns no comics" do
+    it "shows an empty list when the user has no owned or read comics" do
       create(:comic)
 
       get comics_path
@@ -80,6 +80,16 @@ RSpec.describe("Comics", type: :request) do
       expect(response.body).to(include("Tenho"))
       expect(response.body).to(include("Batman Owned"))
       expect(response.body).to(include("10/01/2025"))
+    end
+
+    it "includes comics the user only read" do
+      comic = create(:comic, title: "Only Read Comic")
+      create(:reading, user: user, comic: comic, read_at: Date.new(2026, 2, 1))
+
+      get comics_path
+
+      expect(response.body).to(include("Only Read Comic"))
+      expect(response.body).to(include("01/02/2026"))
     end
   end
 
