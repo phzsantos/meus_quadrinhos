@@ -7,11 +7,13 @@
     index_path,
     class: "px-4 py-2 bg-black rounded-lg hover:bg-black/80 transition" %>
 
-  <% if current_user.admin? %>
+  <% if local_assigns.fetch(:can_edit, current_user.admin?) %>
     <%= link_to "Editar",
       edit_path,
       class: "px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition" %>
+  <% end %>
 
+  <% if current_user.admin? %>
     <div class="ml-auto">
       <%= button_to "Excluir",
         resource,

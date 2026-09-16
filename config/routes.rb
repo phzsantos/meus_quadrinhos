@@ -40,7 +40,11 @@ Rails.application.routes.draw do
   resources :comics, path: "quadrinhos" do
     collection do
       get :export
+      get :browse
     end
+    resource :user_comic, only: [:create, :destroy]
+    resource :membership, only: [:edit, :update], controller: "comic_memberships"
+    resources :readings, only: [:create]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

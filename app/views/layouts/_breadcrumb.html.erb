@@ -1,5 +1,17 @@
 <nav class="flex items-center gap-2 w-full text-black patrick-hand-regular text-xl">
-  <% if action_name != "index" %>
+  <% if controller_name == "comic_memberships" %>
+    <%= link_to t("controllers.comics"),
+      comics_path,
+      class: "underline hover:text-blue-700" %>
+    <% if @comic.present? %>
+      <span>/</span>
+      <%= link_to @comic.display_title,
+        comic_path(@comic),
+        class: "underline hover:text-blue-700" %>
+    <% end %>
+    <span>/</span>
+    <span class="font-bold">Editar</span>
+  <% elsif action_name != "index" %>
     <%= link_to t("controllers.#{controller_name}"),
       url_for(controller: controller_name, action: :index),
       class: "underline hover:text-blue-700" %>
@@ -18,34 +30,43 @@
       <% end %>
 
     <% when "index" %>
-      <% if current_user.admin? %>
-        <div class="ml-auto">
-          <% if %w[comics collections authors characters publishers book_bindings paper_types publication_types].include?(controller_name) %>
-            <%= link_to "Exportar",
-              url_for(controller: controller_name, action: :export),
-              target: "_blank",
-              class: "px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700 transition" %>
-          <% end %>
+      <div class="ml-auto">
+        <% if current_user.admin? && %w[comics collections authors characters publishers book_bindings paper_types publication_types].include?(controller_name) %>
+          <%= link_to "Exportar",
+            url_for(controller: controller_name, action: :export),
+            target: "_blank",
+            class: "px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700 transition" %>
+        <% end %>
 
+        <% if controller_name == "comics" %>
+          <%= link_to "Adicionar Quadrinho",
+            current_user.admin? ? new_comic_path : browse_comics_path,
+            class: "px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition" %>
+        <% elsif current_user.admin? && %w[collections authors characters publishers book_bindings paper_types publication_types].include?(controller_name) %>
           <%= link_to "Adicionar #{controller_name.classify.constantize.model_name.human}",
             url_for(controller: controller_name, action: :new),
             class: "px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition" %>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
+
+    <% when "browse" %>
+      <span>/</span>
+      <span class="font-bold">Adicionar</span>
 
     <% when "edit" %>
-      <% resource = instance_variable_get("@#{controller_name.singularize}") %>
+      <% if controller_name != "comic_memberships" %>
+        <% resource = instance_variable_get("@#{controller_name.singularize}") %>
 
-      <% if resource.present? %>
+        <% if resource.present? %>
+          <span>/</span>
+          <%= link_to resource.try(:name) || resource.try(:title) || resource.id,
+            url_for(controller: controller_name, action: :show, id: resource),
+            class: "underline hover:text-blue-700" %>
+        <% end %>
+
         <span>/</span>
-        <%= link_to resource.try(:name) || resource.try(:title) || resource.id,
-          url_for(controller: controller_name, action: :show, id: resource),
-          class: "underline hover:text-blue-700" %>
+        <span class="font-bold">Editar</span>
       <% end %>
-
-      <span>/</span>
-      <span class="font-bold">Editar</span>
-
 
     <% when "new" %>
       <span>/</span>

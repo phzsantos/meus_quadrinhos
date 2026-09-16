@@ -1,0 +1,76 @@
+<div class="bg-bada p-3 text-shadow-md rounded-md shadow-md" data-controller="comic-filter">
+  <div class="text-black">
+    <div class="text-3xl patrick-hand-regular space-y-4">
+      <div class="py-2 text-shadow-md bangers-regular text-4xl">
+        Adicionar à coleção
+      </div>
+
+      <div>
+        <label for="comic-filter-query" class="block text-xl mb-1">Buscar por título</label>
+        <input
+          id="comic-filter-query"
+          type="search"
+          data-comic-filter-target="query"
+          data-action="input->comic-filter#filter"
+          class="w-full rounded-md border border-black/30 px-3 py-2 text-2xl"
+          placeholder="Ex.: Batman"
+          autocomplete="off"
+        >
+      </div>
+
+      <hr>
+
+      <% if @comics.any? %>
+        <div class="space-y-0">
+          <% @comics.each_with_index do |comic, index| %>
+            <div
+              data-comic-filter-target="item"
+              data-comic-filter-title="<%= comic.display_title %>"
+              hidden
+            >
+              <div class="flex flex-wrap items-center gap-3 py-3">
+                <%= image_tag(
+                  comic.cover_image.attached? ? comic.cover_image.variant(resize_to_fill: [48, 72]) : "covers/no-cover.jpg",
+                  class: "w-12 h-[4.5rem] object-cover rounded shadow shrink-0",
+                  alt: comic.display_title,
+                ) %>
+
+                <span class="flex-1 min-w-0 text-2xl">
+                  <%= comic.display_title %>
+                  <span class="text-xl opacity-70">(<%= comic.published_year %>)</span>
+                </span>
+
+                <div class="flex flex-wrap items-center gap-2 shrink-0">
+                  <%= button_to "Tenho",
+                    comic_user_comic_path(comic),
+                    method: :post,
+                    class: "px-3 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700 transition cursor-pointer text-xl" %>
+
+                  <%= form_with model: Reading.new, url: comic_readings_path(comic), class: "flex items-center gap-2" do |form| %>
+                    <%= hidden_field_tag :return_to, "browse" %>
+                    <%= form.date_field :read_at,
+                      value: Time.zone.today,
+                      required: true,
+                      class: "rounded-md border border-black/30 px-2 py-1.5 text-xl" %>
+                    <%= form.submit "Li em",
+                      class: "px-3 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition cursor-pointer text-xl" %>
+                  <% end %>
+                </div>
+              </div>
+
+              <% unless index == @comics.size - 1 %>
+                <hr>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <p class="py-4 text-2xl" data-comic-filter-target="empty">
+          Digite um título para buscar.
+        </p>
+      <% else %>
+        <p class="py-4 text-2xl">Nenhum quadrinho disponível para adicionar.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

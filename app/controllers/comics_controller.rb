@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class ComicsController < ApplicationController
+  include UserScopedReadings
+
   before_action :authenticate_user!
-  before_action :require_admin!, except: [:index, :show]
+  before_action :require_admin!, except: [:index, :show, :browse]
   before_action :set_comic, only: [:show, :edit, :update, :destroy]
 
   # GET /comics or /comics.json
@@ -19,6 +21,14 @@ class ComicsController < ApplicationController
       .reverse
 
     @comics = Kaminari.paginate_array(comics).page(params[:page]).per(20)
+  end
+
+  # GET /comics/browse
+  def browse
+    @comics = Comic
+      .with_attached_cover_image
+      .where.not(id: current_user.owned_comics.select(:id))
+      .order(:title, :issue_number)
   end
 
   # GET /comics/1 or /comics/1.json
@@ -144,12 +154,6 @@ class ComicsController < ApplicationController
     @comic = Comic.friendly.find(params[:id])
   end
 
-  def assign_current_user_to_readings(comic)
-    comic.readings.each do |reading|
-      reading.user_id ||= current_user.id
-    end
-  end
-
   # Only allow a list of trusted parameters through.
   def comic_params
     permitted = params.require(:comic).permit(
@@ -172,29 +176,5 @@ class ComicsController < ApplicationController
     )
     filter_readings_attributes!(permitted)
     permitted
-  end
-
-  def filter_readings_attributes!(permitted)
-    attrs = permitted[:readings_attributes]
-    return if attrs.blank?
-
-    allowed_ids = if @comic&.persisted?
-      current_user.readings.where(comic_id: @comic.id).pluck(:id).map(&:to_s)
-    else
-      []
-    end
-
-    keep = lambda do |reading_attrs|
-      return false if reading_attrs.blank?
-
-      reading_attrs[:id].blank? || allowed_ids.include?(reading_attrs[:id].to_s)
-    end
-
-    permitted[:readings_attributes] =
-      if attrs.respond_to?(:each_pair)
-        attrs.select { |_key, reading_attrs| keep.call(reading_attrs) }
-      else
-        Array(attrs).select { |reading_attrs| keep.call(reading_attrs) }
-      end
   end
 end

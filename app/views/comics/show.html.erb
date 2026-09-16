@@ -3,7 +3,8 @@
     resource: @comic,
     resource_name: "Quadrinhos",
     index_path: comics_path,
-    edit_path: edit_comic_path(@comic) %>
+    edit_path: current_user.admin? ? edit_comic_path(@comic) : edit_comic_membership_path(@comic),
+    can_edit: true %>
 
   <%= render "comic", comic: @comic %>
 </div>
