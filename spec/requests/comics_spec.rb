@@ -102,6 +102,46 @@ RSpec.describe("Comics", type: :request) do
       get comic_path(comic)
       expect(response).to(have_http_status(:ok))
     end
+
+    it "shows an edit button for the user membership" do
+      comic = create(:comic)
+      create(:user_comic, user: user, comic: comic)
+
+      get comic_path(comic)
+
+      expect(response.body).to(include("Editar"))
+      expect(response.body).to(include(edit_comic_membership_path(comic)))
+      expect(response.body).not_to(include("Registrar leitura"))
+    end
+  end
+
+  describe "GET /comics/browse" do
+    before { sign_in user }
+
+    it "returns success" do
+      get browse_comics_path
+      expect(response).to(have_http_status(:ok))
+    end
+
+    it "lists comics the user does not own" do
+      create(:comic, title: "Available Comic")
+      owned = create(:comic, title: "Already Owned")
+      create(:user_comic, user: user, comic: owned)
+
+      get browse_comics_path
+
+      expect(response.body).to(include("Available Comic"))
+      expect(response.body).not_to(include("Already Owned"))
+    end
+
+    it "includes the stimulus filter markup" do
+      comic = create(:comic, title: "Batman Year One")
+
+      get browse_comics_path
+
+      expect(response.body).to(include('data-controller="comic-filter"'))
+      expect(response.body).to(include("data-comic-filter-title=\"#{comic.display_title}\""))
+    end
   end
 
   describe "GET /comics/new" do
@@ -142,6 +182,7 @@ RSpec.describe("Comics", type: :request) do
       it "allows access" do
         get edit_comic_path(comic)
         expect(response).to(have_http_status(:ok))
+        expect(response.body).to(include("Editar Quadrinho"))
       end
     end
   end
