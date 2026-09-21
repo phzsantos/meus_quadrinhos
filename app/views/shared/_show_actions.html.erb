@@ -8,7 +8,7 @@
     class: "px-4 py-2 bg-black rounded-lg hover:bg-black/80 transition" %>
 
   <% if local_assigns.fetch(:can_edit, current_user.admin?) %>
-    <%= link_to "Editar",
+    <%= link_to local_assigns.fetch(:edit_label, "Editar"),
       edit_path,
       class: "px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition" %>
   <% end %>

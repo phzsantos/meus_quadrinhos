@@ -4,6 +4,7 @@
     resource_name: "Quadrinhos",
     index_path: comics_path,
     edit_path: current_user.admin? ? edit_comic_path(@comic) : edit_comic_membership_path(@comic),
+    edit_label: current_user.admin? ? "Editar" : "Adicionar leitura",
     can_edit: true %>
 
   <%= render "comic", comic: @comic %>

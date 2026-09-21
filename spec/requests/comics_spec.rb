@@ -103,15 +103,15 @@ RSpec.describe("Comics", type: :request) do
       expect(response).to(have_http_status(:ok))
     end
 
-    it "shows an edit button for the user membership" do
+    it "shows an add reading button for the user membership" do
       comic = create(:comic)
       create(:user_comic, user: user, comic: comic)
 
       get comic_path(comic)
 
-      expect(response.body).to(include("Editar"))
+      expect(response.body).to(include("Adicionar leitura"))
       expect(response.body).to(include(edit_comic_membership_path(comic)))
-      expect(response.body).not_to(include("Registrar leitura"))
+      expect(response.body).not_to(include(">Editar<"))
     end
   end
 
