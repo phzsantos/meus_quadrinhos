@@ -18,10 +18,11 @@ RSpec.describe("Readings", type: :request) do
       expect(user.readings.last).to(have_attributes(comic_id: comic.id, read_at: Date.new(2026, 1, 15)))
     end
 
-    it "redirects to browse when requested" do
+    it "returns to the referer when present" do
       post(
         comic_readings_path(comic),
-        params: { return_to: "browse", reading: { read_at: Date.new(2026, 1, 15) } },
+        params: { reading: { read_at: Date.new(2026, 1, 15) } },
+        headers: { "HTTP_REFERER" => browse_comics_url },
       )
 
       expect(response).to(redirect_to(browse_comics_path))

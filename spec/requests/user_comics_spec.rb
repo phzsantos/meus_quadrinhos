@@ -9,10 +9,19 @@ RSpec.describe("UserComics", type: :request) do
   describe "POST /comics/:comic_id/user_comic" do
     before { sign_in user }
 
-    it "creates ownership for the current user" do
+    it "creates ownership and falls back to the comic" do
       expect do
         post(comic_user_comic_path(comic))
       end.to(change { user.owned_comics.count }.by(1))
+
+      expect(response).to(redirect_to(comic_path(comic)))
+    end
+
+    it "returns to the referer when present" do
+      post(
+        comic_user_comic_path(comic),
+        headers: { "HTTP_REFERER" => browse_comics_url },
+      )
 
       expect(response).to(redirect_to(browse_comics_path))
     end

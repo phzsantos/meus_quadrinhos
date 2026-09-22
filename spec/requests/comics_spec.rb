@@ -103,7 +103,7 @@ RSpec.describe("Comics", type: :request) do
       expect(response).to(have_http_status(:ok))
     end
 
-    it "shows an add reading button for the user membership" do
+    it "shows membership actions for the user" do
       comic = create(:comic)
       create(:user_comic, user: user, comic: comic)
 
@@ -111,7 +111,16 @@ RSpec.describe("Comics", type: :request) do
 
       expect(response.body).to(include("Adicionar leitura"))
       expect(response.body).to(include(edit_comic_membership_path(comic)))
+      expect(response.body).to(include("Remover quadrinho da coleção"))
       expect(response.body).not_to(include(">Editar<"))
+    end
+
+    it "shows add to collection when the user does not own the comic" do
+      comic = create(:comic)
+
+      get comic_path(comic)
+
+      expect(response.body).to(include("Adicionar quadrinho à coleção"))
     end
   end
 
