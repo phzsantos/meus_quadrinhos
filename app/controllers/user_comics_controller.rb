@@ -7,8 +7,8 @@ class UserComicsController < ApplicationController
   def create
     current_user.user_comics.find_or_create_by!(comic: @comic)
 
-    redirect_to(
-      browse_comics_path,
+    redirect_back_or_to(
+      comic_path(@comic),
       notice: "#{@comic.display_title} adicionado à sua coleção.",
     )
   end
@@ -16,9 +16,9 @@ class UserComicsController < ApplicationController
   def destroy
     current_user.user_comics.find_by(comic: @comic)&.destroy!
 
-    redirect_to(
+    redirect_back_or_to(
       comic_path(@comic),
-      notice: "#{@comic.display_title} removido da sua coleção.",
+      alert: "#{@comic.display_title} removido da sua coleção.",
     )
   end
 

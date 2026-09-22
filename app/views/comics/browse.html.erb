@@ -47,7 +47,6 @@
                     class: "px-3 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700 transition cursor-pointer text-xl" %>
 
                   <%= form_with model: Reading.new, url: comic_readings_path(comic), class: "flex items-center gap-2" do |form| %>
-                    <%= hidden_field_tag :return_to, "browse" %>
                     <%= form.date_field :read_at,
                       value: Time.zone.today,
                       required: true,

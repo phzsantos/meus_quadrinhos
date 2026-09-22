@@ -8,13 +8,13 @@ class ReadingsController < ApplicationController
     reading = current_user.readings.new(comic: @comic, read_at: reading_params[:read_at])
 
     if reading.save
-      redirect_to(
-        redirect_after_create,
+      redirect_back_or_to(
+        comic_path(@comic),
         notice: "Leitura de #{@comic.display_title} registrada.",
       )
     else
-      redirect_to(
-        redirect_after_create,
+      redirect_back_or_to(
+        comic_path(@comic),
         alert: reading.errors.full_messages.to_sentence.presence || "Não foi possível registrar a leitura.",
       )
     end
@@ -28,12 +28,5 @@ class ReadingsController < ApplicationController
 
   def reading_params
     params.require(:reading).permit(:read_at)
-  end
-
-  def redirect_after_create
-    case params[:return_to]
-    when "browse" then browse_comics_path
-    else comic_path(@comic)
-    end
   end
 end
