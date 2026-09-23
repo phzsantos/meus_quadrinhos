@@ -4,7 +4,7 @@ class ComicsController < ApplicationController
   include UserScopedReadings
 
   before_action :authenticate_user!
-  before_action :require_admin!, except: [:index, :show, :browse]
+  before_action :require_admin!, except: [:index, :show, :browse, :export]
   before_action :set_comic, only: [:show, :edit, :update, :destroy]
 
   # GET /comics or /comics.json
@@ -45,7 +45,7 @@ class ComicsController < ApplicationController
   end
 
   def export
-    comics = Comic
+    comics = export_comics_scope
       .includes(
         :publisher,
         :publication_type,
@@ -140,10 +140,9 @@ class ComicsController < ApplicationController
       link_guia_dos_quadrinhos: comic.link_guia_dos_quadrinhos,
       story_count: comic.story_count,
       read_dates: comic.readings
-        .where.not(read_at: nil)
-        .order(:read_at)
-        .pluck(:read_at)
-        .map { |d| d.to_date.iso8601 },
+        .select { |reading| reading.user_id == current_user.id && reading.read_at.present? }
+        .sort_by(&:read_at)
+        .map { |reading| reading.read_at.to_date.iso8601 },
       issue_number: comic.issue_number,
       issue_title: comic.issue_title,
     }
@@ -152,6 +151,10 @@ class ComicsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_comic
     @comic = Comic.friendly.find(params[:id])
+  end
+
+  def export_comics_scope
+    current_user.admin? ? Comic.all : Comic.visible_to(current_user)
   end
 
   # Only allow a list of trusted parameters through.

@@ -31,7 +31,7 @@
 
     <% when "index" %>
       <div class="ml-auto">
-        <% if current_user.admin? && %w[comics collections authors characters publishers book_bindings paper_types publication_types].include?(controller_name) %>
+        <% if controller_name == "comics" || (current_user.admin? && %w[collections authors characters publishers book_bindings paper_types publication_types].include?(controller_name)) %>
           <%= link_to "Exportar",
             url_for(controller: controller_name, action: :export),
             target: "_blank",
