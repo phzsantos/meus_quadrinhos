@@ -575,9 +575,26 @@ RSpec.describe("Comics", type: :request) do
     context "as regular user" do
       before { sign_in user }
 
-      it "blocks access" do
+      it "exports only comics the user owns or has read" do
+        owned = create(:comic, title: "Owned Export")
+        read = create(:comic, title: "Read Export")
+        create(:comic, title: "Other Export")
+        create(:user_comic, user: user, comic: owned)
+        create(:reading, user: user, comic: read, read_at: Date.new(2025, 10, 8))
+
         get export_comics_path
-        expect(response).to(redirect_to(root_path))
+
+        expect(response).to(have_http_status(:ok))
+        titles = response.parsed_body.map { |comic| comic["title"] }
+        expect(titles).to(contain_exactly("Owned Export", "Read Export"))
+        expect(response.parsed_body.find { |comic| comic["title"] == "Read Export" }["read_dates"]).to(eq(["2025-10-08"]))
+      end
+
+      it "shows the export button on the comics index" do
+        get comics_path
+
+        expect(response.body).to(include("Exportar"))
+        expect(response.body).to(include(export_comics_path))
       end
     end
 
@@ -602,7 +619,7 @@ RSpec.describe("Comics", type: :request) do
           paper_type: paper_type,
           collection: collection,
         )
-        create(:reading, comic: comic, read_at: Date.new(2025, 10, 8))
+        create(:reading, user: admin, comic: comic, read_at: Date.new(2025, 10, 8))
 
         get export_comics_path
 
