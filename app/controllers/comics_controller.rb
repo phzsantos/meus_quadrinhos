@@ -10,6 +10,7 @@ class ComicsController < ApplicationController
   # GET /comics or /comics.json
   def index
     comics = Comic.visible_to(current_user)
+      .with_attached_cover_image
       .includes(:readings, :user_comics)
       .order(created_at: :asc)
       .sort_by do |comic|
