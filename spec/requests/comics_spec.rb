@@ -91,6 +91,32 @@ RSpec.describe("Comics", type: :request) do
       expect(response.body).to(include("Only Read Comic"))
       expect(response.body).to(include("01/02/2026"))
     end
+
+    it "shows cover thumbnails for comics in the list" do
+      comic = create(:comic, title: "Covered Comic")
+      comic.cover_image.attach(
+        io: File.open(Rails.root.join("spec/fixtures/files/test-cover.jpg")),
+        filename: "test-cover.jpg",
+        content_type: "image/jpeg",
+      )
+      create(:user_comic, user: user, comic: comic)
+
+      get comics_path
+
+      expect(response.body).to(include(%(alt="#{comic.display_title}")))
+      expect(response.body).to(include("w-12 h-[4.5rem]"))
+      expect(response.body).to(include("rails/active_storage"))
+    end
+
+    it "shows the placeholder cover when the comic has no cover" do
+      comic = create(:comic, title: "No Cover Comic")
+      create(:user_comic, user: user, comic: comic)
+
+      get comics_path
+
+      expect(response.body).to(include(%(alt="#{comic.display_title}")))
+      expect(response.body).to(include("covers/no-cover"))
+    end
   end
 
   describe "GET /comics/:id" do
