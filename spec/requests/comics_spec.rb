@@ -613,7 +613,14 @@ RSpec.describe("Comics", type: :request) do
         expect(response).to(have_http_status(:ok))
         titles = response.parsed_body.map { |comic| comic["title"] }
         expect(titles).to(contain_exactly("Owned Export", "Read Export"))
-        expect(response.parsed_body.find { |comic| comic["title"] == "Read Export" }["read_dates"]).to(eq(["2025-10-08"]))
+
+        owned_export = response.parsed_body.find { |comic| comic["title"] == "Owned Export" }
+        read_export = response.parsed_body.find { |comic| comic["title"] == "Read Export" }
+
+        expect(owned_export["owned"]).to(be(true))
+        expect(owned_export["read_dates"]).to(eq([]))
+        expect(read_export["owned"]).to(be(false))
+        expect(read_export["read_dates"]).to(eq(["2025-10-08"]))
       end
 
       it "shows the export button on the comics index" do
@@ -646,6 +653,7 @@ RSpec.describe("Comics", type: :request) do
           collection: collection,
         )
         create(:reading, user: admin, comic: comic, read_at: Date.new(2025, 10, 8))
+        create(:user_comic, user: admin, comic: comic)
 
         get export_comics_path
 
@@ -664,6 +672,7 @@ RSpec.describe("Comics", type: :request) do
             "paper_type_name" => paper_type.name,
             "link_guia_dos_quadrinhos" => "http://example.com/edicao",
             "story_count" => 5,
+            "owned" => true,
             "read_dates" => ["2025-10-08"],
             "issue_number" => 99,
             "issue_title" => "Tex contra o mundo",
