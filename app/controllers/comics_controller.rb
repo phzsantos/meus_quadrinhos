@@ -140,6 +140,7 @@ class ComicsController < ApplicationController
       paper_type_name: comic.paper_type.name,
       link_guia_dos_quadrinhos: comic.link_guia_dos_quadrinhos,
       story_count: comic.story_count,
+      owned: comic.owned_by?(current_user),
       read_dates: comic.readings
         .select { |reading| reading.user_id == current_user.id && reading.read_at.present? }
         .sort_by(&:read_at)
