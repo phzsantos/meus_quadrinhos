@@ -1,19 +1,50 @@
-<% @latest_readings.each do |reading| %>
-  <%= link_to reading.comic, class: "group" do %>
-      <div 
-        data-controller="reveal"
-        class="aspect-[2/3] overflow-hidden rounded shadow-lg bg-slate-900"
-      >
-      <%= image_tag(
-            reading.comic.cover_image.attached? ? reading.comic.cover_image : "covers/no-cover.jpg",
-            class: "w-full h-full object-fill group-hover:scale-105 transition-transform duration-200"
-          ) %>
-    </div>
+<div class="bg-bada text-shadow-md p-2 rounded-md shadow-md flex justify-center flex-wrap gap-3 mb-6">
+  <h2 class="text-3xl text-black bangers-regular">
+    <%= image_tag 'icons/clock-solid-full.svg', class: "w-7 h-7 inline-block" %>
+    Últimas leituras
+  </h2>
+</div>
 
-    <p class="mt-1 patrick-hand-regular text-2xl text-shadow-md text-center truncate">
-      <%= reading.comic.display_title %>
-      <br>
-      Lido em: <%= reading.read_at.strftime("%d/%m/%Y") %>
-    </p>
-  <% end %>
-<% end %>
+<div>
+  <div class="bg-bada p-5 text-shadow-md rounded-md shadow-md grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <div class="md:col-span-2 space-y-3 text-black">
+      <div class="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <% @latest_readings.each do |reading| %>
+          <%= link_to reading.comic, class: "group" do %>
+              <div 
+                data-controller="reveal"
+                class="aspect-[2/3] overflow-hidden rounded shadow-lg bg-slate-900"
+              >
+              <%= image_tag(
+                    reading.comic.cover_image.attached? ? reading.comic.cover_image : "covers/no-cover.jpg",
+                    class: "w-full h-full object-fill group-hover:scale-105 transition-transform duration-200"
+                  ) %>
+            </div>
+
+            <p class="mt-1 patrick-hand-regular text-2xl text-shadow-md text-center truncate">
+              <%= reading.comic.display_title %>
+              <br>
+              Lido em: <%= reading.read_at.strftime("%d/%m/%Y") %>
+            </p>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>  
+</div>
+
+<div class="w-full lg:col-span-2 bg-bada rounded-xl p-4 shadow-lg flex flex-col mb-6">
+
+  <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
+    Leituras dia a dia: <%= @read_comics_comparison_current_label %> × <%= @read_comics_comparison_previous_label %>
+  </h2>
+
+  <div class="flex-1 relative min-h-[350px]">
+    <div class="absolute inset-0"></div>
+
+    <div class="absolute inset-0">
+      <%= render "chart_comics_read_by_day_comparison" %>
+    </div>
+  </div>
+
+</div>

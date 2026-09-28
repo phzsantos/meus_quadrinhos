@@ -1,59 +1,72 @@
-<div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md">
-  <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Mês com mais quadrinhos lidos:</h3>
-  <p
-    data-controller="counter"
-    data-counter-value-value="<%= @best_month_comics_count %>"
-    class="text-5xl bangers-regular"
-  >
-  0
-  </p>
-  <% if @best_month.present? %>
-    <p class="text-2xl patrick-hand-regular mt-2"><%= @best_month.strftime("%m/%Y") %></p>
-  <% end %>
+<div class="bg-bada text-shadow-md p-2 rounded-md shadow-md flex justify-center flex-wrap gap-3 mb-6">
+  <h2 class="text-3xl text-black bangers-regular">
+    <%= image_tag 'icons/trophy-solid-full.svg', class: "w-7 h-7 inline-block" %>
+    Recordes
+  </h2>
 </div>
 
-<div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md">
-  <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Mês com mais histórias lidas:</h3>
-  <p
-    data-controller="counter"
-    data-counter-value-value="<%= @best_month_stories_count %>"
-    class="text-5xl bangers-regular"
-  >
-  0
-  </p>
-  <% if @best_stories_month.present? %>
-    <p class="text-2xl patrick-hand-regular mt-2"><%= @best_stories_month.strftime("%m/%Y") %></p>
-  <% end %>
-</div>
-
-<div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md">
-  <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Mês com mais páginas lidas:</h3>
-  <p
-    data-controller="counter"
-    data-counter-value-value="<%= @best_month_pages_count %>"
-    class="text-5xl bangers-regular"
-  >
-  0
-  </p>
-  <% if @best_pages_month.present? %>
-    <p class="text-2xl patrick-hand-regular mt-2"><%= @best_pages_month.strftime("%m/%Y") %></p>
-  <% end %>
-</div>
-
-<div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md">
-  <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Maior sequência de leitura:</h3>
-  <p
-    data-controller="counter"
-    data-counter-value-value="<%= @longest_reading_streak_days %>"
-    class="text-5xl bangers-regular"
-  >
-  0
-  </p>
-  <% if @longest_reading_streak_start.present? && @longest_reading_streak_end.present? %>
-    <p class="text-2xl patrick-hand-regular mt-2">
-      <%= @longest_reading_streak_start.strftime("%d/%m/%Y") %>
-      -
-      <%= @longest_reading_streak_end.strftime("%d/%m/%Y") %>
-    </p>
-  <% end %>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+  <div class="md:col-span-2 space-y-3 text-black">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md">
+        <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Mês com mais quadrinhos lidos:</h3>
+        <p
+          data-controller="counter"
+          data-counter-value-value="<%= @best_month_comics_count %>"
+          class="text-5xl bangers-regular"
+        >
+        0
+        </p>
+        <% if @best_month.present? %>
+          <p class="text-2xl patrick-hand-regular mt-2"><%= @best_month.strftime("%m/%Y") %></p>
+        <% end %>
+      </div>
+      
+      <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md">
+        <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Mês com mais histórias lidas:</h3>
+        <p
+          data-controller="counter"
+          data-counter-value-value="<%= @best_month_stories_count %>"
+          class="text-5xl bangers-regular"
+        >
+        0
+        </p>
+        <% if @best_stories_month.present? %>
+          <p class="text-2xl patrick-hand-regular mt-2"><%= @best_stories_month.strftime("%m/%Y") %></p>
+        <% end %>
+      </div>
+      
+      <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md">
+        <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Mês com mais páginas lidas:</h3>
+        <p
+          data-controller="counter"
+          data-counter-value-value="<%= @best_month_pages_count %>"
+          class="text-5xl bangers-regular"
+        >
+        0
+        </p>
+        <% if @best_pages_month.present? %>
+          <p class="text-2xl patrick-hand-regular mt-2"><%= @best_pages_month.strftime("%m/%Y") %></p>
+        <% end %>
+      </div>
+      
+      <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md">
+        <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Maior sequência de leitura:</h3>
+        <p
+          data-controller="counter"
+          data-counter-value-value="<%= @longest_reading_streak_days %>"
+          class="text-5xl bangers-regular"
+        >
+        0
+        </p>
+        <% if @longest_reading_streak_start.present? && @longest_reading_streak_end.present? %>
+          <p class="text-2xl patrick-hand-regular mt-2">
+            <%= @longest_reading_streak_start.strftime("%d/%m/%Y") %>
+            -
+            <%= @longest_reading_streak_end.strftime("%d/%m/%Y") %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

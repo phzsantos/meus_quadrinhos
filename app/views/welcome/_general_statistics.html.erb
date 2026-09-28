@@ -1,54 +1,155 @@
-<div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
-  <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Quadrinhos lidos:</h3>
-  <p
-    data-controller="counter"
-    data-counter-value-value="<%= @total_comics_read %>"
-    class="text-5xl bangers-regular"
-  >
-  0
-  </p>
+<div class="bg-bada text-shadow-md p-2 rounded-md shadow-md flex justify-center flex-wrap gap-3 mb-6">
+  <h2 class="text-3xl text-black bangers-regular">
+    <%= image_tag 'icons/chart-simple-solid-full.svg', class: "w-7 h-7 inline-block" %>
+    Estatísticas gerais
+  </h2>
 </div>
 
-<div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
-  <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Histórias lidas:</h3>
-  <p
-    data-controller="counter"
-    data-counter-value-value="<%= @total_story_count %>"
-    class="text-5xl bangers-regular"
-  >
-  0
-  </p>
-</div>
+<div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="md:col-span-2 space-y-3 text-black">
+      <div class="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
+          <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Quadrinhos lidos:</h3>
+          <p
+            data-controller="counter"
+            data-counter-value-value="<%= @total_comics_read %>"
+            class="text-5xl bangers-regular"
+          >
+          0
+          </p>
+        </div>
+        
+        <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
+          <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Histórias lidas:</h3>
+          <p
+            data-controller="counter"
+            data-counter-value-value="<%= @total_story_count %>"
+            class="text-5xl bangers-regular"
+          >
+          0
+          </p>
+        </div>
+        
+        <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
+          <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Páginas lidas:</h3>
+          <p
+            data-controller="counter"
+            data-counter-value-value="<%= @total_pages_read %>"
+            class="text-5xl bangers-regular"
+          >
+          0
+          </p>
+        </div>
+        
+        <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
+          <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Lidos esse mês:</h3>
+          <p
+            data-controller="counter"
+            data-counter-value-value="<%= @comics_read_this_month %>"
+            class="text-5xl bangers-regular"
+          >
+          0
+          </p>
+        </div>
+        
+        <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
+          <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Sequência de leitura:</h3>
+          <p
+            data-controller="counter"
+            data-counter-value-value="<%= @current_reading_streak_days %>"
+            class="text-5xl bangers-regular"
+          >
+          0
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
-  <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Páginas lidas:</h3>
-  <p
-    data-controller="counter"
-    data-counter-value-value="<%= @total_pages_read %>"
-    class="text-5xl bangers-regular"
-  >
-  0
-  </p>
-</div>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col">
+      <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
+        Personagens mais lidos
+      </h2>
 
-<div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
-  <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Lidos esse mês:</h3>
-  <p
-    data-controller="counter"
-    data-counter-value-value="<%= @comics_read_this_month %>"
-    class="text-5xl bangers-regular"
-  >
-  0
-  </p>
-</div>
+      <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_characters.size * 40].max %>px">
+        <div class="absolute inset-0"></div>
 
-<div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
-  <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Sequência de leitura:</h3>
-  <p
-    data-controller="counter"
-    data-counter-value-value="<%= @current_reading_streak_days %>"
-    class="text-5xl bangers-regular"
-  >
-  0
-  </p>
+        <div class="absolute inset-0">
+          <%= render "chart_comics_read_by_character" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col">
+      <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
+        Autores mais lidos
+      </h2>
+
+      <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_authors.size * 40].max %>px">
+        <div class="absolute inset-0"></div>
+
+        <div class="absolute inset-0">
+          <%= render "chart_comics_read_by_author" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col">
+      <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
+        Quadrinhos lidos por tipo de papel
+      </h2>
+
+      <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_paper_types.size * 40].max %>px">
+        <div class="absolute inset-0"></div>
+
+        <div class="absolute inset-0">
+          <%= render "chart_comics_read_by_paper_type" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col">
+      <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
+        Quadrinhos lidos por encadernação
+      </h2>
+
+      <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_book_bindings.size * 40].max %>px">
+        <div class="absolute inset-0"></div>
+
+        <div class="absolute inset-0">
+          <%= render "chart_comics_read_by_book_binding" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col">
+      <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
+        Quadrinhos lidos por editora
+      </h2>
+  
+      <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_publishers.size * 40].max %>px">
+        <div class="absolute inset-0"></div>
+  
+        <div class="absolute inset-0">
+          <%= render "chart_comics_read_by_publisher" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full bg-bada rounded-xl p-4 shadow-lg flex flex-col">
+      <h2 class="text-3xl text-black font-bold patrick-hand-regular mb-4 text-center shrink-0">
+        Quadrinhos lidos por tipo de publicação
+      </h2>
+
+      <div class="flex-1 relative" style="min-height: <%= [350, @read_comics_publication_types.size * 40].max %>px">
+        <div class="absolute inset-0"></div>
+
+        <div class="absolute inset-0">
+          <%= render "chart_comics_read_by_publication_type" %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
