@@ -11,7 +11,11 @@ namespace :import do
     comics = JSON.parse(File.read(Rails.root.join("db/seeds/comics.json")), symbolize_names: true)
 
     comics.each do |attrs|
-      comic = Comic.find_or_initialize_by(title: attrs[:title], issue_number: attrs[:issue_number])
+      comic = Comic.find_or_initialize_by(
+        title: attrs[:title],
+        issue_number: attrs[:issue_number],
+        published_year: attrs[:published_year],
+      )
 
       comic.assign_attributes(
         page_count: attrs[:page_count],
