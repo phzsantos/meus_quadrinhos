@@ -12,13 +12,14 @@ def quiet_system(cmd)
   abort("Failed: #{cmd}") unless success
 end
 
-def export_via_controller(controller_class, filename)
+def export_via_controller(controller_class, filename, user: nil)
   controller_class.skip_before_action(:authenticate_user!, raise: false)
   controller_class.skip_before_action(:require_admin!, raise: false)
 
   request = ActionController::TestRequest.create(controller_class)
   response = ActionDispatch::TestResponse.create
   controller = controller_class.new
+  controller.define_singleton_method(:current_user) { user } if user
   controller.dispatch(:export, request, response)
 
   unless response.successful?

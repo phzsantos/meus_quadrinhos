@@ -7,6 +7,7 @@ namespace :import do
   end
 
   def import_comics
+    admin = User.find_by!(email: "admin@admin.com")
     comics = JSON.parse(File.read(Rails.root.join("db/seeds/comics.json")), symbolize_names: true)
 
     comics.each do |attrs|
@@ -35,8 +36,10 @@ namespace :import do
       comic.save!
 
       Array(attrs[:read_dates]).each do |date|
-        comic.readings.find_or_create_by!(read_at: date)
+        comic.readings.find_or_create_by!(user: admin, read_at: date)
       end
+
+      admin.user_comics.find_or_create_by!(comic: comic) if attrs.fetch(:owned, true)
 
       next if comic.cover_image.attached?
 
