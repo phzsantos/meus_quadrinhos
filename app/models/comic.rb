@@ -49,6 +49,7 @@ class Comic < ApplicationRecord
 
   scope :visible_to, lambda { |user|
     return none if user.blank?
+    return all if user.admin?
 
     owned_ids = UserComic.where(user_id: user.id).select(:comic_id)
     read_ids = Reading.where(user_id: user.id).where.not(read_at: nil).select(:comic_id)

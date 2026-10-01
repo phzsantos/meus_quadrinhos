@@ -156,7 +156,7 @@ class ComicsController < ApplicationController
   end
 
   def export_comics_scope
-    current_user.admin? ? Comic.all : Comic.visible_to(current_user)
+    Comic.visible_to(current_user)
   end
 
   # Only allow a list of trusted parameters through.
