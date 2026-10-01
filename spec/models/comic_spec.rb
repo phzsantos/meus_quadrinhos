@@ -109,6 +109,17 @@ RSpec.describe(Comic, type: :model) do
     it "returns none when user is blank" do
       expect(described_class.visible_to(nil)).to(be_empty)
     end
+
+    it "returns every comic when the user is an admin" do
+      admin = create(:user, :admin)
+
+      expect(described_class.visible_to(admin)).to(contain_exactly(
+        owned_comic,
+        read_comic,
+        both_comic,
+        hidden_comic,
+      ))
+    end
   end
 
   describe "friendly_id" do

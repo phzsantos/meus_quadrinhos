@@ -26,6 +26,22 @@ RSpec.describe(Collection, type: :model) do
 
       expect(described_class.with_comics_visible_to(user)).to(contain_exactly(visible_collection))
     end
+
+    it "returns every collection when the user is an admin" do
+      admin = create(:user, :admin)
+      owned_collection = create(:collection, name: "Owned")
+      other_collection = create(:collection, name: "Other")
+      empty_collection = create(:collection, name: "Empty")
+      owned_comic = create(:comic, collection: owned_collection)
+      create(:comic, collection: other_collection)
+      create(:user_comic, user: admin, comic: owned_comic)
+
+      expect(described_class.with_comics_visible_to(admin)).to(contain_exactly(
+        owned_collection,
+        other_collection,
+        empty_collection,
+      ))
+    end
   end
 
   describe "friendly_id" do
