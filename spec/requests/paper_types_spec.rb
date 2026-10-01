@@ -28,6 +28,24 @@ RSpec.describe("PaperTypes", type: :request) do
     end
   end
 
+  describe "GET /paper_types as admin" do
+    before { sign_in admin }
+
+    it "lists every paper type" do
+      owned_paper = create(:paper_type, name: "Owned Paper")
+      create(:paper_type, name: "Catalog Paper")
+      create(:paper_type, name: "Unused Paper")
+      owned_comic = create(:comic, paper_type: owned_paper)
+      create(:user_comic, user: admin, comic: owned_comic)
+
+      get paper_types_path
+
+      expect(response.body).to(include("Owned Paper"))
+      expect(response.body).to(include("Catalog Paper"))
+      expect(response.body).to(include("Unused Paper"))
+    end
+  end
+
   describe "GET /paper_types/:id" do
     before { sign_in user }
 
@@ -51,6 +69,22 @@ RSpec.describe("PaperTypes", type: :request) do
       expect(response.body).to(include(owned_comic.display_title))
       expect(response.body).to(include(read_comic.display_title))
       expect(response.body).not_to(include(hidden_comic.display_title))
+    end
+  end
+
+  describe "GET /paper_types/:id as admin" do
+    before { sign_in admin }
+
+    it "shows every comic of the paper type" do
+      paper_type = create(:paper_type, name: "Offset")
+      owned_comic = create(:comic, paper_type: paper_type, title: "Owned By Paper")
+      hidden_comic = create(:comic, paper_type: paper_type, title: "Hidden By Paper")
+      create(:user_comic, user: admin, comic: owned_comic)
+
+      get paper_type_path(paper_type)
+
+      expect(response.body).to(include(owned_comic.display_title))
+      expect(response.body).to(include(hidden_comic.display_title))
     end
   end
 

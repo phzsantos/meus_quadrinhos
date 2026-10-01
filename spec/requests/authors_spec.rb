@@ -28,6 +28,24 @@ RSpec.describe("Authors", type: :request) do
     end
   end
 
+  describe "GET /authors as admin" do
+    before { sign_in admin }
+
+    it "lists every author" do
+      owned_author = create(:author, name: "Owned Author")
+      create(:author, name: "Catalog Author")
+      create(:author, name: "Unused Author")
+      owned_comic = create(:comic, authors: [owned_author])
+      create(:user_comic, user: admin, comic: owned_comic)
+
+      get authors_path
+
+      expect(response.body).to(include("Owned Author"))
+      expect(response.body).to(include("Catalog Author"))
+      expect(response.body).to(include("Unused Author"))
+    end
+  end
+
   describe "GET /authors/:id" do
     before { sign_in user }
 
@@ -51,6 +69,22 @@ RSpec.describe("Authors", type: :request) do
       expect(response.body).to(include(owned_comic.display_title))
       expect(response.body).to(include(read_comic.display_title))
       expect(response.body).not_to(include(hidden_comic.display_title))
+    end
+  end
+
+  describe "GET /authors/:id as admin" do
+    before { sign_in admin }
+
+    it "shows every comic of the author" do
+      author = create(:author, name: "Frank Miller")
+      owned_comic = create(:comic, authors: [author], title: "Owned By Author")
+      hidden_comic = create(:comic, authors: [author], title: "Hidden By Author")
+      create(:user_comic, user: admin, comic: owned_comic)
+
+      get author_path(author)
+
+      expect(response.body).to(include(owned_comic.display_title))
+      expect(response.body).to(include(hidden_comic.display_title))
     end
   end
 

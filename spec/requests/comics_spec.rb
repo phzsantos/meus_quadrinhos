@@ -119,6 +119,22 @@ RSpec.describe("Comics", type: :request) do
     end
   end
 
+  describe "GET /comics as admin" do
+    before { sign_in admin }
+
+    it "lists every comic" do
+      owned_comic = create(:comic, title: "Owned Comic")
+      create(:comic, title: "Catalog Comic")
+      create(:user_comic, user: admin, comic: owned_comic)
+
+      get comics_path
+
+      expect(response.body).to(include("Owned Comic"))
+      expect(response.body).to(include("Catalog Comic"))
+      expect(response.body).to(include("Quadrinho (2)"))
+    end
+  end
+
   describe "GET /comics/:id" do
     before { sign_in user }
 

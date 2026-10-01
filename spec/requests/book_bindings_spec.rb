@@ -28,6 +28,24 @@ RSpec.describe("BookBindings", type: :request) do
     end
   end
 
+  describe "GET /book_bindings as admin" do
+    before { sign_in admin }
+
+    it "lists every book binding" do
+      owned_binding = create(:book_binding, name: "Owned Binding")
+      create(:book_binding, name: "Catalog Binding")
+      create(:book_binding, name: "Unused Binding")
+      owned_comic = create(:comic, book_binding: owned_binding)
+      create(:user_comic, user: admin, comic: owned_comic)
+
+      get book_bindings_path
+
+      expect(response.body).to(include("Owned Binding"))
+      expect(response.body).to(include("Catalog Binding"))
+      expect(response.body).to(include("Unused Binding"))
+    end
+  end
+
   describe "GET /book_bindings/:id" do
     before { sign_in user }
 
@@ -51,6 +69,22 @@ RSpec.describe("BookBindings", type: :request) do
       expect(response.body).to(include(owned_comic.display_title))
       expect(response.body).to(include(read_comic.display_title))
       expect(response.body).not_to(include(hidden_comic.display_title))
+    end
+  end
+
+  describe "GET /book_bindings/:id as admin" do
+    before { sign_in admin }
+
+    it "shows every comic of the book binding" do
+      book_binding = create(:book_binding, name: "Capa Dura")
+      owned_comic = create(:comic, book_binding: book_binding, title: "Owned By Binding")
+      hidden_comic = create(:comic, book_binding: book_binding, title: "Hidden By Binding")
+      create(:user_comic, user: admin, comic: owned_comic)
+
+      get book_binding_path(book_binding)
+
+      expect(response.body).to(include(owned_comic.display_title))
+      expect(response.body).to(include(hidden_comic.display_title))
     end
   end
 

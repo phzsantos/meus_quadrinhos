@@ -28,6 +28,24 @@ RSpec.describe("PublicationTypes", type: :request) do
     end
   end
 
+  describe "GET /publication_types as admin" do
+    before { sign_in admin }
+
+    it "lists every publication type" do
+      owned_type = create(:publication_type, name: "Owned Type")
+      create(:publication_type, name: "Catalog Type")
+      create(:publication_type, name: "Unused Type")
+      owned_comic = create(:comic, publication_type: owned_type)
+      create(:user_comic, user: admin, comic: owned_comic)
+
+      get publication_types_path
+
+      expect(response.body).to(include("Owned Type"))
+      expect(response.body).to(include("Catalog Type"))
+      expect(response.body).to(include("Unused Type"))
+    end
+  end
+
   describe "GET /publication_types/:id" do
     before { sign_in user }
 
@@ -51,6 +69,22 @@ RSpec.describe("PublicationTypes", type: :request) do
       expect(response.body).to(include(owned_comic.display_title))
       expect(response.body).to(include(read_comic.display_title))
       expect(response.body).not_to(include(hidden_comic.display_title))
+    end
+  end
+
+  describe "GET /publication_types/:id as admin" do
+    before { sign_in admin }
+
+    it "shows every comic of the publication type" do
+      publication_type = create(:publication_type, name: "Graphic Novel")
+      owned_comic = create(:comic, publication_type: publication_type, title: "Owned By Type")
+      hidden_comic = create(:comic, publication_type: publication_type, title: "Hidden By Type")
+      create(:user_comic, user: admin, comic: owned_comic)
+
+      get publication_type_path(publication_type)
+
+      expect(response.body).to(include(owned_comic.display_title))
+      expect(response.body).to(include(hidden_comic.display_title))
     end
   end
 

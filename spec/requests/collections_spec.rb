@@ -28,6 +28,24 @@ RSpec.describe("Collections", type: :request) do
     end
   end
 
+  describe "GET /collections as admin" do
+    before { sign_in admin }
+
+    it "lists every collection" do
+      owned_collection = create(:collection, name: "Owned Collection")
+      create(:collection, name: "Catalog Collection")
+      create(:collection, name: "Unused Collection")
+      owned_comic = create(:comic, collection: owned_collection)
+      create(:user_comic, user: admin, comic: owned_comic)
+
+      get collections_path
+
+      expect(response.body).to(include("Owned Collection"))
+      expect(response.body).to(include("Catalog Collection"))
+      expect(response.body).to(include("Unused Collection"))
+    end
+  end
+
   describe "GET /collections/:id" do
     before { sign_in user }
 
@@ -51,6 +69,23 @@ RSpec.describe("Collections", type: :request) do
       expect(response.body).to(include(owned_comic.display_title))
       expect(response.body).to(include(read_comic.display_title))
       expect(response.body).not_to(include(hidden_comic.display_title))
+      expect(response.body).to(include("Total de volumes da coleção:</strong> 2"))
+    end
+  end
+
+  describe "GET /collections/:id as admin" do
+    before { sign_in admin }
+
+    it "shows every comic of the collection" do
+      collection = create(:collection, name: "Batman")
+      owned_comic = create(:comic, collection: collection, title: "Owned Volume", issue_number: 1)
+      hidden_comic = create(:comic, collection: collection, title: "Hidden Volume", issue_number: 2)
+      create(:user_comic, user: admin, comic: owned_comic)
+
+      get collection_path(collection)
+
+      expect(response.body).to(include(owned_comic.display_title))
+      expect(response.body).to(include(hidden_comic.display_title))
       expect(response.body).to(include("Total de volumes da coleção:</strong> 2"))
     end
   end
