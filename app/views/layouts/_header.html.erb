@@ -18,7 +18,7 @@
           <button
             type="button"
             data-action="click->dropdown#toggle"
-            class="bg-bada cursor-pointer w-10 h-10 sm:w-full sm:h-auto py-2 px-2 rounded-md shadow-md hover:opacity-90 flex items-center justify-center sm:justify-start gap-1">
+            class="bg-bada cursor-pointer w-10 h-10 sm:w-full sm:h-auto py-2 px-2 rounded-md shadow-md hover:opacity-90 flex items-center justify-center sm:justify-start">
             <%= image_tag "icons/#{current_user.admin? ? 'user-gear-solid-full' : 'user-solid-full'}.svg", class: "w-7 h-7 shrink-0" %>
             <span class="hidden sm:block flex-1 text-center truncate"><%= current_user.username %></span>
           </button>
