@@ -1,6 +1,6 @@
 # Meus Quadrinhos
 
-![Preview](preview.png)
+![Demo](demo.gif)
 
 An app to catalog comics, build a personal collection, and track what you have read.
 
