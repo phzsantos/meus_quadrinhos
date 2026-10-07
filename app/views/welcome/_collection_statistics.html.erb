@@ -1,0 +1,56 @@
+<div class="bg-bada text-shadow-md p-2 rounded-md shadow-md flex justify-center flex-wrap gap-3 mb-6">
+  <h2 class="text-3xl text-black bangers-regular">
+    <%= image_tag 'icons/chart-simple-solid-full.svg', class: "w-7 h-7 inline-block" %>
+    Estatísticas de coleção
+  </h2>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div class="md:col-span-2 space-y-3 text-black">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
+        <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Total de quadrinhos:</h3>
+        <p
+          data-controller="counter"
+          data-counter-value-value="<%= @total_collection_comics %>"
+          class="text-5xl bangers-regular"
+        >
+        0
+        </p>
+      </div>
+
+      <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
+        <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Total de quadrinhos não lidos:</h3>
+        <p
+          data-controller="counter"
+          data-counter-value-value="<%= @total_unread_comics %>"
+          class="text-5xl bangers-regular"
+        >
+        0
+        </p>
+      </div>
+
+      <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
+        <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Total de páginas:</h3>
+        <p
+          data-controller="counter"
+          data-counter-value-value="<%= @total_collection_pages %>"
+          class="text-5xl bangers-regular"
+        >
+        0
+        </p>
+      </div>
+
+      <div class="bg-bada text-center text-shadow-md p-3 rounded-md shadow-md mb-6">
+        <h3 class="text-3xl font-bold patrick-hand-regular mb-4">Total de histórias:</h3>
+        <p
+          data-controller="counter"
+          data-counter-value-value="<%= @total_collection_stories %>"
+          class="text-5xl bangers-regular"
+        >
+        0
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

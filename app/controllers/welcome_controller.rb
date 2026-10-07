@@ -63,6 +63,11 @@ class WelcomeController < ApplicationController
     @comics_read_this_month = context.comics_read_this_month
     @current_reading_streak_days = context.current_reading_streak_days
 
+    @total_collection_comics = context.total_collection_comics
+    @total_unread_comics = context.total_unread_comics
+    @total_collection_pages = context.total_collection_pages
+    @total_collection_stories = context.total_collection_stories
+
     @best_month = context.best_month
     @best_month_comics_count = context.best_month_comics_count
     @best_stories_month = context.best_stories_month

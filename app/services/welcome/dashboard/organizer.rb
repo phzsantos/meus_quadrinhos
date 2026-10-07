@@ -20,6 +20,7 @@ module Welcome
         ComicsReadByDayComparison,
         LatestReadings,
         GeneralStatistics,
+        CollectionStatistics,
         ReadingRecords,
       )
     end
