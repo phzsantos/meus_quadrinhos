@@ -80,6 +80,10 @@ RSpec.describe("Welcome", type: :request) do
         total_pages_read: 900,
         comics_read_this_month: 3,
         current_reading_streak_days: 4,
+        total_collection_comics: 40,
+        total_unread_comics: 10,
+        total_collection_pages: 1200,
+        total_collection_stories: 80,
       )
     end
 
