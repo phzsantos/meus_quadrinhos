@@ -74,6 +74,20 @@ RSpec.describe("Welcome", type: :request) do
         read_comics_comparison_current_label: "02/2023",
         read_comics_comparison_previous_label: "01/2023",
 
+        reading_activity_weeks: [
+          [
+            { date: Date.new(2026, 10, 11), count: 0 },
+            { date: Date.new(2026, 10, 12), count: 1 },
+            { date: Date.new(2026, 10, 13), count: 0 },
+            { date: Date.new(2026, 10, 14), count: 2 },
+            { date: Date.new(2026, 10, 15), count: 0 },
+            nil,
+            nil,
+          ],
+        ],
+        reading_activity_months: [10],
+        reading_activity_total: 3,
+
         latest_readings: [],
         total_comics_read: 30,
         total_story_count: 120,
@@ -96,6 +110,14 @@ RSpec.describe("Welcome", type: :request) do
     it "returns success" do
       get root_path
       expect(response).to(have_http_status(:ok))
+    end
+
+    it "renders the reading activity graph" do
+      get root_path
+
+      expect(response.body).to(include("<strong>3</strong> quadrinhos lidos no último ano"))
+      expect(response.body).to(include("contribution-cell is-read"))
+      expect(response.body).to(include("<strong>1</strong> quadrinho lido em 12 de outubro de 2026"))
     end
 
     it "calls the dashboard organizer" do
