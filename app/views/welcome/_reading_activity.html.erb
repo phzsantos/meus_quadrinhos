@@ -1,0 +1,66 @@
+<div class="bg-bada text-shadow-md p-2 rounded-md shadow-md flex justify-center flex-wrap gap-3 mb-6">
+  <h2 class="text-3xl text-black bangers-regular">
+    <%= image_tag "icons/fire-solid-full.svg", class: "w-7 h-7 inline-block" %>
+    Atividade de leitura
+  </h2>
+</div>
+
+<div
+  class="bg-bada rounded-xl p-4 shadow-lg mb-6 text-black"
+  data-controller="contribution-graph"
+>
+  <p class="text-xl patrick-hand-regular mb-4">
+    <%= reading_activity_summary(@reading_activity_total) %>
+  </p>
+
+  <div class="overflow-x-auto">
+    <div
+      class="contribution-grid"
+      style="--contribution-weeks: <%= @reading_activity_weeks.size %>"
+    >
+      <div></div>
+      <% @reading_activity_months.each do |month| %>
+        <% name = reading_activity_month_name(month) %>
+        <div class="relative min-w-0 overflow-visible">
+          <% if name %>
+            <span class="absolute left-0 top-0 whitespace-nowrap text-xs leading-5"><%= name %></span>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% reading_activity_day_labels.each_with_index do |label, row| %>
+        <div class="flex items-center text-xs leading-none"><%= label %></div>
+        <% @reading_activity_weeks.each do |week| %>
+          <% day = week[row] %>
+          <% if day %>
+            <% tooltip = reading_activity_tooltip(day) %>
+            <div
+              class="contribution-cell<%= " is-read" if day[:count].positive? %>"
+              aria-label="<%= strip_tags(tooltip) %>"
+              data-action="mouseenter->contribution-graph#show mouseleave->contribution-graph#hide"
+              data-contribution-graph-text-param="<%= tooltip %>"
+            ></div>
+          <% else %>
+            <div class="contribution-slot"></div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="contribution-legend mt-3 flex items-center justify-end gap-4 text-sm patrick-hand-regular">
+    <span class="flex items-center gap-1">
+      <span class="contribution-cell"></span>
+      Não leu
+    </span>
+    <span class="flex items-center gap-1">
+      <span class="contribution-cell is-read"></span>
+      Leu
+    </span>
+  </div>
+
+  <div
+    data-contribution-graph-target="tooltip"
+    class="hidden fixed z-50 pointer-events-none px-2 py-1 text-sm patrick-hand-regular text-bada bg-black rounded shadow-md whitespace-nowrap"
+  ></div>
+</div>

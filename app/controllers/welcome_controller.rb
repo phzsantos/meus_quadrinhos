@@ -55,6 +55,10 @@ class WelcomeController < ApplicationController
     @read_comics_comparison_current_label = context.read_comics_comparison_current_label
     @read_comics_comparison_previous_label = context.read_comics_comparison_previous_label
 
+    @reading_activity_weeks = context.reading_activity_weeks
+    @reading_activity_months = context.reading_activity_months
+    @reading_activity_total = context.reading_activity_total
+
     @latest_readings = context.latest_readings
 
     @total_comics_read = context.total_comics_read
