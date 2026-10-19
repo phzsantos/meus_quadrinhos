@@ -1,6 +1,6 @@
 # Meus Quadrinhos
 
-![Demo](demo.gif)
+![Demo](docs/assets/gifs/demo.gif)
 
 An app to catalog comics, build a personal collection, and track what you have read.
 
@@ -24,6 +24,44 @@ An app to catalog comics, build a personal collection, and track what you have r
 - User authentication
 - Admin area
 - Catalog export as JSON
+
+## 📊 Charts
+
+### Reading activity
+
+Contribution graph showing how many comics you read each day over the past year.
+
+![Reading activity](docs/assets/charts/_reading_activity.png)
+
+### Monthly metrics
+
+| Day-by-day comparison | Comics read per month |
+| :---: | :---: |
+| ![Comics read by day comparison](docs/assets/charts/_chart_comics_read_by_day_comparison.png) | ![Comics read by month](docs/assets/charts/_chart_comics_read_by_month.png) |
+
+| Pages read per month | Stories read per month |
+| :---: | :---: |
+| ![Pages read by month](docs/assets/charts/_chart_pages_read_by_month.png) | ![Stories read by month](docs/assets/charts/_chart_stories_read_by_month.png) |
+
+### Annual metrics
+
+| Comics read per year | Pages read per year |
+| :---: | :---: |
+| ![Comics read by year](docs/assets/charts/_chart_comics_read_by_year.png) | ![Pages read by year](docs/assets/charts/_chart_pages_read_by_year.png) |
+
+### General statistics
+
+| Most-read characters | Most-read authors |
+| :---: | :---: |
+| ![Comics read by character](docs/assets/charts/_chart_comics_read_by_character.png) | ![Comics read by author](docs/assets/charts/_chart_comics_read_by_author.png) |
+
+| Comics read by paper type | Comics read by book binding |
+| :---: | :---: |
+| ![Comics read by paper type](docs/assets/charts/_chart_comics_read_by_paper_type.png) | ![Comics read by book binding](docs/assets/charts/_chart_comics_read_by_book_binding.png) |
+
+| Comics read by publisher | Comics read by publication type |
+| :---: | :---: |
+| ![Comics read by publisher](docs/assets/charts/_chart_comics_read_by_publisher.png) | ![Comics read by publication type](docs/assets/charts/_chart_comics_read_by_publication_type.png) |
 
 ## 🚀 Getting Started
 
