@@ -25,6 +25,45 @@ An app to catalog comics, build a personal collection, and track what you have r
 - Admin area
 - Catalog export as JSON
 
+## 📈 Statistics
+
+### Latest reads
+
+![Latest reads](docs/assets/statistics/_latest_reads.png)
+
+- The last 6 comics read
+- Cover
+- Title
+- Read date
+
+### General statistics
+
+![General statistics](docs/assets/statistics/_general_statistics.png)
+
+- Comics read
+- Stories read
+- Pages read
+- Comics read this month
+- Current reading streak
+
+### Collection statistics
+
+![Collection statistics](docs/assets/statistics/_collection_statistics.png)
+
+- Total comics in the collection
+- Total unread comics
+- Total pages
+- Total stories
+
+### Reading records
+
+![Reading records](docs/assets/statistics/_reading_records.png)
+
+- Month with the most comics read
+- Month with the most stories read
+- Month with the most pages read
+- Longest reading streak
+
 ## 📊 Charts
 
 ### Reading activity
