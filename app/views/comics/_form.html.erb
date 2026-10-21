@@ -19,13 +19,13 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-2xl patrick-hand-regular">
       <div>
-        <strong>Título</strong>
+        <strong>Título *</strong>
         <%= form.text_field :title,
           class: "w-full mt-1 rounded-md border border-black/30 px-3 py-2" %>
       </div>
       
       <div>
-        <strong>Volume</strong>
+        <strong>Volume *</strong>
         <%= field_hint("número da lombada/capa") %>
         <%= form.number_field :issue_number,
           class: "w-full mt-1 rounded-md border border-black/30 px-3 py-2" %>
@@ -41,14 +41,14 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-2xl patrick-hand-regular">
       <div>
-        <strong>Páginas</strong>
+        <strong>Páginas *</strong>
         <%= field_hint("quantidade de páginas") %>
         <%= form.number_field :page_count,
           class: "w-full mt-1 rounded-md border border-black/30 px-3 py-2" %>
       </div>
 
       <div>
-        <strong>Histórias</strong>
+        <strong>Histórias *</strong>
         <%= field_hint("quantidade de capítulos compilados") %>
         <%= form.number_field :story_count,
           min: 1,
@@ -56,7 +56,7 @@
       </div>
 
       <div>
-        <strong>Ano</strong>
+        <strong>Ano *</strong>
         <%= field_hint("ano de publicação") %>
         <%= form.number_field :published_year,
           class: "w-full mt-1 rounded-md border border-black/30 px-3 py-2" %>
@@ -64,7 +64,7 @@
     </div>
 
     <div class="text-2xl patrick-hand-regular">
-      <strong>Autores</strong>
+      <strong>Autores *</strong>
       <div class="mt-1 max-h-60 overflow-y-auto rounded-md border border-black/30 bg-white/60 p-2 columns-1 sm:columns-2 gap-x-4">
         <%= form.collection_check_boxes :author_ids, Author.order(:name), :id, :name do |b| %>
           <label class="flex items-center gap-2 break-inside-avoid py-0.5 cursor-pointer hover:bg-black/5 rounded px-1">
@@ -76,7 +76,7 @@
     </div>
 
     <div class="text-2xl patrick-hand-regular">
-      <strong>Personagens</strong>
+      <strong>Personagens *</strong>
       <div class="mt-1 max-h-60 overflow-y-auto rounded-md border border-black/30 bg-white/60 p-2 columns-1 sm:columns-2 gap-x-4">
         <%= form.collection_check_boxes :character_ids, Character.order(:name), :id, :name do |b| %>
           <label class="flex items-center gap-2 break-inside-avoid py-0.5 cursor-pointer hover:bg-black/5 rounded px-1">
@@ -89,7 +89,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-2xl patrick-hand-regular">
       <div>
-        <strong>Editora</strong>
+        <strong>Editora *</strong>
         <%= form.collection_select :publisher_id,
           Publisher.order(:name),
           :id,
@@ -99,7 +99,7 @@
       </div>
 
       <div>
-        <strong>Tipo</strong>
+        <strong>Tipo *</strong>
         <%= form.collection_select :publication_type_id,
           PublicationType.order(:name),
           :id,
@@ -109,7 +109,7 @@
       </div>
 
       <div>
-        <strong>Encadernação</strong>
+        <strong>Encadernação *</strong>
         <%= form.collection_select :book_binding_id,
           BookBinding.order(:name),
           :id,
@@ -119,7 +119,7 @@
       </div>
 
       <div>
-        <strong>Papel</strong>
+        <strong>Papel *</strong>
         <%= form.collection_select :paper_type_id,
           PaperType.order(:name),
           :id,
@@ -193,6 +193,8 @@
 
   <div class="flex justify-center md:justify-end">
     <div class="p-3 space-y-3">
+      <p class="text-2xl text-black patrick-hand-regular"><strong>Capa *</strong></p>
+      <hr class="text-black">
       <div class="bg-black/80 p-3 rounded-md shadow-md">
         <%= form.file_field :cover_image,
           class: "text-white text-sm" %>
