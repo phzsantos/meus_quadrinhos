@@ -25,7 +25,7 @@
       <% if resource.present? %>
         <span>/</span>
         <span class="font-bold">
-          <%= resource.try(:name) || resource.try(:title) || resource.id %>
+          <%= resource.try(:display_title) || resource.try(:name) || resource.try(:title) || resource.id %>
         </span>
       <% end %>
 
@@ -59,7 +59,7 @@
 
         <% if resource.present? %>
           <span>/</span>
-          <%= link_to resource.try(:name) || resource.try(:title) || resource.id,
+          <%= link_to resource.try(:display_title) || resource.try(:name) || resource.try(:title) || resource.id,
             url_for(controller: controller_name, action: :show, id: resource),
             class: "underline hover:text-blue-700" %>
         <% end %>
