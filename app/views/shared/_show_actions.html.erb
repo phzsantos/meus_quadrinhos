@@ -27,6 +27,7 @@
         <%= button_to "Remover quadrinho da coleção",
           comic_user_comic_path(resource),
           method: :delete,
+          data: { turbo_confirm: "Remover #{resource.display_title} da coleção?" },
           class: "px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition cursor-pointer" %>
       <% else %>
         <%= button_to "Adicionar quadrinho à coleção",
