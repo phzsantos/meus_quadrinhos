@@ -11,9 +11,11 @@
       <% if @collection.link_guia_dos_quadrinhos.present? %>
         <p>
           <strong>Guia dos Quadrinhos:</strong>
-          <a href="<%= @collection.link_guia_dos_quadrinhos %>" target="_blank", rel="noopener", class="text-blue-600 underline">
-            Link
-          </a>
+          <%= link_to "Link",
+            @collection.link_guia_dos_quadrinhos,
+            target: "_blank",
+            rel: "noopener",
+            class: "text-blue-600 underline" %>
         </p>
       <% end %>
     </div>
