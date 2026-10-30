@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   def page_title
-    base = "MeusQuadrinhos"
+    base = "Meus Quadrinhos"
 
     # title = "controllers.#{controller_name}"
     title = t("controllers.#{controller_name}")
