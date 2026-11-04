@@ -27,4 +27,8 @@ export default class extends Controller {
     this.menuTarget.classList.add("hidden")
     document.removeEventListener("click", this.handleClickOutside)
   }
+
+  disconnect() {
+    this.close()
+  }
 }
