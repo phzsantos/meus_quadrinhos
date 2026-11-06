@@ -13,6 +13,7 @@ class BookBindingsController < ApplicationController
   # GET /book_bindings/1 or /book_bindings/1.json
   def show
     @comics = @book_binding.comics.visible_to(current_user)
+      .with_attached_cover_image
       .order(:title, :issue_number)
       .page(params[:page])
       .per(18)

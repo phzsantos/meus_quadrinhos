@@ -16,6 +16,7 @@ class CollectionsController < ApplicationController
   # GET /collections/1 or /collections/1.json
   def show
     @comics = @collection.comics.visible_to(current_user)
+      .with_attached_cover_image
       .order(:issue_number)
       .page(params[:page])
       .per(18)
