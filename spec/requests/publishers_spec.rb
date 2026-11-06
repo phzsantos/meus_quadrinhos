@@ -26,6 +26,46 @@ RSpec.describe("Publishers", type: :request) do
       expect(response.body).to(include("Visible Publisher"))
       expect(response.body).not_to(include("Hidden Publisher"))
     end
+
+    it "filters publishers by name" do
+      panini = create(:publisher, name: "Panini")
+      abril = create(:publisher, name: "Abril")
+      panini_comic = create(:comic, publisher: panini, title: "Panini Comic")
+      abril_comic = create(:comic, publisher: abril, title: "Abril Comic")
+      create(:user_comic, user: user, comic: panini_comic)
+      create(:user_comic, user: user, comic: abril_comic)
+
+      get publishers_path, params: { q: "panini" }
+
+      expect(response.body).to(include("Panini"))
+      expect(response.body).not_to(include("Abril"))
+      expect(response.body).to(include('value="panini"'))
+      expect(response.body).to(include('id="publishers"'))
+    end
+
+    it "shows an empty message when the search has no matches" do
+      publisher = create(:publisher, name: "Panini")
+      comic = create(:comic, publisher: publisher)
+      create(:user_comic, user: user, comic: comic)
+
+      get publishers_path, params: { q: "abril" }
+
+      expect(response.body).to(include("Nenhuma editora encontrada."))
+    end
+
+    it "keeps the search query in pagination links" do
+      21.times do |index|
+        publisher = create(:publisher, name: "Panini #{index}")
+        comic = create(:comic, publisher: publisher)
+        create(:user_comic, user: user, comic: comic)
+      end
+      create(:publisher, name: "Abril")
+
+      get publishers_path, params: { q: "panini" }
+
+      expect(response.body).to(include("page=2"))
+      expect(response.body).to(match(/q=panini[^"]*page=2|page=2[^"]*q=panini/))
+    end
   end
 
   describe "GET /publishers as admin" do

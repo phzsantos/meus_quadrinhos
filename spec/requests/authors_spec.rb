@@ -26,6 +26,46 @@ RSpec.describe("Authors", type: :request) do
       expect(response.body).to(include("Visible Author"))
       expect(response.body).not_to(include("Hidden Author"))
     end
+
+    it "filters authors by name" do
+      miller = create(:author, name: "Frank Miller")
+      moore = create(:author, name: "Alan Moore")
+      miller_comic = create(:comic, authors: [miller], title: "Miller Comic")
+      moore_comic = create(:comic, authors: [moore], title: "Moore Comic")
+      create(:user_comic, user: user, comic: miller_comic)
+      create(:user_comic, user: user, comic: moore_comic)
+
+      get authors_path, params: { q: "miller" }
+
+      expect(response.body).to(include("Frank Miller"))
+      expect(response.body).not_to(include("Alan Moore"))
+      expect(response.body).to(include('value="miller"'))
+      expect(response.body).to(include('id="authors"'))
+    end
+
+    it "shows an empty message when the search has no matches" do
+      author = create(:author, name: "Frank Miller")
+      comic = create(:comic, authors: [author])
+      create(:user_comic, user: user, comic: comic)
+
+      get authors_path, params: { q: "moore" }
+
+      expect(response.body).to(include("Nenhum autor encontrado."))
+    end
+
+    it "keeps the search query in pagination links" do
+      21.times do |index|
+        author = create(:author, name: "Miller #{index}")
+        comic = create(:comic, authors: [author])
+        create(:user_comic, user: user, comic: comic)
+      end
+      create(:author, name: "Alan Moore")
+
+      get authors_path, params: { q: "miller" }
+
+      expect(response.body).to(include("page=2"))
+      expect(response.body).to(match(/q=miller[^"]*page=2|page=2[^"]*q=miller/))
+    end
   end
 
   describe "GET /authors as admin" do

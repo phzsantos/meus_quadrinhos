@@ -117,6 +117,47 @@ RSpec.describe("Comics", type: :request) do
       expect(response.body).to(include(%(alt="#{comic.display_title}")))
       expect(response.body).to(include("covers/no-cover"))
     end
+
+    it "filters the list by title without revealing comics outside the collection" do
+      batman = create(:comic, title: "Batman")
+      sandman = create(:comic, title: "Sandman")
+      create(:comic, title: "Hidden Batman")
+      create(:user_comic, user: user, comic: batman)
+      create(:user_comic, user: user, comic: sandman)
+
+      get comics_path, params: { q: "batman" }
+
+      expect(response.body).to(include("Batman"))
+      expect(response.body).not_to(include("Sandman"))
+      expect(response.body).not_to(include("Hidden Batman"))
+      expect(response.body).to(include("Quadrinho (1)"))
+      expect(response.body).to(include('value="batman"'))
+      expect(response.body).to(include('id="comics"'))
+      expect(response.body).to(include('target="_top"'))
+    end
+
+    it "shows an empty message when the search has no matches" do
+      comic = create(:comic, title: "Batman")
+      create(:user_comic, user: user, comic: comic)
+
+      get comics_path, params: { q: "sandman" }
+
+      expect(response.body).to(include("Nenhum quadrinho encontrado."))
+      expect(response.body).to(include("Quadrinho (0)"))
+    end
+
+    it "keeps the search query in pagination links" do
+      21.times do |index|
+        comic = create(:comic, title: "Batman #{index}")
+        create(:user_comic, user: user, comic: comic)
+      end
+      create(:comic, title: "Sandman")
+
+      get comics_path, params: { q: "batman" }
+
+      expect(response.body).to(include("page=2"))
+      expect(response.body).to(match(/q=batman[^"]*page=2|page=2[^"]*q=batman/))
+    end
   end
 
   describe "GET /comics as admin" do

@@ -26,6 +26,46 @@ RSpec.describe("Collections", type: :request) do
       expect(response.body).to(include("Visible Collection"))
       expect(response.body).not_to(include("Hidden Collection"))
     end
+
+    it "filters collections by name" do
+      saga = create(:collection, name: "Saga do Batman")
+      sandman = create(:collection, name: "Absolute Sandman")
+      saga_comic = create(:comic, collection: saga, title: "Saga Comic")
+      sandman_comic = create(:comic, collection: sandman, title: "Sandman Comic")
+      create(:user_comic, user: user, comic: saga_comic)
+      create(:user_comic, user: user, comic: sandman_comic)
+
+      get collections_path, params: { q: "saga" }
+
+      expect(response.body).to(include("Saga do Batman"))
+      expect(response.body).not_to(include("Absolute Sandman"))
+      expect(response.body).to(include('value="saga"'))
+      expect(response.body).to(include('id="collections"'))
+    end
+
+    it "shows an empty message when the search has no matches" do
+      collection = create(:collection, name: "Saga do Batman")
+      comic = create(:comic, collection: collection)
+      create(:user_comic, user: user, comic: comic)
+
+      get collections_path, params: { q: "sandman" }
+
+      expect(response.body).to(include("Nenhuma coleção encontrada."))
+    end
+
+    it "keeps the search query in pagination links" do
+      21.times do |index|
+        collection = create(:collection, name: "Saga #{index}")
+        comic = create(:comic, collection: collection)
+        create(:user_comic, user: user, comic: comic)
+      end
+      create(:collection, name: "Absolute Sandman")
+
+      get collections_path, params: { q: "saga" }
+
+      expect(response.body).to(include("page=2"))
+      expect(response.body).to(match(/q=saga[^"]*page=2|page=2[^"]*q=saga/))
+    end
   end
 
   describe "GET /collections as admin" do

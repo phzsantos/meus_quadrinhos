@@ -26,6 +26,46 @@ RSpec.describe("Characters", type: :request) do
       expect(response.body).to(include("Visible Character"))
       expect(response.body).not_to(include("Hidden Character"))
     end
+
+    it "filters characters by name" do
+      wolverine = create(:character, name: "Wolverine")
+      batman = create(:character, name: "Batman")
+      wolverine_comic = create(:comic, characters: [wolverine], title: "Wolverine Comic")
+      batman_comic = create(:comic, characters: [batman], title: "Batman Comic")
+      create(:user_comic, user: user, comic: wolverine_comic)
+      create(:user_comic, user: user, comic: batman_comic)
+
+      get characters_path, params: { q: "wolverine" }
+
+      expect(response.body).to(include("Wolverine"))
+      expect(response.body).not_to(include("Batman"))
+      expect(response.body).to(include('value="wolverine"'))
+      expect(response.body).to(include('id="characters"'))
+    end
+
+    it "shows an empty message when the search has no matches" do
+      character = create(:character, name: "Wolverine")
+      comic = create(:comic, characters: [character])
+      create(:user_comic, user: user, comic: comic)
+
+      get characters_path, params: { q: "batman" }
+
+      expect(response.body).to(include("Nenhum personagem encontrado."))
+    end
+
+    it "keeps the search query in pagination links" do
+      21.times do |index|
+        character = create(:character, name: "Wolverine #{index}")
+        comic = create(:comic, characters: [character])
+        create(:user_comic, user: user, comic: comic)
+      end
+      create(:character, name: "Batman")
+
+      get characters_path, params: { q: "wolverine" }
+
+      expect(response.body).to(include("page=2"))
+      expect(response.body).to(match(/q=wolverine[^"]*page=2|page=2[^"]*q=wolverine/))
+    end
   end
 
   describe "GET /characters as admin" do

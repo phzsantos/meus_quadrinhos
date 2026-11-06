@@ -26,6 +26,32 @@ RSpec.describe("PaperTypes", type: :request) do
       expect(response.body).to(include("Visible Paper"))
       expect(response.body).not_to(include("Hidden Paper"))
     end
+
+    it "filters paper types by name" do
+      glossy = create(:paper_type, name: "Couchê")
+      offset = create(:paper_type, name: "Offset")
+      glossy_comic = create(:comic, paper_type: glossy, title: "Glossy Comic")
+      offset_comic = create(:comic, paper_type: offset, title: "Offset Comic")
+      create(:user_comic, user: user, comic: glossy_comic)
+      create(:user_comic, user: user, comic: offset_comic)
+
+      get paper_types_path, params: { q: "couche" }
+
+      expect(response.body).to(include("Couchê"))
+      expect(response.body).not_to(include("Offset"))
+      expect(response.body).to(include('value="couche"'))
+      expect(response.body).to(include('id="paper_types"'))
+    end
+
+    it "shows an empty message when the search has no matches" do
+      paper_type = create(:paper_type, name: "Couchê")
+      comic = create(:comic, paper_type: paper_type)
+      create(:user_comic, user: user, comic: comic)
+
+      get paper_types_path, params: { q: "offset" }
+
+      expect(response.body).to(include("Nenhum papel encontrado."))
+    end
   end
 
   describe "GET /paper_types as admin" do

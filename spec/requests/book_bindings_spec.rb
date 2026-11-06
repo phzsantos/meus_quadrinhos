@@ -26,6 +26,32 @@ RSpec.describe("BookBindings", type: :request) do
       expect(response.body).to(include("Visible Binding"))
       expect(response.body).not_to(include("Hidden Binding"))
     end
+
+    it "filters book bindings by name" do
+      hardcover = create(:book_binding, name: "Capa dura")
+      paperback = create(:book_binding, name: "Brochura")
+      hardcover_comic = create(:comic, book_binding: hardcover, title: "Hardcover Comic")
+      paperback_comic = create(:comic, book_binding: paperback, title: "Paperback Comic")
+      create(:user_comic, user: user, comic: hardcover_comic)
+      create(:user_comic, user: user, comic: paperback_comic)
+
+      get book_bindings_path, params: { q: "capa" }
+
+      expect(response.body).to(include("Capa dura"))
+      expect(response.body).not_to(include("Brochura"))
+      expect(response.body).to(include('value="capa"'))
+      expect(response.body).to(include('id="book_bindings"'))
+    end
+
+    it "shows an empty message when the search has no matches" do
+      binding = create(:book_binding, name: "Capa dura")
+      comic = create(:comic, book_binding: binding)
+      create(:user_comic, user: user, comic: comic)
+
+      get book_bindings_path, params: { q: "brochura" }
+
+      expect(response.body).to(include("Nenhuma encadernação encontrada."))
+    end
   end
 
   describe "GET /book_bindings as admin" do

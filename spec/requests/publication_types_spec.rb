@@ -26,6 +26,32 @@ RSpec.describe("PublicationTypes", type: :request) do
       expect(response.body).to(include("Visible Type"))
       expect(response.body).not_to(include("Hidden Type"))
     end
+
+    it "filters publication types by name" do
+      hq = create(:publication_type, name: "HQ")
+      manga = create(:publication_type, name: "Mangá")
+      hq_comic = create(:comic, publication_type: hq, title: "HQ Comic")
+      manga_comic = create(:comic, publication_type: manga, title: "Mangá Comic")
+      create(:user_comic, user: user, comic: hq_comic)
+      create(:user_comic, user: user, comic: manga_comic)
+
+      get publication_types_path, params: { q: "hq" }
+
+      expect(response.body).to(include("HQ"))
+      expect(response.body).not_to(include("Mangá"))
+      expect(response.body).to(include('value="hq"'))
+      expect(response.body).to(include('id="publication_types"'))
+    end
+
+    it "shows an empty message when the search has no matches" do
+      publication_type = create(:publication_type, name: "HQ")
+      comic = create(:comic, publication_type: publication_type)
+      create(:user_comic, user: user, comic: comic)
+
+      get publication_types_path, params: { q: "manga" }
+
+      expect(response.body).to(include("Nenhum tipo encontrado."))
+    end
   end
 
   describe "GET /publication_types as admin" do
