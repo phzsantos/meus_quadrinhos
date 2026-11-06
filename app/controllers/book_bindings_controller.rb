@@ -7,7 +7,9 @@ class BookBindingsController < ApplicationController
 
   # GET /book_bindings or /book_bindings.json
   def index
-    @book_bindings = BookBinding.with_comics_visible_to(current_user).order(:name)
+    @book_bindings = BookBinding.with_comics_visible_to(current_user)
+      .matching_query(params[:q])
+      .order(:name)
   end
 
   # GET /book_bindings/1 or /book_bindings/1.json

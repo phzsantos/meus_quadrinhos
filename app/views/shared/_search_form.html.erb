@@ -1,0 +1,11 @@
+<%= form_with url: url, method: :get, class: "mb-4", data: { controller: "catalog-search", turbo_frame: frame, action: "input->catalog-search#queue submit->catalog-search#remember" } do |form| %>
+  <%= form.label :q, label, for: input_id, class: "block text-xl mb-1" %>
+  <%= form.search_field :q,
+    id: input_id,
+    value: params[:q],
+    placeholder: placeholder,
+    autocomplete: "off",
+    enterkeyhint: "search",
+    data: { catalog_search_target: "query" },
+    class: "w-full rounded-md border border-black/30 bg-white px-3 py-2 text-2xl" %>
+<% end %>

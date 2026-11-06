@@ -1,12 +1,24 @@
+<%= turbo_frame_tag "publication_types", target: "_top", data: { turbo_action: "advance" } do %>
 <div class="bg-bada p-3 text-shadow-md rounded-md shadow-md">
   <div class="text-black">
     <div class="text-3xl patrick-hand-regular">
+      <%= render "shared/search_form",
+        url: publication_types_path,
+        frame: "publication_types",
+        input_id: "publication-type-search",
+        label: "Buscar tipo",
+        placeholder: "Nome do tipo" %>
+
       <div class="py-2 text-shadow-md flex flex-wrap bangers-regular text-4xl">
         <span>Tipo de HQ (<%= @publication_types.count %>)</span>
         <span class="ml-auto">Volumes</span>
       </div>
 
       <hr>
+
+      <% if @publication_types.empty? && params[:q].to_s.strip.present? %>
+        <p class="py-4 text-2xl">Nenhum tipo encontrado.</p>
+      <% end %>
 
       <div class="text-3xl patrick-hand-regular">
         <% @publication_types.each_with_index do |publication_type, index| %>
@@ -29,3 +41,4 @@
     </div>
   </div>
 </div>
+<% end %>

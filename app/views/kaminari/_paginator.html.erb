@@ -7,7 +7,12 @@
     paginator:     the paginator that renders the pagination tags inside
 -%>
 <%= paginator.render do %>
-  <nav class="flex justify-center bangers-regular text-xl" role="navigation" aria-label="pager">
+  <nav
+    class="flex justify-center bangers-regular text-xl"
+    role="navigation"
+    aria-label="pager"
+    data-controller="scroll-to-top"
+    data-action="click->scroll-to-top#scroll">
     <div class="flex items-center gap-2 bg-bada px-4 py-2 rounded-md shadow-md text-black">
 
       <%= first_page_tag unless current_page.first? %>
@@ -18,17 +23,7 @@
       <% each_page do |page| %>
         <% if page.display_tag? %>
           <% last_was_gap = false %>
-
-          <% if page.current? %>
-            <span class="px-3 py-1 bg-black text-white rounded-md shadow">
-              <%= page.number %>
-            </span>
-          <% else %>
-            <%= link_to page.number,
-              url_for(page: page.number),
-              class: "px-3 py-1 rounded-md hover:bg-black/20 transition" %>
-          <% end %>
-
+          <%= page_tag page %>
         <% else %>
           <% unless last_was_gap %>
             <%= gap_tag %>

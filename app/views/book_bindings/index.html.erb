@@ -1,12 +1,24 @@
+<%= turbo_frame_tag "book_bindings", target: "_top", data: { turbo_action: "advance" } do %>
 <div class="bg-bada p-3 text-shadow-md rounded-md shadow-md">
   <div class="text-black">
     <div class="text-3xl patrick-hand-regular">
+      <%= render "shared/search_form",
+        url: book_bindings_path,
+        frame: "book_bindings",
+        input_id: "book-binding-search",
+        label: "Buscar encadernação",
+        placeholder: "Nome da encadernação" %>
+
       <div class="py-2 text-shadow-md flex flex-wrap bangers-regular text-4xl">
         <span>Encadernação (<%= @book_bindings.count %>)</span>
         <span class="ml-auto">Volumes</span>
       </div>
 
       <hr>
+
+      <% if @book_bindings.empty? && params[:q].to_s.strip.present? %>
+        <p class="py-4 text-2xl">Nenhuma encadernação encontrada.</p>
+      <% end %>
 
       <div class="text-3xl patrick-hand-regular">
         <% @book_bindings.each_with_index do |book_binding, index| %>
@@ -29,3 +41,4 @@
     </div>
   </div>
 </div>
+<% end %>

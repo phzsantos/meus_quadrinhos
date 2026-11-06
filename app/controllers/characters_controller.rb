@@ -8,6 +8,7 @@ class CharactersController < ApplicationController
   # GET /characters or /characters.json
   def index
     @characters = Character.with_comics_visible_to(current_user)
+      .matching_query(params[:q])
       .order(:name)
       .page(params[:page])
       .per(20)

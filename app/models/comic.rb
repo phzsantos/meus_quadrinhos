@@ -17,6 +17,21 @@ class Comic < ApplicationRecord
     end
   end
 
+  scope :matching_query, lambda { |query|
+    table = arel_table
+    expression = Arel::Nodes::NamedFunction.new(
+      "concat_ws",
+      [
+        Arel::Nodes.build_quoted(" "),
+        ::CatalogSearch.coalesce(table[:title]),
+        ::CatalogSearch.coalesce(::CatalogSearch.cast_text(table[:issue_number])),
+        ::CatalogSearch.coalesce(table[:issue_title]),
+      ],
+    )
+
+    ::CatalogSearch.filter(all, query, expression)
+  }
+
   def display_title
     if collection.present?
       "#{title} n° #{issue_number}"

@@ -7,7 +7,9 @@ class PublicationTypesController < ApplicationController
 
   # GET /publication_types or /publication_types.json
   def index
-    @publication_types = PublicationType.with_comics_visible_to(current_user).order(:name)
+    @publication_types = PublicationType.with_comics_visible_to(current_user)
+      .matching_query(params[:q])
+      .order(:name)
   end
 
   # GET /publication_types/1 or /publication_types/1.json

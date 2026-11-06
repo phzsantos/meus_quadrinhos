@@ -8,6 +8,7 @@ class AuthorsController < ApplicationController
   # GET /authors or /authors.json
   def index
     @authors = Author.with_comics_visible_to(current_user)
+      .matching_query(params[:q])
       .order(:name)
       .page(params[:page])
       .per(20)

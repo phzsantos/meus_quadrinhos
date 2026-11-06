@@ -9,7 +9,8 @@ class ComicsController < ApplicationController
 
   # GET /comics or /comics.json
   def index
-    comics = Comic.visible_to(current_user)
+    comics = Comic.where(id: Comic.visible_to(current_user).select(:id))
+      .matching_query(params[:q])
       .with_attached_cover_image
       .includes(:readings, :user_comics)
       .order(created_at: :asc)

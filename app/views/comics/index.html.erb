@@ -1,6 +1,14 @@
+<%= turbo_frame_tag "comics", target: "_top", data: { turbo_action: "advance" } do %>
 <div class="bg-bada p-3 text-shadow-md rounded-md shadow-md">
   <div class="text-black">
     <div class="text-3xl patrick-hand-regular">
+      <%= render "shared/search_form",
+        url: comics_path,
+        frame: "comics",
+        input_id: "comic-search",
+        label: "Buscar quadrinho",
+        placeholder: "Título, número ou nome da história" %>
+
       <div class="py-2 text-shadow-md flex items-center gap-4 bangers-regular text-4xl">
         <span class="flex-1 min-w-0">Quadrinho (<%= @comics.total_count %>)</span>
         <div class="flex items-center shrink-0">
@@ -11,6 +19,10 @@
       </div>
 
       <hr>
+
+      <% if @comics.empty? && params[:q].to_s.strip.present? %>
+        <p class="py-4 text-2xl">Nenhum quadrinho encontrado.</p>
+      <% end %>
 
       <div class="text-3xl patrick-hand-regular">
         <% @comics.each_with_index do |comic, index| %>
@@ -47,3 +59,4 @@
 <div class="mt-6 flex justify-center">
   <%= paginate @comics %>
 </div>
+<% end %>

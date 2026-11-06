@@ -8,6 +8,7 @@ class CollectionsController < ApplicationController
   # GET /collections or /collections.json
   def index
     @collections = Collection.with_comics_visible_to(current_user)
+      .matching_query(params[:q])
       .order(:name)
       .page(params[:page])
       .per(20)

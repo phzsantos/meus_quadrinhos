@@ -1,12 +1,24 @@
+<%= turbo_frame_tag "collections", target: "_top", data: { turbo_action: "advance" } do %>
 <div class="bg-bada p-3 text-shadow-md rounded-md shadow-md">
   <div class="text-black">
     <div class="text-3xl patrick-hand-regular">
+      <%= render "shared/search_form",
+        url: collections_path,
+        frame: "collections",
+        input_id: "collection-search",
+        label: "Buscar coleção",
+        placeholder: "Nome da coleção" %>
+
       <div class="py-2 text-shadow-md flex flex-wrap bangers-regular text-4xl">
         <span>Coleção (<%= @collections.total_count %>)</span>
         <span class="ml-auto">Volumes</span>
       </div>
 
       <hr>
+
+      <% if @collections.empty? && params[:q].to_s.strip.present? %>
+        <p class="py-4 text-2xl">Nenhuma coleção encontrada.</p>
+      <% end %>
 
       <div class="text-3xl patrick-hand-regular">
         <% @collections.each_with_index do |collection, index| %>
@@ -33,3 +45,4 @@
 <div class="mt-6 flex justify-center">
   <%= paginate @collections %>
 </div>
+<% end %>

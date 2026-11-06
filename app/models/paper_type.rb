@@ -3,6 +3,7 @@
 class PaperType < ApplicationRecord
   extend FriendlyId
   include CatalogVisibility
+  include NameSearch
 
   friendly_id :name, use: :slugged
 

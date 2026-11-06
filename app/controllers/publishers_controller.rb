@@ -8,6 +8,7 @@ class PublishersController < ApplicationController
   # GET /publishers or /publishers.json
   def index
     @publishers = Publisher.with_comics_visible_to(current_user)
+      .matching_query(params[:q])
       .order(:name)
       .page(params[:page])
       .per(20)

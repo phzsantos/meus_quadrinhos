@@ -7,7 +7,9 @@ class PaperTypesController < ApplicationController
 
   # GET /paper_types or /paper_types.json
   def index
-    @paper_types = PaperType.with_comics_visible_to(current_user).order(:name)
+    @paper_types = PaperType.with_comics_visible_to(current_user)
+      .matching_query(params[:q])
+      .order(:name)
   end
 
   # GET /paper_types/1 or /paper_types/1.json
