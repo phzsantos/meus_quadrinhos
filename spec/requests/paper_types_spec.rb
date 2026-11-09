@@ -52,6 +52,20 @@ RSpec.describe("PaperTypes", type: :request) do
 
       expect(response.body).to(include("Nenhum papel encontrado."))
     end
+
+    it "keeps the search query in pagination links" do
+      21.times do |index|
+        paper_type = create(:paper_type, name: "Offset #{index}")
+        comic = create(:comic, paper_type: paper_type)
+        create(:user_comic, user: user, comic: comic)
+      end
+      create(:paper_type, name: "Couchê")
+
+      get paper_types_path, params: { q: "offset" }
+
+      expect(response.body).to(include("page=2"))
+      expect(response.body).to(match(/q=offset[^"]*page=2|page=2[^"]*q=offset/))
+    end
   end
 
   describe "GET /paper_types as admin" do

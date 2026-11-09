@@ -52,6 +52,20 @@ RSpec.describe("BookBindings", type: :request) do
 
       expect(response.body).to(include("Nenhuma encadernação encontrada."))
     end
+
+    it "keeps the search query in pagination links" do
+      21.times do |index|
+        binding = create(:book_binding, name: "Capa #{index}")
+        comic = create(:comic, book_binding: binding)
+        create(:user_comic, user: user, comic: comic)
+      end
+      create(:book_binding, name: "Brochura")
+
+      get book_bindings_path, params: { q: "capa" }
+
+      expect(response.body).to(include("page=2"))
+      expect(response.body).to(match(/q=capa[^"]*page=2|page=2[^"]*q=capa/))
+    end
   end
 
   describe "GET /book_bindings as admin" do

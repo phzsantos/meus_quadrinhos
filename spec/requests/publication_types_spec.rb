@@ -52,6 +52,20 @@ RSpec.describe("PublicationTypes", type: :request) do
 
       expect(response.body).to(include("Nenhum tipo encontrado."))
     end
+
+    it "keeps the search query in pagination links" do
+      21.times do |index|
+        publication_type = create(:publication_type, name: "Graphic #{index}")
+        comic = create(:comic, publication_type: publication_type)
+        create(:user_comic, user: user, comic: comic)
+      end
+      create(:publication_type, name: "Mangá")
+
+      get publication_types_path, params: { q: "graphic" }
+
+      expect(response.body).to(include("page=2"))
+      expect(response.body).to(match(/q=graphic[^"]*page=2|page=2[^"]*q=graphic/))
+    end
   end
 
   describe "GET /publication_types as admin" do
