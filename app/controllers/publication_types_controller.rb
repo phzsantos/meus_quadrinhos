@@ -10,6 +10,8 @@ class PublicationTypesController < ApplicationController
     @publication_types = PublicationType.with_comics_visible_to(current_user)
       .matching_query(params[:q])
       .order(:name)
+      .page(params[:page])
+      .per(20)
   end
 
   # GET /publication_types/1 or /publication_types/1.json

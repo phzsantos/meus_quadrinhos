@@ -10,7 +10,7 @@
         placeholder: "Nome da encadernação" %>
 
       <div class="py-2 text-shadow-md flex flex-wrap bangers-regular text-4xl">
-        <span>Encadernação (<%= @book_bindings.count %>)</span>
+        <span>Encadernação (<%= @book_bindings.total_count %>)</span>
         <span class="ml-auto">Volumes</span>
       </div>
 
@@ -40,5 +40,9 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="mt-6 flex justify-center">
+  <%= paginate @book_bindings %>
 </div>
 <% end %>

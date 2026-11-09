@@ -10,6 +10,8 @@ class BookBindingsController < ApplicationController
     @book_bindings = BookBinding.with_comics_visible_to(current_user)
       .matching_query(params[:q])
       .order(:name)
+      .page(params[:page])
+      .per(20)
   end
 
   # GET /book_bindings/1 or /book_bindings/1.json

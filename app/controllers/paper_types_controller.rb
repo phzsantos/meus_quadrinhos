@@ -10,6 +10,8 @@ class PaperTypesController < ApplicationController
     @paper_types = PaperType.with_comics_visible_to(current_user)
       .matching_query(params[:q])
       .order(:name)
+      .page(params[:page])
+      .per(20)
   end
 
   # GET /paper_types/1 or /paper_types/1.json
