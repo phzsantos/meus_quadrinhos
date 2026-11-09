@@ -16,6 +16,7 @@ class PaperTypesController < ApplicationController
   def show
     @comics = @paper_type.comics.visible_to(current_user)
       .with_attached_cover_image
+      .includes(:collection)
       .order(:title, :issue_number)
       .page(params[:page])
       .per(18)

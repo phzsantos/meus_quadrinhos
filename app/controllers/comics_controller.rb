@@ -12,7 +12,7 @@ class ComicsController < ApplicationController
     comics = Comic.where(id: Comic.visible_to(current_user).select(:id))
       .matching_query(params[:q])
       .with_attached_cover_image
-      .includes(:readings, :user_comics)
+      .includes(:collection, :readings, :user_comics)
       .order(created_at: :asc)
       .sort_by do |comic|
         comic.readings
@@ -29,6 +29,7 @@ class ComicsController < ApplicationController
   def browse
     @comics = Comic
       .with_attached_cover_image
+      .includes(:collection)
       .where.not(id: current_user.owned_comics.select(:id))
       .order(:title, :issue_number)
   end

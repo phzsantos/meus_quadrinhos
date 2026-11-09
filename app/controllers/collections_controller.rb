@@ -18,6 +18,7 @@ class CollectionsController < ApplicationController
   def show
     @comics = @collection.comics.visible_to(current_user)
       .with_attached_cover_image
+      .includes(:collection)
       .order(:issue_number)
       .page(params[:page])
       .per(18)

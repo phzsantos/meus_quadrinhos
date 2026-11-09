@@ -16,6 +16,7 @@ class BookBindingsController < ApplicationController
   def show
     @comics = @book_binding.comics.visible_to(current_user)
       .with_attached_cover_image
+      .includes(:collection)
       .order(:title, :issue_number)
       .page(params[:page])
       .per(18)
