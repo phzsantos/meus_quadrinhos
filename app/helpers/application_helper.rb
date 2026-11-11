@@ -14,13 +14,44 @@ module ApplicationHelper
 
   def page_title
     base = "Meus Quadrinhos"
+    record = record_page_label
+    return "#{record} | #{base}" if record.present?
 
-    title = t("controllers.#{controller_name}")
-
-    [title, base].compact.join(" | ")
+    section = t("controllers.#{controller_name}")
+    [new_page_label, section, base].compact.join(" | ")
   end
 
   def visible_comics_count(resource)
     resource.comics.visible_to(current_user).count
+  end
+
+  private
+
+  def record_page_label
+    return if ["show", "edit", "update"].exclude?(action_name)
+
+    current_record_label
+  end
+
+  def new_page_label
+    "Novo" if ["new", "create"].include?(action_name) && !authentication_page?
+  end
+
+  def authentication_page?
+    ["sessions", "registrations", "passwords"].include?(controller_name)
+  end
+
+  def current_record_label
+    resource = current_record
+    return if resource.blank?
+
+    resource.try(:display_title).presence ||
+      resource.try(:name).presence ||
+      resource.try(:title).presence
+  end
+
+  def current_record
+    name = controller_name == "comic_memberships" ? "comic" : controller_name.singularize
+    instance_variable_get(:"@#{name}")
   end
 end
