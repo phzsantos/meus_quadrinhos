@@ -17,8 +17,9 @@ module ApplicationHelper
     record = record_page_label
     return "#{record} | #{base}" if record.present?
 
-    section = t("controllers.#{controller_name}")
-    [new_page_label, section, base].compact.join(" | ")
+    new_label = new_page_label
+    section = new_label ? current_model_label : t("controllers.#{controller_name}")
+    [new_label, section, base].compact.join(" | ")
   end
 
   def visible_comics_count(resource)
@@ -35,6 +36,10 @@ module ApplicationHelper
 
   def new_page_label
     "Novo" if ["new", "create"].include?(action_name) && !authentication_page?
+  end
+
+  def current_model_label
+    controller_name.classify.constantize.model_name.human
   end
 
   def authentication_page?
