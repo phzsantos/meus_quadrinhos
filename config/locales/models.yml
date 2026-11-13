@@ -4,7 +4,9 @@ pt-BR:
       comic:
         title: "Título"
         issue_number: "Volume"
+        issue_title: "Título da edição"
         page_count: "Páginas"
+        story_count: "Histórias"
         published_year: "Ano de Publicação"
         authors: "Autores"
         characters: "Personagens"
@@ -12,6 +14,7 @@ pt-BR:
         publication_type: "Tipo"
         book_binding: "Encadernação"
         paper_type: "Papel"
+        collection: "Coleção"
         cover_image: "Imagem de capa"
       collection:
         name: "Nome"
