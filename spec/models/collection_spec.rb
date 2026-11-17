@@ -44,6 +44,21 @@ RSpec.describe(Collection, type: :model) do
     end
   end
 
+  describe ".with_visible_comics_count" do
+    let(:user) { create(:user) }
+
+    it "annotates each collection with the count of comics visible to the user" do
+      collection = create(:collection)
+      visible_comic = create(:comic, collection: collection)
+      create(:comic, collection: collection)
+      create(:user_comic, user: user, comic: visible_comic)
+
+      counted = described_class.with_visible_comics_count(user).find(collection.id)
+
+      expect(counted[:visible_comics_count].to_i).to(eq(1))
+    end
+  end
+
   describe "friendly_id" do
     it "generates slug from name" do
       collection = create(:collection, name: "Justiceiro: Deluxe")

@@ -9,6 +9,7 @@ class CharactersController < ApplicationController
   def index
     @characters = Character.with_comics_visible_to(current_user)
       .matching_query(params[:q])
+      .with_visible_comics_count(current_user)
       .order(:name)
       .page(params[:page])
       .per(20)

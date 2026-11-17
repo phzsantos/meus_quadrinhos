@@ -45,6 +45,22 @@ RSpec.describe(Character, type: :model) do
     end
   end
 
+  describe ".with_visible_comics_count" do
+    let(:user) { create(:user) }
+
+    it "annotates each character with the count of comics visible to the user" do
+      character = create(:character)
+      other_character = create(:character, name: "Other")
+      visible_comic = create(:comic, characters: [character])
+      create(:comic, characters: [character, other_character])
+      create(:user_comic, user: user, comic: visible_comic)
+
+      counted = described_class.with_visible_comics_count(user).find(character.id)
+
+      expect(counted[:visible_comics_count].to_i).to(eq(1))
+    end
+  end
+
   describe "friendly_id" do
     it "generates slug from name" do
       character = create(:character, name: "Bruce Wayne")

@@ -23,7 +23,11 @@ module ApplicationHelper
   end
 
   def visible_comics_count(resource)
-    resource.comics.visible_to(current_user).count
+    if resource.has_attribute?(:visible_comics_count)
+      resource[:visible_comics_count].to_i
+    else
+      resource.comics.visible_to(current_user).count
+    end
   end
 
   private

@@ -43,6 +43,21 @@ RSpec.describe(BookBinding, type: :model) do
     end
   end
 
+  describe ".with_visible_comics_count" do
+    let(:user) { create(:user) }
+
+    it "annotates each book binding with the count of comics visible to the user" do
+      book_binding = create(:book_binding)
+      visible_comic = create(:comic, book_binding: book_binding)
+      create(:comic, book_binding: book_binding)
+      create(:user_comic, user: user, comic: visible_comic)
+
+      counted = described_class.with_visible_comics_count(user).find(book_binding.id)
+
+      expect(counted[:visible_comics_count].to_i).to(eq(1))
+    end
+  end
+
   describe "friendly_id" do
     it "generates slug from name" do
       book_binding = create(:book_binding, name: "Capa cartão")

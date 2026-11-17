@@ -43,6 +43,21 @@ RSpec.describe(PublicationType, type: :model) do
     end
   end
 
+  describe ".with_visible_comics_count" do
+    let(:user) { create(:user) }
+
+    it "annotates each publication type with the count of comics visible to the user" do
+      publication_type = create(:publication_type)
+      visible_comic = create(:comic, publication_type: publication_type)
+      create(:comic, publication_type: publication_type)
+      create(:user_comic, user: user, comic: visible_comic)
+
+      counted = described_class.with_visible_comics_count(user).find(publication_type.id)
+
+      expect(counted[:visible_comics_count].to_i).to(eq(1))
+    end
+  end
+
   describe "friendly_id" do
     it "generates slug from name" do
       publication_type = create(:publication_type, name: "HQ")

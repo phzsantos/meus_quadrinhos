@@ -43,6 +43,21 @@ RSpec.describe(PaperType, type: :model) do
     end
   end
 
+  describe ".with_visible_comics_count" do
+    let(:user) { create(:user) }
+
+    it "annotates each paper type with the count of comics visible to the user" do
+      paper_type = create(:paper_type)
+      visible_comic = create(:comic, paper_type: paper_type)
+      create(:comic, paper_type: paper_type)
+      create(:user_comic, user: user, comic: visible_comic)
+
+      counted = described_class.with_visible_comics_count(user).find(paper_type.id)
+
+      expect(counted[:visible_comics_count].to_i).to(eq(1))
+    end
+  end
+
   describe "friendly_id" do
     it "generates slug from name" do
       paper_type = create(:paper_type, name: "Couchê")
