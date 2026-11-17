@@ -34,6 +34,41 @@ RSpec.describe(Welcome::Dashboard::ComicsReadByPublicationType) do
       end
     end
 
+    context "when there are more than seven publication types with readings" do
+      before do
+        8.times do |index|
+          publication_type = create(:publication_type, name: "Type #{index}")
+          comic = create(:comic, publication_type: publication_type)
+
+          (8 - index).times do
+            create(:reading, user: user, comic: comic, read_at: Date.new(2023, 1, index + 1))
+          end
+        end
+      end
+
+      it "returns only the top seven publication types" do
+        expect(context.read_comics_publication_types.size).to(eq(7))
+      end
+
+      it "returns the seven most read publication types in descending order" do
+        expect(context.read_comics_publication_types).to(eq(
+          [
+            "Type 0",
+            "Type 1",
+            "Type 2",
+            "Type 3",
+            "Type 4",
+            "Type 5",
+            "Type 6",
+          ],
+        ))
+      end
+
+      it "returns reading counts for the top seven publication types" do
+        expect(context.read_comics_count_by_publication_type).to(eq([8, 7, 6, 5, 4, 3, 2]))
+      end
+    end
+
     context "when there are no readings" do
       it "returns an empty list of publication types with readings" do
         expect(context.read_comics_publication_types).to(eq([]))

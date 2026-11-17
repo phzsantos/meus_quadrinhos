@@ -34,6 +34,41 @@ RSpec.describe(Welcome::Dashboard::ComicsReadByBookBinding) do
       end
     end
 
+    context "when there are more than seven book bindings with readings" do
+      before do
+        8.times do |index|
+          book_binding = create(:book_binding, name: "Binding #{index}")
+          comic = create(:comic, book_binding: book_binding)
+
+          (8 - index).times do
+            create(:reading, user: user, comic: comic, read_at: Date.new(2023, 1, index + 1))
+          end
+        end
+      end
+
+      it "returns only the top seven book bindings" do
+        expect(context.read_comics_book_bindings.size).to(eq(7))
+      end
+
+      it "returns the seven most read book bindings in descending order" do
+        expect(context.read_comics_book_bindings).to(eq(
+          [
+            "Binding 0",
+            "Binding 1",
+            "Binding 2",
+            "Binding 3",
+            "Binding 4",
+            "Binding 5",
+            "Binding 6",
+          ],
+        ))
+      end
+
+      it "returns reading counts for the top seven book bindings" do
+        expect(context.read_comics_count_by_book_binding).to(eq([8, 7, 6, 5, 4, 3, 2]))
+      end
+    end
+
     context "when there are no readings" do
       it "returns an empty list of book bindings with readings" do
         expect(context.read_comics_book_bindings).to(eq([]))

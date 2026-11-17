@@ -34,6 +34,41 @@ RSpec.describe(Welcome::Dashboard::ComicsReadByPublisher) do
       end
     end
 
+    context "when there are more than seven publishers with readings" do
+      before do
+        8.times do |index|
+          publisher = create(:publisher, name: "Publisher #{index}")
+          comic = create(:comic, publisher: publisher)
+
+          (8 - index).times do
+            create(:reading, user: user, comic: comic, read_at: Date.new(2023, 1, index + 1))
+          end
+        end
+      end
+
+      it "returns only the top seven publishers" do
+        expect(context.read_comics_publishers.size).to(eq(7))
+      end
+
+      it "returns the seven most read publishers in descending order" do
+        expect(context.read_comics_publishers).to(eq(
+          [
+            "Publisher 0",
+            "Publisher 1",
+            "Publisher 2",
+            "Publisher 3",
+            "Publisher 4",
+            "Publisher 5",
+            "Publisher 6",
+          ],
+        ))
+      end
+
+      it "returns reading counts for the top seven publishers" do
+        expect(context.read_comics_count_by_publisher).to(eq([8, 7, 6, 5, 4, 3, 2]))
+      end
+    end
+
     context "when there are no readings" do
       it "returns an empty list of publishers with readings" do
         expect(context.read_comics_publishers).to(eq([]))

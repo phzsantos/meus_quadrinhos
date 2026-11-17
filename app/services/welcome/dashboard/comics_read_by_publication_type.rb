@@ -6,19 +6,22 @@ module Welcome
       include Interactor
       include UserScopedReadings
 
+      LIMIT = 7
+
       def call
-        grouped = readings_scope
+        counts = Hash.new(0)
+
+        readings_scope
           .includes(comic: :publication_type)
           .where.not(read_at: nil)
-          .group_by { |r| r.comic.publication_type.name }
+          .find_each do |reading|
+            counts[reading.comic.publication_type.name] += 1
+          end
 
-        publication_types = grouped
-          .sort_by { |name, readings| [-readings.count, name] }
-          .map(&:first)
+        ranked = counts.sort_by { |name, count| [-count, name] }.first(LIMIT)
 
-        context.read_comics_publication_types = publication_types
-        context.read_comics_count_by_publication_type =
-          publication_types.map { |publication_type| grouped[publication_type].count }
+        context.read_comics_publication_types = ranked.map(&:first)
+        context.read_comics_count_by_publication_type = ranked.map(&:last)
       end
     end
   end
