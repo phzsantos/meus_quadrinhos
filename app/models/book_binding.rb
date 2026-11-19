@@ -9,7 +9,7 @@ class BookBinding < ApplicationRecord
 
   has_many :comics, dependent: :restrict_with_error
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   def should_generate_new_friendly_id?
     name_changed?

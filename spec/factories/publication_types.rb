@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :publication_type do
-    name { Faker::Book.genre }
+    sequence(:name) { |n| "Publication Type #{n}" }
   end
 end

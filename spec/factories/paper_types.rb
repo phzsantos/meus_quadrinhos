@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :paper_type do
-    name { Faker::Commerce.material }
+    sequence(:name) { |n| "Paper Type #{n}" }
   end
 end

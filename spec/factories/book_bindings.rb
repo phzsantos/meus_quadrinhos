@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :book_binding do
-    name { Faker::Commerce.material }
+    sequence(:name) { |n| "Book Binding #{n}" }
   end
 end
