@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_11_18_225100) do
+ActiveRecord::Schema[7.1].define(version: 2026_11_23_225800) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -169,6 +169,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_11_18_225100) do
     t.datetime "updated_at", null: false
     t.uuid "user_id", null: false
     t.index ["comic_id"], name: "index_readings_on_comic_id"
+    t.index ["user_id", "read_at"], name: "index_readings_on_user_id_and_read_at"
     t.index ["user_id"], name: "index_readings_on_user_id"
   end
 
