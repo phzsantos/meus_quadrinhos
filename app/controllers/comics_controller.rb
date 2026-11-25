@@ -154,7 +154,24 @@ class ComicsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_comic
-    @comic = Comic.friendly.find(params[:id])
+    scope = Comic.friendly
+    if action_name == "show"
+      scope = scope
+        .includes(
+          :authors,
+          :characters,
+          :publisher,
+          :publication_type,
+          :book_binding,
+          :paper_type,
+          :collection,
+          :user_comics,
+          :readings,
+        )
+        .with_attached_cover_image
+    end
+
+    @comic = scope.find(params[:id])
   end
 
   def export_comics_scope
