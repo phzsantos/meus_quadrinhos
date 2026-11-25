@@ -81,7 +81,7 @@ class Comic < ApplicationRecord
   validates :issue_number, numericality: { only_integer: true }, presence: true
 
   def should_generate_new_friendly_id?
-    title_changed? || issue_number_changed? || published_year_changed?
+    title_changed? || issue_number_changed? || published_year_changed? || collection_id_changed?
   end
 
   def owned_by?(user)

@@ -154,6 +154,23 @@ RSpec.describe(Comic, type: :model) do
         expect(comic.slug).to(eq("zagor-1-2020"))
       end
     end
+
+    it "updates slug when a collection is added" do
+      comic = create(:comic, title: "Tex Willer", issue_number: 1, published_year: 2020, collection: nil)
+      collection = create(:collection)
+
+      comic.update!(collection: collection)
+
+      expect(comic.slug).to(eq("tex-willer-1-2020"))
+    end
+
+    it "updates slug when the collection is removed" do
+      comic = create(:comic, title: "Tex Willer", issue_number: 1, published_year: 2020)
+
+      comic.update!(collection: nil)
+
+      expect(comic.slug).to(eq("tex-willer-2020"))
+    end
   end
 
   describe "callbacks" do
