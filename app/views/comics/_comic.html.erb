@@ -17,7 +17,7 @@
       <p>
         <strong>Autores:</strong>
         <%= safe_join(
-          @comic.authors.order(:name).map do |author|
+          @comic.authors.sort_by(&:name).map do |author|
             link_to author.name, author, class: "text-blue-600 underline hover:text-blue-800"
           end,
           ", "
@@ -27,7 +27,7 @@
         <p>
           <strong>Personagens:</strong>
           <%= safe_join(
-            @comic.characters.order(:name).map do |character|
+            @comic.characters.sort_by(&:name).map do |character|
               link_to character.name, character, class: "text-blue-600 underline hover:text-blue-800"
             end,
             ", "
@@ -60,7 +60,7 @@
       <% else %>
         <p><strong>Tenho:</strong> Não</p>
       <% end %>
-      <% user_readings = @comic.readings_for(current_user).order(read_at: :asc) %>
+      <% user_readings = @comic.readings_for(current_user).order(:read_at) %>
       <% if user_readings.any? %>
         <p>
           <strong>Lido em:</strong>

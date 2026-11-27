@@ -166,7 +166,6 @@ class ComicsController < ApplicationController
           :paper_type,
           :collection,
           :user_comics,
-          :readings,
         )
         .with_attached_cover_image
     end
